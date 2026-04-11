@@ -9,6 +9,7 @@ Code Clash is a profile-less timed MCQ battle app for placement and core CS prep
 - No login, profile, ELO, permanent game history, or replay storage in the MVP.
 - Invite links are valid only while the room waits for an opponent and expire after 30 minutes.
 - Match duration is selected before the battle: 30 seconds, or 1 to 10 minutes.
+- Battle type is selected before the battle: all topics, one topic, or any mix of topics.
 - Scoring is simple: 1 point for each correct answer, no negative marks.
 - Questions come from an updateable JSON bank with category and difficulty tags.
 - Difficulty adapts during the game based on answered count, score, and streak.
@@ -46,7 +47,7 @@ flowchart LR
 
 - QuestionBank
   - Loads and validates `data/questions.json`.
-  - Picks questions by target difficulty while avoiding repeats per player until the local pool is exhausted.
+  - Picks questions by selected topic scope and target difficulty while avoiding repeats per player until the local pool is exhausted.
 
 ## Main User Flows
 
@@ -57,7 +58,7 @@ sequenceDiagram
   participant A as Player A
   participant S as Server
   participant B as Player B
-  A->>S: create_room(durationSeconds)
+  A->>S: create_room(durationSeconds, categories)
   S-->>A: room_created(room, sharePath)
   B->>S: join_room(roomId)
   S-->>A: game_started
@@ -73,14 +74,14 @@ sequenceDiagram
   participant A as Player A
   participant S as Server
   participant B as Player B
-  A->>S: join_matchmaking(durationSeconds)
+  A->>S: join_matchmaking(durationSeconds, categories)
   S-->>A: queued
-  B->>S: join_matchmaking(durationSeconds)
+  B->>S: join_matchmaking(durationSeconds, categories)
   S-->>A: game_started
   S-->>B: game_started
 ```
 
-Players are paired only when they select the same duration. This avoids one player joining a 30-second match while another expects 10 minutes.
+Players are paired only when they select the same duration and topic scope. This avoids one player joining a 30-second DSA-only match while another expects a 10-minute all-topics match.
 
 ### Answer And Review
 

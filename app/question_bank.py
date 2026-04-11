@@ -87,28 +87,44 @@ class QuestionBank:
     def get(self, question_id: str) -> dict[str, Any] | None:
         return self._by_id.get(question_id)
 
-    def pick(self, difficulty: str, seen_ids: set[str]) -> dict[str, Any]:
+    def pick(
+        self,
+        difficulty: str,
+        seen_ids: set[str],
+        categories: tuple[str, ...] | None = None,
+    ) -> dict[str, Any]:
         if not self._questions:
             raise QuestionBankError("Question bank is empty.")
 
-        candidates = [
+        category_set = set(categories or ())
+        scoped_questions = [
             question
             for question in self._questions
+            if not category_set or question["category"] in category_set
+        ]
+        if not scoped_questions:
+            scoped_questions = self._questions
+
+        candidates = [
+            question
+            for question in scoped_questions
             if question["difficulty"] == difficulty and question["id"] not in seen_ids
         ]
 
         if not candidates:
             candidates = [
-                question for question in self._questions if question["id"] not in seen_ids
+                question
+                for question in scoped_questions
+                if question["id"] not in seen_ids
             ]
 
         if not candidates:
             seen_ids.clear()
             candidates = [
                 question
-                for question in self._questions
+                for question in scoped_questions
                 if question["difficulty"] == difficulty
-            ] or self._questions
+            ] or scoped_questions
 
         return random.choice(candidates)
 

@@ -213,7 +213,8 @@ button {
   gap: 14px;
 }
 
-.duration-picker {
+.duration-picker,
+.category-picker {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -246,6 +247,30 @@ button {
   padding: 0 12px;
   background: #ffffff;
   color: var(--ink);
+}
+
+.category-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.category-chip {
+  min-height: 38px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.category-chip.active {
+  border-color: rgba(0, 166, 118, 0.45);
+  background: rgba(0, 166, 118, 0.12);
+  color: #006f50;
+  font-weight: 750;
 }
 
 .mode-button,
@@ -677,7 +702,8 @@ button {
 
   .topbar,
   .identity,
-  .duration-picker {
+  .duration-picker,
+  .category-picker {
     align-items: flex-start;
     flex-direction: column;
   }
@@ -712,6 +738,10 @@ button {
 
   .duration-select {
     width: 100%;
+  }
+
+  .category-actions {
+    justify-content: flex-start;
   }
 
   .review-option {

@@ -100,6 +100,7 @@ class Connection:
     room_id: str | None = None
     queued: bool = False
     queued_duration_seconds: int | None = None
+    queued_categories: tuple[str, ...] | None = None
 
 
 @dataclass
@@ -144,6 +145,7 @@ class Room:
     created_at: float = field(default_factory=time.time)
     expires_at: float = field(default_factory=lambda: time.time() + INVITE_TTL_SECONDS)
     duration_seconds: int = DEFAULT_GAME_SECONDS
+    categories: tuple[str, ...] = ()
     status: str = "waiting"
     players: dict[str, PlayerState] = field(default_factory=dict)
     started_at: float | None = None
@@ -158,6 +160,7 @@ class Room:
             "status": self.status,
             "players": [player.public() for player in self.players.values()],
             "durationSeconds": self.duration_seconds,
+            "categories": list(self.categories),
             "createdAt": int(self.created_at * 1000),
             "expiresAt": int(self.expires_at * 1000),
             "startedAt": int(self.started_at * 1000) if self.started_at else None,
@@ -197,6 +200,7 @@ class GameManager:
                     "avatar": conn.avatar,
                 },
                 "bank": self.question_bank.stats(),
+                "questionCategories": list(self._known_categories()),
                 "durations": list(ALLOWED_GAME_SECONDS),
                 "defaultDurationSeconds": DEFAULT_GAME_SECONDS,
                 "serverNow": now_ms(),
@@ -239,13 +243,17 @@ class GameManager:
 
         if message_type == "create_room":
             await self.create_invite_room(
-                conn, self._duration_from_payload(payload.get("durationSeconds"))
+                conn,
+                self._duration_from_payload(payload.get("durationSeconds")),
+                self._categories_from_payload(payload.get("categories")),
             )
         elif message_type == "join_room":
             await self.join_invite_room(conn, str(payload.get("roomId", "")))
         elif message_type == "join_matchmaking":
             await self.join_matchmaking(
-                conn, self._duration_from_payload(payload.get("durationSeconds"))
+                conn,
+                self._duration_from_payload(payload.get("durationSeconds")),
+                self._categories_from_payload(payload.get("categories")),
             )
         elif message_type == "leave_queue":
             self._remove_from_queue(conn)
@@ -254,7 +262,9 @@ class GameManager:
             await self.leave_room(conn)
         elif message_type == "play_solo":
             await self.play_solo(
-                conn, self._duration_from_payload(payload.get("durationSeconds"))
+                conn,
+                self._duration_from_payload(payload.get("durationSeconds")),
+                self._categories_from_payload(payload.get("categories")),
             )
         elif message_type == "answer":
             await self.answer(
@@ -265,7 +275,12 @@ class GameManager:
         else:
             await self.send_error(conn, "Unknown action.")
 
-    async def create_invite_room(self, conn: Connection, duration_seconds: int) -> None:
+    async def create_invite_room(
+        self,
+        conn: Connection,
+        duration_seconds: int,
+        categories: tuple[str, ...],
+    ) -> None:
         if not await self._can_start_new_activity(conn):
             return
 
@@ -278,6 +293,7 @@ class GameManager:
             mode="invite",
             owner_id=conn.player_id,
             duration_seconds=duration_seconds,
+            categories=categories,
         )
         room.players[conn.player_id] = self._player_from_connection(conn)
         conn.room_id = room.id
@@ -333,7 +349,12 @@ class GameManager:
         if len(room.players) == 2:
             await self.start_game(room)
 
-    async def join_matchmaking(self, conn: Connection, duration_seconds: int) -> None:
+    async def join_matchmaking(
+        self,
+        conn: Connection,
+        duration_seconds: int,
+        categories: tuple[str, ...],
+    ) -> None:
         if not await self._can_start_new_activity(conn):
             return
 
@@ -346,17 +367,24 @@ class GameManager:
                     "type": "queued",
                     "durationSeconds": conn.queued_duration_seconds
                     or duration_seconds,
+                    "categories": list(conn.queued_categories or categories),
                 },
             )
             return
 
-        opponent = self._next_waiting_opponent(conn, duration_seconds)
+        opponent = self._next_waiting_opponent(conn, duration_seconds, categories)
         if opponent is None:
             conn.queued = True
             conn.queued_duration_seconds = duration_seconds
+            conn.queued_categories = categories
             self.queue.append(conn.id)
             await self.send(
-                conn, {"type": "queued", "durationSeconds": duration_seconds}
+                conn,
+                {
+                    "type": "queued",
+                    "durationSeconds": duration_seconds,
+                    "categories": list(categories),
+                },
             )
             return
 
@@ -366,6 +394,7 @@ class GameManager:
             mode="matchmaking",
             owner_id=opponent.player_id,
             duration_seconds=duration_seconds,
+            categories=categories,
         )
         room.players[opponent.player_id] = self._player_from_connection(opponent)
         room.players[conn.player_id] = self._player_from_connection(conn)
@@ -389,7 +418,12 @@ class GameManager:
                 {"type": "room_update", "room": previous_room.public()},
             )
 
-    async def play_solo(self, conn: Connection, duration_seconds: int) -> None:
+    async def play_solo(
+        self,
+        conn: Connection,
+        duration_seconds: int,
+        categories: tuple[str, ...],
+    ) -> None:
         if not await self._can_start_new_activity(conn):
             return
 
@@ -402,6 +436,7 @@ class GameManager:
             mode="solo",
             owner_id=conn.player_id,
             duration_seconds=duration_seconds,
+            categories=categories,
         )
         room.players[conn.player_id] = self._player_from_connection(conn)
         conn.room_id = room.id
@@ -511,7 +546,9 @@ class GameManager:
         self, conn: Connection, room: Room, player: PlayerState
     ) -> None:
         difficulty = self._target_difficulty(player)
-        question = self.question_bank.pick(difficulty, player.asked_ids)
+        question = self.question_bank.pick(
+            difficulty, player.asked_ids, room.categories
+        )
         player.current_question_id = question["id"]
         player.asked_ids.add(question["id"])
 
@@ -606,6 +643,22 @@ class GameManager:
             return duration_seconds
         return DEFAULT_GAME_SECONDS
 
+    def _known_categories(self) -> tuple[str, ...]:
+        return tuple(self.question_bank.stats()["categories"].keys())
+
+    def _categories_from_payload(self, value: Any) -> tuple[str, ...]:
+        known_categories = self._known_categories()
+        if not known_categories:
+            return ()
+        if not isinstance(value, list):
+            return known_categories
+
+        requested = {str(category).strip() for category in value}
+        categories = tuple(
+            category for category in known_categories if category in requested
+        )
+        return categories or known_categories
+
     def _leave_current_room(self, conn: Connection) -> Room | None:
         room = self.rooms.get(conn.room_id or "")
         if not room or room.status == "active":
@@ -622,6 +675,7 @@ class GameManager:
     def _remove_from_queue(self, conn: Connection) -> None:
         conn.queued = False
         conn.queued_duration_seconds = None
+        conn.queued_categories = None
         self.queue = deque(
             queued_conn_id
             for queued_conn_id in self.queue
@@ -629,7 +683,10 @@ class GameManager:
         )
 
     def _next_waiting_opponent(
-        self, conn: Connection, duration_seconds: int
+        self,
+        conn: Connection,
+        duration_seconds: int,
+        categories: tuple[str, ...],
     ) -> Connection | None:
         self._remove_from_queue(conn)
         remaining: deque[str] = deque()
@@ -644,9 +701,11 @@ class GameManager:
                 and candidate.id != conn.id
                 and candidate.queued
                 and candidate.queued_duration_seconds == duration_seconds
+                and candidate.queued_categories == categories
             ):
                 candidate.queued = False
                 candidate.queued_duration_seconds = None
+                candidate.queued_categories = None
                 opponent = candidate
                 continue
 

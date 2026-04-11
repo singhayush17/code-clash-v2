@@ -3,9 +3,12 @@ const state = {
   connected: false,
   player: null,
   bank: null,
+  categories: [],
+  selectedCategories: [],
   durations: [30, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600],
   durationSeconds: 60,
   queuedDurationSeconds: null,
+  queuedCategories: [],
   room: null,
   queued: false,
   question: null,
@@ -58,6 +61,7 @@ function connect() {
     state.connected = false;
     state.queued = false;
     state.queuedDurationSeconds = null;
+    state.queuedCategories = [];
     state.room = null;
     state.question = null;
     state.result = null;
@@ -79,6 +83,9 @@ function handleMessage(message) {
     case "hello":
       state.player = message.player;
       state.bank = message.bank;
+      state.categories =
+        message.questionCategories || Object.keys(message.bank?.categories || {});
+      state.selectedCategories = [...state.categories];
       state.durations = message.durations || state.durations;
       state.durationSeconds = message.defaultDurationSeconds || state.durationSeconds;
       if (state.routeRoomId) {
@@ -90,6 +97,7 @@ function handleMessage(message) {
     case "room_created":
       state.room = message.room;
       state.durationSeconds = message.room.durationSeconds || state.durationSeconds;
+      state.selectedCategories = message.room.categories || selectedCategories();
       state.queued = false;
       state.gameOver = null;
       state.question = null;
@@ -102,14 +110,17 @@ function handleMessage(message) {
     case "room_update":
       state.room = message.room;
       state.durationSeconds = message.room.durationSeconds || state.durationSeconds;
+      state.selectedCategories = message.room.categories || state.selectedCategories;
       state.queued = false;
       state.queuedDurationSeconds = null;
+      state.queuedCategories = [];
       break;
 
     case "queued":
       state.queued = true;
       state.queuedDurationSeconds =
         message.durationSeconds || state.durationSeconds;
+      state.queuedCategories = message.categories || selectedCategories();
       state.room = null;
       state.gameOver = null;
       state.roundReview = [];
@@ -119,6 +130,7 @@ function handleMessage(message) {
     case "queue_left":
       state.queued = false;
       state.queuedDurationSeconds = null;
+      state.queuedCategories = [];
       break;
 
     case "left_room":
@@ -135,7 +147,10 @@ function handleMessage(message) {
       state.room = message.room;
       state.durationSeconds =
         message.durationSeconds || message.room.durationSeconds || state.durationSeconds;
+      state.selectedCategories = message.room.categories || state.selectedCategories;
       state.queued = false;
+      state.queuedDurationSeconds = null;
+      state.queuedCategories = [];
       state.gameOver = null;
       state.question = null;
       state.result = null;
@@ -168,6 +183,7 @@ function handleMessage(message) {
       state.room = message.room;
       state.durationSeconds =
         message.room.durationSeconds || state.durationSeconds;
+      state.selectedCategories = message.room.categories || state.selectedCategories;
       state.gameOver = message;
       state.roundReview = message.review || [];
       state.showReview = false;
@@ -261,6 +277,39 @@ function durationLabel(seconds) {
   }
   const minutes = seconds / 60;
   return `${minutes} min${minutes === 1 ? "" : "s"}`;
+}
+
+function allCategories() {
+  if (state.categories.length) {
+    return state.categories;
+  }
+  return Object.keys(state.bank?.categories || {});
+}
+
+function selectedCategories() {
+  const known = allCategories();
+  const selected = state.selectedCategories.filter((category) =>
+    known.includes(category),
+  );
+  return selected.length ? selected : known;
+}
+
+function isAllCategoriesSelected(categories = selectedCategories()) {
+  const known = allCategories();
+  return known.length > 0 && categories.length === known.length;
+}
+
+function categoryScopeLabel(categories = selectedCategories()) {
+  if (!categories.length) {
+    return "All topics";
+  }
+  if (isAllCategoriesSelected(categories)) {
+    return "All topics";
+  }
+  if (categories.length <= 2) {
+    return categories.join(" + ");
+  }
+  return `${categories.length} topics`;
 }
 
 function formatTimeLeft(ms) {
@@ -367,14 +416,15 @@ function renderLobby() {
   return `
     ${renderIdentity()}
     ${renderDurationPicker()}
+    ${renderCategoryPicker()}
     <section class="mode-grid" aria-label="Battle modes">
       <button class="mode-button accent-green" data-action="create-room">
         <b>Create 1v1 Link</b>
-        <span>Share a private ${durationLabel(state.durationSeconds)} room. The link expires in 30 minutes.</span>
+        <span>Share a private ${durationLabel(state.durationSeconds)} ${categoryScopeLabel()} room. The link expires in 30 minutes.</span>
       </button>
       <button class="mode-button accent-coral" data-action="matchmaking">
         <b>Find Random Player</b>
-        <span>Queue for a ${durationLabel(state.durationSeconds)} battle and start when another player arrives.</span>
+        <span>Queue for a ${durationLabel(state.durationSeconds)} ${categoryScopeLabel()} battle.</span>
       </button>
       <button class="mode-button accent-yellow" data-action="solo">
         <b>Play Solo</b>
@@ -384,6 +434,33 @@ function renderLobby() {
     <section class="join-strip" aria-label="Join by room code">
       <input id="roomCodeInput" autocomplete="off" placeholder="Enter room code" maxlength="12" />
       <button class="primary-button" data-action="join-code">Join Room</button>
+    </section>
+  `;
+}
+
+function renderCategoryPicker() {
+  const known = allCategories();
+  const selected = selectedCategories();
+  return `
+    <section class="category-picker" aria-label="Battle type">
+      <div>
+        <p class="eyebrow">Battle Type</p>
+        <p class="duration-copy">Pick one topic, combine topics, or keep the full mixed bank.</p>
+      </div>
+      <div class="category-actions">
+        <button class="category-chip ${isAllCategoriesSelected(selected) ? "active" : ""}" data-action="category-all">
+          All
+        </button>
+        ${known
+          .map(
+            (category) => `
+              <button class="category-chip ${selected.includes(category) && !isAllCategoriesSelected(selected) ? "active" : ""}" data-action="category-toggle" data-category="${escapeHtml(category)}">
+                ${escapeHtml(category)}
+              </button>
+            `,
+          )
+          .join("")}
+      </div>
     </section>
   `;
 }
@@ -442,7 +519,7 @@ function renderWaitingRoom() {
     ${renderIdentity()}
     <section class="section">
       <h2>Waiting for opponent</h2>
-      <p>Room ${escapeHtml(state.room.id)} is open for ${expiresIn} minute${expiresIn === 1 ? "" : "s"}. Match duration is ${durationLabel(state.room.durationSeconds)}.</p>
+      <p>Room ${escapeHtml(state.room.id)} is open for ${expiresIn} minute${expiresIn === 1 ? "" : "s"}. Match duration is ${durationLabel(state.room.durationSeconds)} with ${categoryScopeLabel(state.room.categories || allCategories())}.</p>
       <div class="share-box">
         <input readonly value="${escapeHtml(shareUrl)}" aria-label="Share link" />
         <button class="primary-button" data-action="copy-link">Copy Link</button>
@@ -455,11 +532,14 @@ function renderWaitingRoom() {
 
 function renderQueue() {
   const durationSeconds = state.queuedDurationSeconds || state.durationSeconds;
+  const categories = state.queuedCategories.length
+    ? state.queuedCategories
+    : selectedCategories();
   return `
     ${renderIdentity()}
     <section class="section">
       <h2>Finding a player</h2>
-      <p>Queued for a ${durationLabel(durationSeconds)} battle. Keep this tab open; the match starts as soon as another player picks the same duration.</p>
+      <p>Queued for a ${durationLabel(durationSeconds)} ${categoryScopeLabel(categories)} battle. Keep this tab open; the match starts as soon as another player picks the same setup.</p>
       <div class="queue-pulse" aria-hidden="true"></div>
       <button class="secondary-button" data-action="leave-queue">Cancel Queue</button>
     </section>
@@ -658,15 +738,24 @@ document.addEventListener("click", async (event) => {
   }
 
   if (action === "create-room") {
-    send("create_room", { durationSeconds: state.durationSeconds });
+    send("create_room", {
+      durationSeconds: state.durationSeconds,
+      categories: selectedCategories(),
+    });
   }
 
   if (action === "matchmaking") {
-    send("join_matchmaking", { durationSeconds: state.durationSeconds });
+    send("join_matchmaking", {
+      durationSeconds: state.durationSeconds,
+      categories: selectedCategories(),
+    });
   }
 
   if (action === "solo") {
-    send("play_solo", { durationSeconds: state.durationSeconds });
+    send("play_solo", {
+      durationSeconds: state.durationSeconds,
+      categories: selectedCategories(),
+    });
   }
 
   if (action === "leave-queue") {
@@ -715,6 +804,35 @@ document.addEventListener("click", async (event) => {
 
   if (action === "toggle-review") {
     state.showReview = !state.showReview;
+    render();
+  }
+
+  if (action === "category-all") {
+    state.selectedCategories = [...allCategories()];
+    render();
+  }
+
+  if (action === "category-toggle") {
+    const category = button.dataset.category;
+    const known = allCategories();
+    if (!known.includes(category)) {
+      return;
+    }
+
+    const current = selectedCategories();
+    const currentSet = new Set(
+      isAllCategoriesSelected(current) ? [] : current,
+    );
+
+    if (currentSet.has(category)) {
+      currentSet.delete(category);
+    } else {
+      currentSet.add(category);
+    }
+
+    state.selectedCategories = currentSet.size
+      ? known.filter((knownCategory) => currentSet.has(knownCategory))
+      : [category];
     render();
   }
 });
