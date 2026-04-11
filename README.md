@@ -2,6 +2,10 @@
 
 Code Clash is a profile-less 1v1 MCQ battle app for DSA, CN, OOPS, OS, System Design, Core CS, and aptitude prep. This version runs locally with a FastAPI server, WebSockets, an in-memory game loop, and an updateable 210-question JSON bank.
 
+## Live App
+
+Code Clash is hosted on Render at [https://code-clash-3uwa.onrender.com/](https://code-clash-3uwa.onrender.com/).
+
 ## What Works Now
 
 - Create a private 1v1 room and share `/room/{code}`.
