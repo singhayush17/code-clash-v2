@@ -37,6 +37,7 @@
 - `ENDED_ROOM_TTL_SECONDS = 75`
 
 Any duration received from the client is validated by `_duration_from_payload`. Invalid or missing values fall back to 60 seconds.
+Any category list received from the client is validated by `_categories_from_payload`. Invalid or empty values fall back to all known categories.
 
 ## Data Models
 
@@ -53,6 +54,7 @@ Fields:
 - `room_id`: current room, if any.
 - `queued`: whether the connection is in matchmaking.
 - `queued_duration_seconds`: selected duration for matchmaking.
+- `queued_categories`: selected topic scope for matchmaking.
 
 ### PlayerState
 
@@ -79,6 +81,7 @@ Fields:
 - `mode`: `invite`, `matchmaking`, or `solo`.
 - `owner_id`: creator or first matched player.
 - `duration_seconds`: selected battle duration.
+- `categories`: selected topic scope for the room.
 - `expires_at`: waiting-room expiry timestamp.
 - `status`: `waiting`, `active`, or `ended`.
 - `players`: transient player states.
@@ -96,6 +99,7 @@ Fields:
   "type": "hello",
   "player": {},
   "bank": {},
+  "questionCategories": ["DSA", "CN", "OOPS", "OS", "System Design", "Core CS", "Aptitude"],
   "durations": [30, 60, 120, 180, 240, 300, 360, 420, 480, 540, 600],
   "defaultDurationSeconds": 60,
   "serverNow": 0
@@ -118,7 +122,8 @@ Fields:
 ```json
 {
   "type": "queued",
-  "durationSeconds": 120
+  "durationSeconds": 120,
+  "categories": ["DSA", "System Design"]
 }
 ```
 
@@ -194,7 +199,8 @@ Create invite room:
 ```json
 {
   "type": "create_room",
-  "durationSeconds": 120
+  "durationSeconds": 120,
+  "categories": ["DSA", "System Design"]
 }
 ```
 
@@ -212,7 +218,8 @@ Join matchmaking:
 ```json
 {
   "type": "join_matchmaking",
-  "durationSeconds": 120
+  "durationSeconds": 120,
+  "categories": ["DSA", "System Design"]
 }
 ```
 
@@ -221,7 +228,8 @@ Play solo:
 ```json
 {
   "type": "play_solo",
-  "durationSeconds": 120
+  "durationSeconds": 120,
+  "categories": ["DSA", "System Design"]
 }
 ```
 
@@ -238,7 +246,7 @@ Submit answer:
 ## Room Lifecycle
 
 1. Waiting
-   - Invite room is created with a selected duration.
+   - Invite room is created with a selected duration and topic scope.
    - Room can accept one opponent until full, expired, or abandoned.
 
 2. Active
@@ -261,20 +269,21 @@ The current adaptive rules are intentionally simple:
 - Medium if score is at least 4, answered count is at least 5, or streak is at least 3.
 - Easy otherwise.
 
-Question picking tries the target difficulty first and avoids repeats for the player. If that pool is exhausted, it falls back to unseen questions from any difficulty. If the player has seen everything, the seen set is cleared.
+Question picking first filters by the room topic scope, then tries the target difficulty and avoids repeats for the player. If that pool is exhausted, it falls back to unseen questions from any difficulty inside the selected topics. If the player has seen everything in scope, the seen set is cleared.
 
 ## Matchmaking
 
-The queue stores connection ids. Each queued connection also stores `queued_duration_seconds`.
+The queue stores connection ids. Each queued connection also stores `queued_duration_seconds` and `queued_categories`.
 
 When a player joins matchmaking:
 
 1. The server validates the requested duration.
-2. The server scans the queue for the first active connection with the same duration.
-3. If found, it creates a matchmaking room with that duration.
-4. If not found, it queues the player under that duration.
+2. The server validates the requested topic scope.
+3. The server scans the queue for the first active connection with the same duration and same topic scope.
+4. If found, it creates a matchmaking room with that setup.
+5. If not found, it queues the player under that setup.
 
-This keeps expectations aligned for match length without adding profiles or ranking.
+This keeps expectations aligned for match length and battle type without adding profiles or ranking.
 
 ## Current-Game Review
 

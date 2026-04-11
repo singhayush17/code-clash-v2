@@ -1,6 +1,6 @@
 # Code Clash
 
-Code Clash is a profile-less 1v1 MCQ battle app for DSA, CN, OOPS, OS, System Design, Core CS, and aptitude prep. This version runs locally with a FastAPI server, WebSockets, an in-memory game loop, and an updateable 210-question JSON bank.
+Code Clash is a profile-less 1v1 MCQ battle app for DSA, CN, OOPS, OS, System Design, Core CS, and aptitude prep. This version runs locally with a FastAPI server, WebSockets, an in-memory game loop, and an updateable 300-question JSON bank.
 
 ## Live App
 
@@ -12,12 +12,14 @@ Code Clash is hosted on Render at [https://code-clash-3uwa.onrender.com/](https:
 - Invite links expire after 30 minutes while waiting.
 - Find a random online player through in-memory matchmaking.
 - Choose 30 seconds or 1 to 10 minutes for invite, matchmaking, or solo battles.
+- Choose a battle type: All topics, one topic, or a custom topic mix such as DSA + System Design.
 - Play solo with the same strict timed format.
 - Server-authoritative scoring: 1 point per correct answer, no negatives, no skips, highest score wins.
 - Review your own answered questions at the end of the current game, including your pick and the correct option. Reviews stay in memory only for the current room.
 - Random usernames and generated SVG avatars.
 - Adaptive questions: players start on easy questions and move toward medium/hard as they answer more and build score/streak.
-- 210 starter MCQs with 10 questions in every category/difficulty bucket.
+- 300 starter MCQs across all supported subjects, with balanced correct-answer positions across A, B, C, and D.
+- At least 42 questions are available in each supported subject.
 - No accounts, no profiles, no match history, no replaying old games.
 - Update questions by editing `data/questions.json` and reloading the bank.
 

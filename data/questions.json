@@ -4,8 +4,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Which data structure follows Last In, First Out order?",
-    "options": ["Stack", "Queue", "Hash table", "Binary tree"],
-    "answerIndex": 0,
+    "options": [
+      "Min-heap",
+      "Deque",
+      "Priority queue",
+      "Stack"
+    ],
+    "answerIndex": 3,
     "explanation": "A stack removes the most recently inserted item first."
   },
   {
@@ -13,8 +18,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Binary search requires the input array to be:",
-    "options": ["Circular", "Sorted", "Sparse", "Stored as a heap"],
-    "answerIndex": 1,
+    "options": [
+      "Quick sort partitioning",
+      "Merge sort",
+      "Heap sort",
+      "Sorted"
+    ],
+    "answerIndex": 3,
     "explanation": "Binary search discards half the search space using sorted order."
   },
   {
@@ -22,8 +32,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "What is the time complexity of reading arr[i] from a normal array?",
-    "options": ["O(1)", "O(log n)", "O(n)", "O(n log n)"],
-    "answerIndex": 0,
+    "options": [
+      "O(log n)",
+      "O(1)",
+      "O(n)",
+      "O(n log n)"
+    ],
+    "answerIndex": 1,
     "explanation": "Array indexing uses address arithmetic, so it is constant time."
   },
   {
@@ -31,8 +46,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "For finding whether a sorted array has two numbers that sum to X, which approach is usually O(n)?",
-    "options": ["Nested loops", "Two pointers", "Heap sort first", "Binary tree traversal"],
-    "answerIndex": 1,
+    "options": [
+      "O(1) amortized",
+      "O(V + E)",
+      "O(n log n)",
+      "Two pointers"
+    ],
+    "answerIndex": 3,
     "explanation": "One pointer starts at each end and moves inward based on the sum."
   },
   {
@@ -40,8 +60,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "Which structure is commonly used to keep the k largest elements seen so far in O(n log k)?",
-    "options": ["Min-heap of size k", "Stack of size k", "Trie of size k", "Adjacency matrix"],
-    "answerIndex": 0,
+    "options": [
+      "O(n log n)",
+      "O(n)",
+      "O(1) amortized",
+      "Min-heap of size k"
+    ],
+    "answerIndex": 3,
     "explanation": "A min-heap lets you evict the smallest of the current top k elements."
   },
   {
@@ -49,8 +74,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "Which graph algorithm gives shortest path lengths in an unweighted graph?",
-    "options": ["DFS", "BFS", "Kruskal", "Quickselect"],
-    "answerIndex": 1,
+    "options": [
+      "Union-find connectivity",
+      "DFS tree traversal",
+      "Bellman-Ford relaxation",
+      "BFS"
+    ],
+    "answerIndex": 3,
     "explanation": "BFS explores nodes by increasing edge distance in unweighted graphs."
   },
   {
@@ -58,8 +88,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "Dynamic programming is most useful when a problem has overlapping subproblems and:",
-    "options": ["Random pivots", "Optimal substructure", "Only prime inputs", "No base case"],
-    "answerIndex": 1,
+    "options": [
+      "Prefix-sum preprocessing",
+      "Memoized state transition",
+      "Optimal substructure",
+      "Backtracking over all states"
+    ],
+    "answerIndex": 2,
     "explanation": "Optimal substructure lets solutions combine results of smaller subproblems."
   },
   {
@@ -67,8 +102,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "Dijkstra's algorithm is correct for graphs whose edge weights are:",
-    "options": ["All non-negative", "All unique", "All negative", "All equal to one"],
-    "answerIndex": 0,
+    "options": [
+      "Kruskal minimum spanning tree",
+      "Topological sorting",
+      "Bellman-Ford relaxation",
+      "All non-negative"
+    ],
+    "answerIndex": 3,
     "explanation": "Negative edges can invalidate Dijkstra's greedy finalization step."
   },
   {
@@ -76,8 +116,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "Union-find with path compression and union by rank has which amortized behavior?",
-    "options": ["O(n) per operation", "O(log n) per operation", "Nearly constant inverse Ackermann time", "O(n log n) per operation"],
-    "answerIndex": 2,
+    "options": [
+      "Nearly constant inverse Ackermann time",
+      "O(1) amortized",
+      "O(V + E)",
+      "O(n log n)"
+    ],
+    "answerIndex": 0,
     "explanation": "The amortized bound is O(alpha(n)), which grows extremely slowly."
   },
   {
@@ -85,7 +130,12 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "DNS is mainly used to:",
-    "options": ["Encrypt packets", "Map domain names to IP addresses", "Schedule CPU threads", "Compress images"],
+    "options": [
+      "CIDR block sizing",
+      "Map domain names to IP addresses",
+      "MAC address resolution",
+      "Default gateway lookup"
+    ],
     "answerIndex": 1,
     "explanation": "DNS resolves human-readable names to network addresses."
   },
@@ -94,8 +144,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "Which protocol is connection-oriented?",
-    "options": ["UDP", "TCP", "IP", "ICMP"],
-    "answerIndex": 1,
+    "options": [
+      "Connection teardown with FIN",
+      "Congestion window growth",
+      "TCP",
+      "Flow control window update"
+    ],
+    "answerIndex": 2,
     "explanation": "TCP establishes a connection and provides ordered reliable delivery."
   },
   {
@@ -103,8 +158,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "HTTP status code 404 usually means:",
-    "options": ["Server error", "Unauthorized", "Not found", "Redirect"],
-    "answerIndex": 2,
+    "options": [
+      "Not found",
+      "502 bad gateway",
+      "301 permanent redirect",
+      "500 internal server error"
+    ],
+    "answerIndex": 0,
     "explanation": "404 indicates that the requested resource was not found."
   },
   {
@@ -112,8 +172,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "What is the correct order of TCP's three-way handshake?",
-    "options": ["ACK, SYN, SYN-ACK", "SYN, SYN-ACK, ACK", "SYN-ACK, SYN, ACK", "FIN, ACK, SYN"],
-    "answerIndex": 1,
+    "options": [
+      "Congestion window growth",
+      "Connection teardown with FIN",
+      "SYN, SYN-ACK, ACK",
+      "Flow control window update"
+    ],
+    "answerIndex": 2,
     "explanation": "The client sends SYN, the server replies SYN-ACK, then the client ACKs."
   },
   {
@@ -121,8 +186,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "An IPv4 /24 network contains how many total addresses?",
-    "options": ["24", "128", "256", "1024"],
-    "answerIndex": 2,
+    "options": [
+      "256",
+      "CIDR block sizing",
+      "Subnet prefix matching",
+      "Private IPv4 range"
+    ],
+    "answerIndex": 0,
     "explanation": "/24 leaves 8 host bits, so 2^8 total addresses exist."
   },
   {
@@ -130,8 +200,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "Which statement about UDP is true?",
-    "options": ["It guarantees in-order delivery", "It has a three-way handshake", "It is connectionless", "It retransmits lost packets automatically"],
-    "answerIndex": 2,
+    "options": [
+      "Flow control window update",
+      "It is connectionless",
+      "Duplicate ACK handling",
+      "Retransmission timeout"
+    ],
+    "answerIndex": 1,
     "explanation": "UDP sends datagrams without connection setup or built-in reliability."
   },
   {
@@ -139,8 +214,13 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "During TCP slow start, the congestion window typically grows:",
-    "options": ["Linearly per RTT", "Exponentially per RTT until a threshold", "Only when packets are lost", "To exactly one segment"],
-    "answerIndex": 1,
+    "options": [
+      "Flow control window update",
+      "Congestion window growth",
+      "Exponentially per RTT until a threshold",
+      "Retransmission timeout"
+    ],
+    "answerIndex": 2,
     "explanation": "Slow start increases cwnd rapidly until congestion avoidance begins."
   },
   {
@@ -148,8 +228,13 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "NAT commonly works by rewriting and tracking:",
-    "options": ["Only MAC addresses", "Private/public IP and port mappings", "HTML headers", "Disk block numbers"],
-    "answerIndex": 1,
+    "options": [
+      "Private IPv4 range",
+      "MAC address resolution",
+      "Private/public IP and port mappings",
+      "Default gateway lookup"
+    ],
+    "answerIndex": 2,
     "explanation": "NAT maps internal address-port tuples to externally visible tuples."
   },
   {
@@ -157,8 +242,13 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "A TLS handshake primarily establishes:",
-    "options": ["A shared secret and negotiated security parameters", "A database transaction", "A CPU scheduling policy", "A DNS zone file"],
-    "answerIndex": 0,
+    "options": [
+      "Flow control window update",
+      "Checksum validation",
+      "A shared secret and negotiated security parameters",
+      "Connection teardown with FIN"
+    ],
+    "answerIndex": 2,
     "explanation": "TLS negotiation authenticates as configured and derives keys for encrypted traffic."
   },
   {
@@ -166,7 +256,12 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "In object-oriented programming, a class is best described as:",
-    "options": ["A blueprint for objects", "A running process", "A network packet", "A SQL index"],
+    "options": [
+      "A blueprint for objects",
+      "Runtime polymorphism",
+      "Aggregation",
+      "Composition"
+    ],
     "answerIndex": 0,
     "explanation": "A class defines the data and behavior that its objects can have."
   },
@@ -175,8 +270,13 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "Encapsulation mainly means:",
-    "options": ["Sorting data", "Bundling data with methods and controlling access", "Running code in parallel", "Deleting unused objects"],
-    "answerIndex": 1,
+    "options": [
+      "Bundling data with methods and controlling access",
+      "Encapsulation",
+      "Method overloading",
+      "Composition"
+    ],
+    "answerIndex": 0,
     "explanation": "Encapsulation keeps state and behavior together behind a controlled interface."
   },
   {
@@ -184,8 +284,13 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "Inheritance models which relationship?",
-    "options": ["is-a", "has-a", "runs-on", "points-to"],
-    "answerIndex": 0,
+    "options": [
+      "has-a",
+      "is-a",
+      "uses-a",
+      "part-of"
+    ],
+    "answerIndex": 1,
     "explanation": "A subclass is a specialized form of its superclass."
   },
   {
@@ -193,8 +298,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "Runtime polymorphism in Java is commonly achieved through:",
-    "options": ["Method overriding", "Variable shadowing", "Static blocks", "Package imports"],
-    "answerIndex": 0,
+    "options": [
+      "Abstract class member",
+      "Static dispatch",
+      "Method overriding",
+      "Final method restriction"
+    ],
+    "answerIndex": 2,
     "explanation": "Overridden methods are dispatched based on the runtime object type."
   },
   {
@@ -202,8 +312,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "An interface is mainly used to define:",
-    "options": ["A contract of behavior", "A database table", "A process id", "A heap segment"],
-    "answerIndex": 0,
+    "options": [
+      "Abstract class member",
+      "A contract of behavior",
+      "Method overriding",
+      "Final method restriction"
+    ],
+    "answerIndex": 1,
     "explanation": "Interfaces specify what operations an implementing type must provide."
   },
   {
@@ -211,8 +326,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "Composition usually represents which relationship?",
-    "options": ["is-a", "has-a", "less-than", "connects-to"],
-    "answerIndex": 1,
+    "options": [
+      "has-a",
+      "is-a",
+      "uses-a",
+      "depends-on"
+    ],
+    "answerIndex": 0,
     "explanation": "Composition builds a type from objects it owns or uses."
   },
   {
@@ -220,8 +340,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "The Liskov Substitution Principle says that:",
-    "options": ["Subtypes should be usable wherever base types are expected", "Every class must be final", "All methods must be static", "Inheritance should never be used"],
-    "answerIndex": 0,
+    "options": [
+      "Liskov Substitution Principle",
+      "Open-Closed Principle",
+      "Subtypes should be usable wherever base types are expected",
+      "Interface Segregation Principle"
+    ],
+    "answerIndex": 2,
     "explanation": "A subtype should preserve the behavioral expectations of its base type."
   },
   {
@@ -229,8 +354,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "The diamond problem is most closely related to:",
-    "options": ["Multiple inheritance ambiguity", "Garbage collection pauses", "Hash collisions", "TCP retransmission"],
-    "answerIndex": 0,
+    "options": [
+      "Abstraction",
+      "Runtime polymorphism",
+      "Multiple inheritance ambiguity",
+      "Aggregation"
+    ],
+    "answerIndex": 2,
     "explanation": "Two parent paths can provide conflicting inherited members."
   },
   {
@@ -238,8 +368,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "Why are immutable objects often easier to share across threads?",
-    "options": ["Their state cannot change after construction", "They always use less memory", "They bypass constructors", "They disable type checking"],
-    "answerIndex": 0,
+    "options": [
+      "Aggregation",
+      "Their state cannot change after construction",
+      "Runtime polymorphism",
+      "Inheritance"
+    ],
+    "answerIndex": 1,
     "explanation": "No thread can observe a partial or unexpected mutation."
   },
   {
@@ -247,8 +382,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "A process differs from a thread mainly because a process has:",
-    "options": ["Its own address space", "No CPU state", "No memory", "Only one instruction"],
-    "answerIndex": 0,
+    "options": [
+      "Kernel mode transition",
+      "Its own address space",
+      "Device driver request",
+      "Process control block"
+    ],
+    "answerIndex": 1,
     "explanation": "Threads in the same process share the process address space."
   },
   {
@@ -256,8 +396,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "Deadlock requires processes to be:",
-    "options": ["Waiting forever for resources in a cycle", "Always running on separate CPUs", "Using only read-only memory", "Sorted by priority"],
-    "answerIndex": 0,
+    "options": [
+      "Reader-writer lock",
+      "Deadlock avoidance",
+      "Waiting forever for resources in a cycle",
+      "Critical section"
+    ],
+    "answerIndex": 2,
     "explanation": "Circular waiting is one of the classic deadlock conditions."
   },
   {
@@ -265,8 +410,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "Virtual memory helps programs use:",
-    "options": ["Only CPU registers", "A larger logical address space than physical RAM alone", "No storage", "Only kernel memory"],
-    "answerIndex": 1,
+    "options": [
+      "A larger logical address space than physical RAM alone",
+      "Page table entry",
+      "Page fault handling",
+      "Dirty page write-back"
+    ],
+    "answerIndex": 0,
     "explanation": "Virtual memory maps virtual addresses to physical frames or disk-backed pages."
   },
   {
@@ -274,7 +424,12 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "A semaphore is commonly used for:",
-    "options": ["Synchronization between threads or processes", "Compiling code", "Routing packets", "Balancing binary trees"],
+    "options": [
+      "Synchronization between threads or processes",
+      "Mutex lock",
+      "Race condition",
+      "Reader-writer lock"
+    ],
     "answerIndex": 0,
     "explanation": "Semaphores coordinate access to shared resources."
   },
@@ -283,8 +438,13 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "A context switch involves saving and restoring:",
-    "options": ["Process or thread execution state", "Only source code", "Only DNS cache", "Only HTML files"],
-    "answerIndex": 0,
+    "options": [
+      "Process control block",
+      "Kernel mode transition",
+      "System call boundary",
+      "Process or thread execution state"
+    ],
+    "answerIndex": 3,
     "explanation": "The OS stores CPU state for one task and restores another."
   },
   {
@@ -292,7 +452,12 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "In paging, a page table maps:",
-    "options": ["Virtual pages to physical frames", "HTTP routes to handlers", "Classes to objects", "Packets to ports only"],
+    "options": [
+      "Virtual pages to physical frames",
+      "Copy-on-write page sharing",
+      "Working set tracking",
+      "Page fault handling"
+    ],
     "answerIndex": 0,
     "explanation": "Page tables translate virtual page numbers into physical frame numbers."
   },
@@ -301,8 +466,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "Thrashing occurs when the system spends excessive time:",
-    "options": ["Switching pages in and out of memory", "Parsing JSON", "Drawing pixels", "Resolving DNS once"],
-    "answerIndex": 0,
+    "options": [
+      "Dirty page write-back",
+      "Switching pages in and out of memory",
+      "TLB lookup",
+      "Copy-on-write page sharing"
+    ],
+    "answerIndex": 1,
     "explanation": "Too many page faults can dominate actual useful computation."
   },
   {
@@ -310,8 +480,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "Copy-on-write after fork means memory pages are copied:",
-    "options": ["Immediately for every page", "Only when a shared page is modified", "Only when the process exits", "Never, under any condition"],
-    "answerIndex": 1,
+    "options": [
+      "Working set tracking",
+      "Copy-on-write page sharing",
+      "Only when a shared page is modified",
+      "Page table entry"
+    ],
+    "answerIndex": 2,
     "explanation": "Parent and child share pages until one writes to them."
   },
   {
@@ -319,8 +494,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "Starvation differs from deadlock because starvation means:",
-    "options": ["A task waits indefinitely while others keep making progress", "All tasks are permanently blocked in a cycle", "No scheduler exists", "Only one task exists"],
-    "answerIndex": 0,
+    "options": [
+      "Reader-writer lock",
+      "A task waits indefinitely while others keep making progress",
+      "Counting semaphore",
+      "Deadlock avoidance"
+    ],
+    "answerIndex": 1,
     "explanation": "In starvation, the system can still progress, but one task is repeatedly denied service."
   },
   {
@@ -328,8 +508,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "A load balancer is mainly used to:",
-    "options": ["Distribute traffic across servers", "Encrypt passwords at rest", "Compile frontend assets", "Replace all databases"],
-    "answerIndex": 0,
+    "options": [
+      "Partitioned workload",
+      "Distribute traffic across servers",
+      "Load balancing",
+      "Autoscaling policy"
+    ],
+    "answerIndex": 1,
     "explanation": "Load balancers spread requests across healthy backend instances."
   },
   {
@@ -337,8 +522,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "A cache is useful because it can:",
-    "options": ["Serve frequently requested data faster", "Guarantee zero bugs", "Remove the need for APIs", "Prevent all network failures"],
-    "answerIndex": 0,
+    "options": [
+      "Cache-aside lookup",
+      "Serve frequently requested data faster",
+      "Write-through cache",
+      "Consistent hashing"
+    ],
+    "answerIndex": 1,
     "explanation": "Caching avoids repeating expensive work or slow reads."
   },
   {
@@ -346,8 +536,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "Horizontal scaling means adding more:",
-    "options": ["Machines or instances", "CPU registers to one core", "Columns to every table", "Tabs to the browser"],
-    "answerIndex": 0,
+    "options": [
+      "Read replica routing",
+      "Partitioned workload",
+      "Machines or instances",
+      "Vertical scaling"
+    ],
+    "answerIndex": 2,
     "explanation": "Horizontal scaling increases capacity by adding more nodes."
   },
   {
@@ -355,8 +550,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "Consistent hashing is often used to reduce remapping when:",
-    "options": ["Cache nodes are added or removed", "A password is typed", "A loop is compiled", "A UI button is clicked"],
-    "answerIndex": 0,
+    "options": [
+      "Consistent hashing",
+      "Write-through cache",
+      "Cache nodes are added or removed",
+      "Read-through cache"
+    ],
+    "answerIndex": 2,
     "explanation": "It limits how many keys move when the node set changes."
   },
   {
@@ -364,8 +564,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "An idempotent API request can be safely:",
-    "options": ["Retried without changing the result beyond the first success", "Run only once per server lifetime", "Used without authentication always", "Stored only in RAM"],
-    "answerIndex": 0,
+    "options": [
+      "Connection pool reuse",
+      "Retried without changing the result beyond the first success",
+      "SLA target tracking",
+      "Rate limiter bucket"
+    ],
+    "answerIndex": 1,
     "explanation": "Idempotency makes retries safer after timeouts or network failures."
   },
   {
@@ -373,7 +578,12 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "A token bucket rate limiter allows:",
-    "options": ["Controlled bursts up to available tokens", "Unlimited requests forever", "Only one request per day", "No requests during idle periods"],
+    "options": [
+      "Controlled bursts up to available tokens",
+      "Health check probing",
+      "API gateway routing",
+      "SLA target tracking"
+    ],
     "answerIndex": 0,
     "explanation": "Tokens accumulate over time and are spent by requests."
   },
@@ -382,8 +592,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "In a replicated database, a write quorum is used to balance consistency with:",
-    "options": ["Availability and latency", "CSS specificity", "CPU instruction width", "Image compression"],
-    "answerIndex": 0,
+    "options": [
+      "Consensus log replication",
+      "Quorum read/write",
+      "Availability and latency",
+      "Leader election"
+    ],
+    "answerIndex": 2,
     "explanation": "Quorums trade stricter agreement against response time and availability."
   },
   {
@@ -391,8 +606,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "Backpressure is important because it:",
-    "options": ["Prevents fast producers from overwhelming slower consumers", "Makes all messages smaller", "Eliminates persistence", "Forces every request to be synchronous"],
-    "answerIndex": 0,
+    "options": [
+      "Message deduplication",
+      "Fan-out on write",
+      "Dead-letter queue",
+      "Prevents fast producers from overwhelming slower consumers"
+    ],
+    "answerIndex": 3,
     "explanation": "Backpressure lets systems slow intake before queues or memory explode."
   },
   {
@@ -400,8 +620,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "CAP theorem becomes relevant when a distributed system faces:",
-    "options": ["A network partition", "A syntax error", "A browser refresh", "A local cache hit"],
-    "answerIndex": 0,
+    "options": [
+      "Idempotent retry handling",
+      "Consensus log replication",
+      "Leader election",
+      "A network partition"
+    ],
+    "answerIndex": 3,
     "explanation": "CAP discusses tradeoffs among consistency and availability under partition."
   },
   {
@@ -409,8 +634,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "In Boolean logic, A AND B is true when:",
-    "options": ["Both A and B are true", "Only A is false", "Exactly one input is true", "Both inputs are false"],
-    "answerIndex": 0,
+    "options": [
+      "Little-endian byte order",
+      "Two's-complement range",
+      "Boolean conjunction",
+      "Both A and B are true"
+    ],
+    "answerIndex": 3,
     "explanation": "AND requires all operands to be true."
   },
   {
@@ -418,8 +648,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "How many bits are in one byte?",
-    "options": ["4", "8", "16", "32"],
-    "answerIndex": 1,
+    "options": [
+      "Floating-point rounding",
+      "Two's-complement range",
+      "Boolean conjunction",
+      "8"
+    ],
+    "answerIndex": 3,
     "explanation": "A byte is conventionally 8 bits."
   },
   {
@@ -427,7 +662,12 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "A compiler generally translates source code into:",
-    "options": ["Another executable or lower-level representation", "A network cable", "A CPU fan", "A database password"],
+    "options": [
+      "Another executable or lower-level representation",
+      "Parsing syntax tree",
+      "Semantic analysis",
+      "Lexical analysis tokens"
+    ],
     "answerIndex": 0,
     "explanation": "Compilers transform programs before execution."
   },
@@ -436,8 +676,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "A hash collision occurs when:",
-    "options": ["Two different keys map to the same hash bucket", "A stack is empty", "A packet is encrypted", "A thread sleeps"],
-    "answerIndex": 0,
+    "options": [
+      "MVCC version chain",
+      "Two different keys map to the same hash bucket",
+      "Primary key constraint",
+      "Hash index collision"
+    ],
+    "answerIndex": 1,
     "explanation": "Hash tables need collision handling because hashes are finite."
   },
   {
@@ -445,8 +690,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "A stateless REST service stores client session state primarily:",
-    "options": ["On the server between requests", "In each request or external storage, not in server memory", "Only in CPU cache", "Inside DNS records"],
-    "answerIndex": 1,
+    "options": [
+      "API contract versioning",
+      "JSON object structure",
+      "Git commit history",
+      "In each request or external storage, not in server memory"
+    ],
+    "answerIndex": 3,
     "explanation": "Stateless services do not depend on per-client memory in one server process."
   },
   {
@@ -454,7 +704,12 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "Database normalization mainly reduces:",
-    "options": ["Data redundancy and update anomalies", "Network bandwidth only", "CPU clock speed", "The number of users"],
+    "options": [
+      "Data redundancy and update anomalies",
+      "Serializable isolation",
+      "Foreign key constraint",
+      "Primary key constraint"
+    ],
     "answerIndex": 0,
     "explanation": "Normalization organizes data to avoid duplicate facts and inconsistent updates."
   },
@@ -463,8 +718,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "Serializable isolation means concurrent transactions behave as if:",
-    "options": ["They ran in some sequential order", "They never write data", "They skipped logging", "They all failed"],
-    "answerIndex": 0,
+    "options": [
+      "Foreign key constraint",
+      "Primary key constraint",
+      "They ran in some sequential order",
+      "MVCC version chain"
+    ],
+    "answerIndex": 2,
     "explanation": "Serializable schedules are equivalent to a serial execution of transactions."
   },
   {
@@ -472,8 +732,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "A Bloom filter can have:",
-    "options": ["False positives but no false negatives for inserted items", "False negatives but no false positives", "Only exact answers", "No hash functions"],
-    "answerIndex": 0,
+    "options": [
+      "Consensus majority commit",
+      "CAP partition tradeoff",
+      "Hash load factor",
+      "False positives but no false negatives for inserted items"
+    ],
+    "answerIndex": 3,
     "explanation": "Bloom filters may say an absent item is present, but inserted items are not missed."
   },
   {
@@ -481,7 +746,12 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "In leader-based consensus, the leader typically coordinates:",
-    "options": ["Replication of agreed log entries", "CSS rendering only", "Local variable names", "Keyboard input speed"],
+    "options": [
+      "Replication of agreed log entries",
+      "Hash load factor",
+      "CAP partition tradeoff",
+      "Consensus majority commit"
+    ],
     "answerIndex": 0,
     "explanation": "Consensus systems use a leader to order and replicate committed operations."
   },
@@ -490,8 +760,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "What is 20% of 150?",
-    "options": ["15", "20", "30", "45"],
-    "answerIndex": 2,
+    "options": [
+      "15",
+      "30",
+      "45",
+      "20"
+    ],
+    "answerIndex": 1,
     "explanation": "20 percent of 150 is 0.2 x 150 = 30."
   },
   {
@@ -499,7 +774,12 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "The average of 4, 8, and 12 is:",
-    "options": ["6", "8", "10", "12"],
+    "options": [
+      "10",
+      "8",
+      "12",
+      "6"
+    ],
     "answerIndex": 1,
     "explanation": "(4 + 8 + 12) / 3 = 8."
   },
@@ -508,8 +788,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "If the ratio of A:B is 2:3 and A is 10, what is B?",
-    "options": ["12", "15", "20", "25"],
-    "answerIndex": 1,
+    "options": [
+      "20",
+      "25",
+      "12",
+      "15"
+    ],
+    "answerIndex": 3,
     "explanation": "Each part is 5, so B has 3 parts = 15."
   },
   {
@@ -517,8 +802,13 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "A can finish a task in 6 days and B in 12 days. Together they finish it in:",
-    "options": ["3 days", "4 days", "6 days", "18 days"],
-    "answerIndex": 1,
+    "options": [
+      "4 days",
+      "6 days",
+      "18 days",
+      "3 days"
+    ],
+    "answerIndex": 0,
     "explanation": "Their combined rate is 1/6 + 1/12 = 1/4 task per day."
   },
   {
@@ -526,8 +816,13 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "A fair coin is tossed twice. Probability of exactly one head is:",
-    "options": ["1/4", "1/2", "3/4", "1"],
-    "answerIndex": 1,
+    "options": [
+      "1/2",
+      "1",
+      "3/4",
+      "1/4"
+    ],
+    "answerIndex": 0,
     "explanation": "The favorable outcomes are HT and TH out of four equally likely outcomes."
   },
   {
@@ -535,8 +830,13 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "How many ways can 3 different books be arranged on a shelf?",
-    "options": ["3", "6", "9", "12"],
-    "answerIndex": 1,
+    "options": [
+      "6",
+      "3",
+      "12",
+      "9"
+    ],
+    "answerIndex": 0,
     "explanation": "3! = 6 arrangements."
   },
   {
@@ -544,7 +844,12 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "A price increases by 20% and then decreases by 20%. The final price is:",
-    "options": ["Same as original", "4% lower", "4% higher", "20% lower"],
+    "options": [
+      "4% higher",
+      "4% lower",
+      "20% lower",
+      "Same as original"
+    ],
     "answerIndex": 1,
     "explanation": "1.2 x 0.8 = 0.96, so the final price is 4% lower."
   },
@@ -553,8 +858,13 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "If x + 1/x = 5, then x^2 + 1/x^2 equals:",
-    "options": ["23", "24", "25", "27"],
-    "answerIndex": 0,
+    "options": [
+      "25",
+      "23",
+      "27",
+      "24"
+    ],
+    "answerIndex": 1,
     "explanation": "Square both sides: x^2 + 2 + 1/x^2 = 25, so the answer is 23."
   },
   {
@@ -562,8 +872,13 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "A train 120 m long crosses a pole in 6 seconds. Its speed is:",
-    "options": ["54 km/h", "60 km/h", "72 km/h", "80 km/h"],
-    "answerIndex": 2,
+    "options": [
+      "72 km/h",
+      "54 km/h",
+      "80 km/h",
+      "60 km/h"
+    ],
+    "answerIndex": 0,
     "explanation": "Speed is 120/6 = 20 m/s, which is 72 km/h."
   },
   {
@@ -571,8 +886,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "A linked list node usually stores data and:",
-    "options": ["A reference to another node", "A SQL query", "A CPU register only", "A DNS record"],
-    "answerIndex": 0,
+    "options": [
+      "Deque",
+      "Doubly linked list",
+      "A reference to another node",
+      "Priority queue"
+    ],
+    "answerIndex": 2,
     "explanation": "A linked list node stores a value and one or more links to other nodes."
   },
   {
@@ -580,8 +900,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Which data structure follows First In, First Out order?",
-    "options": ["Stack", "Queue", "Trie", "Heap"],
-    "answerIndex": 1,
+    "options": [
+      "Queue",
+      "Stack",
+      "Deque",
+      "Circular buffer"
+    ],
+    "answerIndex": 0,
     "explanation": "A queue removes the item that was inserted earliest."
   },
   {
@@ -589,8 +914,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Average-case lookup in a well-designed hash table is usually:",
-    "options": ["O(1)", "O(log n)", "O(n)", "O(n^2)"],
-    "answerIndex": 0,
+    "options": [
+      "O(log n)",
+      "O(n)",
+      "O(n log n)",
+      "O(1)"
+    ],
+    "answerIndex": 3,
     "explanation": "With a good hash function and resizing, expected lookup is constant time."
   },
   {
@@ -598,8 +928,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Breadth-first search commonly uses which data structure?",
-    "options": ["Queue", "Stack", "Min-heap", "Hash set only"],
-    "answerIndex": 0,
+    "options": [
+      "Doubly linked list",
+      "Trie",
+      "Queue",
+      "Balanced BST"
+    ],
+    "answerIndex": 2,
     "explanation": "BFS processes nodes layer by layer using a queue."
   },
   {
@@ -607,8 +942,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Recursive depth-first search relies on which implicit structure?",
-    "options": ["Call stack", "Priority queue", "Hash table", "Circular buffer"],
-    "answerIndex": 0,
+    "options": [
+      "Priority queue",
+      "Min-heap",
+      "Call stack",
+      "Hash map"
+    ],
+    "answerIndex": 2,
     "explanation": "Recursive calls are stored on the call stack."
   },
   {
@@ -616,7 +956,12 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "In a min-heap, the root element is:",
-    "options": ["The smallest element", "The largest element", "Always zero", "Always the newest element"],
+    "options": [
+      "The smallest element",
+      "Trie",
+      "Queue",
+      "Hash map"
+    ],
     "answerIndex": 0,
     "explanation": "A min-heap keeps the minimum value at the root."
   },
@@ -625,8 +970,13 @@
     "category": "DSA",
     "difficulty": "easy",
     "prompt": "Which sorting algorithm is commonly taught with O(n^2) worst-case time?",
-    "options": ["Bubble sort", "Merge sort", "Counting sort", "Radix sort"],
-    "answerIndex": 0,
+    "options": [
+      "O(n log n)",
+      "O(V + E)",
+      "O(n^2)",
+      "Bubble sort"
+    ],
+    "answerIndex": 3,
     "explanation": "Bubble sort repeatedly swaps adjacent elements and can take quadratic time."
   },
   {
@@ -634,8 +984,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "Prefix sums are most useful for answering repeated:",
-    "options": ["Range sum queries", "Graph coloring queries", "Heap deletion queries", "String encryption queries"],
-    "answerIndex": 0,
+    "options": [
+      "Binary search on answer",
+      "Two pointers",
+      "Range sum queries",
+      "Prefix sums"
+    ],
+    "answerIndex": 2,
     "explanation": "After preprocessing, many subarray sum queries can be answered quickly."
   },
   {
@@ -643,7 +998,12 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "The sliding window technique is usually applied to:",
-    "options": ["Contiguous subarrays or substrings", "Random graph edges", "Only binary trees", "Only sorted linked lists"],
+    "options": [
+      "Contiguous subarrays or substrings",
+      "Binary search on answer",
+      "Prefix sums",
+      "Sliding window"
+    ],
     "answerIndex": 0,
     "explanation": "Sliding windows maintain information about a moving contiguous region."
   },
@@ -652,8 +1012,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "Topological sorting applies to which kind of graph?",
-    "options": ["Directed acyclic graph", "Undirected complete graph", "Weighted cyclic graph only", "Disconnected tree only"],
-    "answerIndex": 0,
+    "options": [
+      "Topological sorting",
+      "Union-find connectivity",
+      "Kruskal minimum spanning tree",
+      "Directed acyclic graph"
+    ],
+    "answerIndex": 3,
     "explanation": "A topological order exists only when directed dependencies have no cycle."
   },
   {
@@ -661,8 +1026,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "Standard merge sort usually requires extra space of:",
-    "options": ["O(n)", "O(1)", "O(log log n)", "O(n^2)"],
-    "answerIndex": 0,
+    "options": [
+      "O(n^2)",
+      "O(n)",
+      "O(V + E)",
+      "O(1) amortized"
+    ],
+    "answerIndex": 1,
     "explanation": "Merge sort typically uses auxiliary arrays while merging."
   },
   {
@@ -670,8 +1040,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "A trie is especially useful for:",
-    "options": ["Prefix-based string lookup", "CPU scheduling", "Matrix multiplication only", "Finding shortest paths in weighted graphs"],
-    "answerIndex": 0,
+    "options": [
+      "Queue",
+      "Hash map",
+      "Trie",
+      "Prefix-based string lookup"
+    ],
+    "answerIndex": 3,
     "explanation": "Trie edges represent characters, making prefix queries natural."
   },
   {
@@ -679,8 +1054,13 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "Search in a balanced binary search tree is usually:",
-    "options": ["O(log n)", "O(1) always", "O(n^2)", "O(n!)"],
-    "answerIndex": 0,
+    "options": [
+      "O(n^2)",
+      "O(log k)",
+      "O(log n)",
+      "O(V + E)"
+    ],
+    "answerIndex": 2,
     "explanation": "Balancing keeps the tree height logarithmic."
   },
   {
@@ -688,7 +1068,12 @@
     "category": "DSA",
     "difficulty": "medium",
     "prompt": "An efficient LRU cache is commonly built with a hash map and:",
-    "options": ["Doubly linked list", "Adjacency matrix", "Binary search only", "Recursive stack only"],
+    "options": [
+      "Doubly linked list",
+      "Queue",
+      "Hash map",
+      "Deque"
+    ],
     "answerIndex": 0,
     "explanation": "The hash map finds nodes quickly and the list updates recency quickly."
   },
@@ -697,8 +1082,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "Which shortest-path algorithm can handle negative edge weights if there is no negative cycle?",
-    "options": ["Bellman-Ford", "Dijkstra only", "Kruskal", "Prim"],
-    "answerIndex": 0,
+    "options": [
+      "Two pointers",
+      "Bellman-Ford",
+      "Binary search on answer",
+      "Monotonic stack"
+    ],
+    "answerIndex": 1,
     "explanation": "Bellman-Ford relaxes edges repeatedly and can detect negative cycles."
   },
   {
@@ -706,7 +1096,12 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "KMP string matching avoids repeated comparisons by using:",
-    "options": ["The longest prefix-suffix table", "A min-heap", "A random pivot", "A page table"],
+    "options": [
+      "The longest prefix-suffix table",
+      "Monotonic stack",
+      "Two pointers",
+      "Sliding window"
+    ],
     "answerIndex": 0,
     "explanation": "The LPS table tells the matcher how far to shift after a mismatch."
   },
@@ -715,8 +1110,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "A segment tree usually answers range queries and point updates in:",
-    "options": ["O(log n)", "O(1) always", "O(n^2)", "O(n!)"],
-    "answerIndex": 0,
+    "options": [
+      "O(n)",
+      "O(1) amortized",
+      "O(n log n)",
+      "O(log n)"
+    ],
+    "answerIndex": 3,
     "explanation": "A segment tree has logarithmic height."
   },
   {
@@ -724,7 +1124,12 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "Tarjan's algorithm is commonly used to find:",
-    "options": ["Strongly connected components", "Median of two arrays only", "Minimum heap root", "HTTP routes"],
+    "options": [
+      "Strongly connected components",
+      "Union-find connectivity",
+      "Bellman-Ford relaxation",
+      "Kruskal minimum spanning tree"
+    ],
     "answerIndex": 0,
     "explanation": "Tarjan's DFS tracks low-link values to identify SCCs."
   },
@@ -733,8 +1138,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "In classic 0/1 knapsack DP, a common state is based on item index and:",
-    "options": ["Remaining capacity", "DNS TTL", "TCP port", "Tree color only"],
-    "answerIndex": 0,
+    "options": [
+      "Memoized state transition",
+      "Remaining capacity",
+      "Backtracking over all states",
+      "Prefix-sum preprocessing"
+    ],
+    "answerIndex": 1,
     "explanation": "The choice for each item depends on capacity left."
   },
   {
@@ -742,8 +1152,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "Floyd-Warshall is used for:",
-    "options": ["All-pairs shortest paths", "Single hash lookup", "Queue reversal only", "Finding CPU idle time"],
-    "answerIndex": 0,
+    "options": [
+      "Monotonic stack",
+      "All-pairs shortest paths",
+      "Two pointers",
+      "Hashing with collision handling"
+    ],
+    "answerIndex": 1,
     "explanation": "It computes shortest paths between every pair of vertices in O(V^3)."
   },
   {
@@ -751,8 +1166,13 @@
     "category": "DSA",
     "difficulty": "hard",
     "prompt": "A monotonic stack can solve next greater element problems in:",
-    "options": ["O(n)", "O(n^2) always", "O(log n)", "O(1) total"],
-    "answerIndex": 0,
+    "options": [
+      "O(1) amortized",
+      "O(log n)",
+      "O(V + E)",
+      "O(n)"
+    ],
+    "answerIndex": 3,
     "explanation": "Each element is pushed and popped at most once."
   },
   {
@@ -760,8 +1180,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "An IP address is primarily used to identify:",
-    "options": ["A host or network interface", "A Java class", "A disk sector", "A sorting algorithm"],
-    "answerIndex": 0,
+    "options": [
+      "CIDR block sizing",
+      "Default gateway lookup",
+      "A host or network interface",
+      "NAT port mapping"
+    ],
+    "answerIndex": 2,
     "explanation": "IP addresses locate devices or interfaces on IP networks."
   },
   {
@@ -769,8 +1194,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "HTTPS is HTTP combined with:",
-    "options": ["TLS encryption", "CPU scheduling", "File compression only", "ARP only"],
-    "answerIndex": 0,
+    "options": [
+      "Session key negotiation",
+      "Certificate chain validation",
+      "Replay protection",
+      "TLS encryption"
+    ],
+    "answerIndex": 3,
     "explanation": "HTTPS uses TLS to protect HTTP traffic."
   },
   {
@@ -778,7 +1208,12 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "A MAC address belongs to which layer conceptually?",
-    "options": ["Data link layer", "Application layer", "Presentation layer only", "Session layer only"],
+    "options": [
+      "Data link layer",
+      "Private IPv4 range",
+      "CIDR block sizing",
+      "Default gateway lookup"
+    ],
     "answerIndex": 0,
     "explanation": "MAC addresses are used for local network frame delivery."
   },
@@ -787,8 +1222,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "A router is mainly responsible for:",
-    "options": ["Forwarding packets between networks", "Compiling source code", "Allocating heap objects", "Normalizing databases"],
-    "answerIndex": 0,
+    "options": [
+      "TCP",
+      "ICMP",
+      "HTTP",
+      "Forwarding packets between networks"
+    ],
+    "answerIndex": 3,
     "explanation": "Routers decide where packets should go next."
   },
   {
@@ -796,8 +1236,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "A port number helps identify:",
-    "options": ["An application or service on a host", "A monitor cable only", "A file extension", "A CPU core temperature"],
-    "answerIndex": 0,
+    "options": [
+      "ICMP",
+      "UDP",
+      "DHCP",
+      "An application or service on a host"
+    ],
+    "answerIndex": 3,
     "explanation": "Transport protocols use ports to route data to the right process."
   },
   {
@@ -805,8 +1250,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "LAN stands for:",
-    "options": ["Local Area Network", "Logical Array Node", "Large Access Number", "Linked Application Namespace"],
-    "answerIndex": 0,
+    "options": [
+      "ARP",
+      "TCP",
+      "Local Area Network",
+      "ICMP"
+    ],
+    "answerIndex": 2,
     "explanation": "A LAN connects devices in a limited local area."
   },
   {
@@ -814,8 +1264,13 @@
     "category": "CN",
     "difficulty": "easy",
     "prompt": "The ping command commonly uses:",
-    "options": ["ICMP", "SMTP", "SQL", "SSH keys only"],
-    "answerIndex": 0,
+    "options": [
+      "SMTP",
+      "ICMP",
+      "HTTP",
+      "TCP"
+    ],
+    "answerIndex": 1,
     "explanation": "Ping sends ICMP echo requests and receives echo replies."
   },
   {
@@ -823,8 +1278,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "TCP flow control is mainly based on:",
-    "options": ["The receiver's advertised window", "The sender's screen size", "DNS recursion depth", "The number of routers only"],
-    "answerIndex": 0,
+    "options": [
+      "Congestion window growth",
+      "The receiver's advertised window",
+      "Retransmission timeout",
+      "Connection teardown with FIN"
+    ],
+    "answerIndex": 1,
     "explanation": "The receiver window tells the sender how much data can be accepted."
   },
   {
@@ -832,8 +1292,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "DHCP is used to:",
-    "options": ["Assign IP configuration automatically", "Encrypt web pages", "Sort packets by size", "Detect deadlocks"],
-    "answerIndex": 0,
+    "options": [
+      "NAT port mapping",
+      "Assign IP configuration automatically",
+      "Subnet prefix matching",
+      "MAC address resolution"
+    ],
+    "answerIndex": 1,
     "explanation": "DHCP can provide IP address, gateway, DNS, and lease information."
   },
   {
@@ -841,7 +1306,12 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "ARP maps an IPv4 address to:",
-    "options": ["A MAC address", "A Java object", "A database row", "A process priority"],
+    "options": [
+      "A MAC address",
+      "NAT port mapping",
+      "Subnet prefix matching",
+      "MAC address resolution"
+    ],
     "answerIndex": 0,
     "explanation": "ARP resolves local IPv4 addresses to link-layer addresses."
   },
@@ -850,7 +1320,12 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "An HTTP GET request should normally be:",
-    "options": ["Safe and used for retrieval", "Used to delete resources by default", "A TCP handshake step", "A database index"],
+    "options": [
+      "Safe and used for retrieval",
+      "502 bad gateway",
+      "500 internal server error",
+      "404 not found"
+    ],
     "answerIndex": 0,
     "explanation": "GET is intended to retrieve a representation without changing server state."
   },
@@ -859,8 +1334,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "A CDN improves latency by:",
-    "options": ["Serving content from locations closer to users", "Making CPUs run faster", "Disabling TLS", "Removing all caches"],
-    "answerIndex": 0,
+    "options": [
+      "FTP",
+      "SMTP",
+      "ARP",
+      "Serving content from locations closer to users"
+    ],
+    "answerIndex": 3,
     "explanation": "CDNs place cached content near users at edge locations."
   },
   {
@@ -868,8 +1348,13 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "MTU refers to:",
-    "options": ["Maximum transmission unit", "Minimum thread uptime", "Main table update", "Memory transfer utility"],
-    "answerIndex": 0,
+    "options": [
+      "HTTP",
+      "UDP",
+      "Maximum transmission unit",
+      "ARP"
+    ],
+    "answerIndex": 2,
     "explanation": "MTU is the largest packet or frame size supported on a link."
   },
   {
@@ -877,7 +1362,12 @@
     "category": "CN",
     "difficulty": "medium",
     "prompt": "A subnet mask is used to separate:",
-    "options": ["Network bits from host bits", "HTML from CSS", "RAM from ROM", "Public methods from private methods"],
+    "options": [
+      "Network bits from host bits",
+      "CIDR block sizing",
+      "NAT port mapping",
+      "MAC address resolution"
+    ],
     "answerIndex": 0,
     "explanation": "The mask identifies which part of an IP address is the network prefix."
   },
@@ -886,7 +1376,12 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "BGP is primarily used for:",
-    "options": ["Routing between autonomous systems", "Local file locking", "Garbage collection", "Sorting arrays"],
+    "options": [
+      "Routing between autonomous systems",
+      "Anycast advertisement",
+      "Split horizon",
+      "Path-vector routing"
+    ],
     "answerIndex": 0,
     "explanation": "BGP exchanges reachability information between networks on the internet."
   },
@@ -895,7 +1390,12 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "Head-of-line blocking in TCP can happen because:",
-    "options": ["A lost segment can delay delivery of later bytes", "DNS names are too short", "Routers cannot forward packets", "UDP always retries packets"],
+    "options": [
+      "A lost segment can delay delivery of later bytes",
+      "Duplicate ACK handling",
+      "Flow control window update",
+      "Congestion window growth"
+    ],
     "answerIndex": 0,
     "explanation": "TCP delivers an ordered byte stream, so missing earlier bytes can block later data."
   },
@@ -904,7 +1404,12 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "QUIC runs on top of:",
-    "options": ["UDP", "ICMP", "ARP", "SMTP"],
+    "options": [
+      "UDP",
+      "Flow control window update",
+      "Congestion window growth",
+      "Retransmission timeout"
+    ],
     "answerIndex": 0,
     "explanation": "QUIC uses UDP while implementing reliability and security in user space."
   },
@@ -913,8 +1418,13 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "SYN cookies help defend against:",
-    "options": ["SYN flood attacks", "SQL injection", "Page replacement faults", "Cache invalidation bugs"],
-    "answerIndex": 0,
+    "options": [
+      "UDP",
+      "SYN flood attacks",
+      "ICMP",
+      "DHCP"
+    ],
+    "answerIndex": 1,
     "explanation": "SYN cookies avoid allocating full connection state until the handshake is validated."
   },
   {
@@ -922,8 +1432,13 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "Anycast routing means:",
-    "options": ["The same IP is announced from multiple locations", "Every packet is broadcast to all hosts", "Only one private IP can exist", "Packets never cross routers"],
-    "answerIndex": 0,
+    "options": [
+      "Route summarization",
+      "Distance-vector routing",
+      "The same IP is announced from multiple locations",
+      "Split horizon"
+    ],
+    "answerIndex": 2,
     "explanation": "Anycast routes users to a nearby instance advertising the same address."
   },
   {
@@ -931,8 +1446,13 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "Split horizon is used in distance-vector routing to reduce:",
-    "options": ["Routing loops", "Password reuse", "CPU cache misses", "Heap fragmentation"],
-    "answerIndex": 0,
+    "options": [
+      "Anycast advertisement",
+      "Link-state routing",
+      "Split horizon",
+      "Routing loops"
+    ],
+    "answerIndex": 3,
     "explanation": "It avoids advertising a route back through the neighbor that supplied it."
   },
   {
@@ -940,7 +1460,12 @@
     "category": "CN",
     "difficulty": "hard",
     "prompt": "A TLS certificate primarily binds:",
-    "options": ["A public key to an identity", "A process to a CPU core", "A file to a directory only", "A queue to a stack"],
+    "options": [
+      "A public key to an identity",
+      "Public-key authentication",
+      "Replay protection",
+      "Certificate chain validation"
+    ],
     "answerIndex": 0,
     "explanation": "Certificates let clients verify the public key belongs to the expected identity."
   },
@@ -949,8 +1474,13 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "An object is:",
-    "options": ["An instance of a class", "A network route", "A disk partition", "A SQL command only"],
-    "answerIndex": 0,
+    "options": [
+      "Composition",
+      "An instance of a class",
+      "Abstraction",
+      "Inheritance"
+    ],
+    "answerIndex": 1,
     "explanation": "Objects are runtime instances created from class definitions."
   },
   {
@@ -958,8 +1488,13 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "A constructor is usually used to:",
-    "options": ["Initialize a new object", "Route IP packets", "Replace the OS kernel", "Compress images"],
-    "answerIndex": 0,
+    "options": [
+      "Aggregation",
+      "Runtime polymorphism",
+      "Initialize a new object",
+      "Encapsulation"
+    ],
+    "answerIndex": 2,
     "explanation": "Constructors set up object state when an object is created."
   },
   {
@@ -967,8 +1502,13 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "A private field is intended to be accessed:",
-    "options": ["Only from within its class", "From every machine on the network", "Only through DNS", "Only before compilation"],
-    "answerIndex": 0,
+    "options": [
+      "Inheritance",
+      "Runtime polymorphism",
+      "Encapsulation",
+      "Only from within its class"
+    ],
+    "answerIndex": 3,
     "explanation": "Private access restricts direct use from outside the class."
   },
   {
@@ -976,7 +1516,12 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "Method overloading means having methods with the same name but different:",
-    "options": ["Parameter lists", "Hard drives", "IP addresses", "Database engines"],
+    "options": [
+      "Parameter lists",
+      "Final method restriction",
+      "Abstract class member",
+      "Method overloading"
+    ],
     "answerIndex": 0,
     "explanation": "Overloaded methods differ by parameters such as type or count."
   },
@@ -985,7 +1530,12 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "Abstraction mainly helps by:",
-    "options": ["Hiding implementation details behind a simpler interface", "Increasing network latency", "Deleting all classes", "Forcing every method to be public"],
+    "options": [
+      "Hiding implementation details behind a simpler interface",
+      "Method overriding",
+      "Final method restriction",
+      "Interface default method"
+    ],
     "answerIndex": 0,
     "explanation": "Abstraction exposes what is needed and hides unnecessary details."
   },
@@ -994,7 +1544,12 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "The keyword this usually refers to:",
-    "options": ["The current object", "The parent process", "The DNS server", "The database schema"],
+    "options": [
+      "The current object",
+      "Composition",
+      "Abstraction",
+      "Runtime polymorphism"
+    ],
     "answerIndex": 0,
     "explanation": "this points to the receiver object in many OOP languages."
   },
@@ -1003,8 +1558,13 @@
     "category": "OOPS",
     "difficulty": "easy",
     "prompt": "A getter method is commonly used to:",
-    "options": ["Read a value from an object", "Start a TCP handshake", "Allocate a router", "Drop a database"],
-    "answerIndex": 0,
+    "options": [
+      "Composition",
+      "Read a value from an object",
+      "Runtime polymorphism",
+      "Encapsulation"
+    ],
+    "answerIndex": 1,
     "explanation": "Getters expose controlled read access to object state."
   },
   {
@@ -1012,8 +1572,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "An abstract class can usually contain:",
-    "options": ["Both abstract and implemented methods", "Only IP addresses", "Only final static fields", "No methods at all"],
-    "answerIndex": 0,
+    "options": [
+      "Final method restriction",
+      "Method overriding",
+      "Both abstract and implemented methods",
+      "Interface default method"
+    ],
+    "answerIndex": 2,
     "explanation": "Abstract classes can share common behavior while leaving some methods abstract."
   },
   {
@@ -1021,8 +1586,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "In Java, a final class cannot be:",
-    "options": ["Extended", "Instantiated ever", "Compiled", "Placed in a package"],
-    "answerIndex": 0,
+    "options": [
+      "Method overloading",
+      "Final method restriction",
+      "Static dispatch",
+      "Extended"
+    ],
+    "answerIndex": 3,
     "explanation": "final on a class prevents subclassing."
   },
   {
@@ -1030,8 +1600,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "A static method belongs to:",
-    "options": ["The class rather than a particular instance", "Only a subclass instance", "A database row", "A network socket only"],
-    "answerIndex": 0,
+    "options": [
+      "Final method restriction",
+      "Interface default method",
+      "The class rather than a particular instance",
+      "Abstract class member"
+    ],
+    "answerIndex": 2,
     "explanation": "Static members are associated with the type itself."
   },
   {
@@ -1039,8 +1614,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "Aggregation is best described as:",
-    "options": ["A weak has-a relationship", "A strict is-a relationship", "A packet checksum", "A CPU interrupt"],
-    "answerIndex": 0,
+    "options": [
+      "uses-a relationship",
+      "has-a relationship",
+      "A weak has-a relationship",
+      "depends-on relationship"
+    ],
+    "answerIndex": 2,
     "explanation": "Aggregation models ownership or use where lifetimes may be independent."
   },
   {
@@ -1048,7 +1628,12 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "Dependency injection means dependencies are:",
-    "options": ["Provided from outside the class", "Always created with new inside the class", "Stored only in global variables", "Fetched from DNS"],
+    "options": [
+      "Provided from outside the class",
+      "Encapsulation",
+      "Runtime polymorphism",
+      "Composition"
+    ],
     "answerIndex": 0,
     "explanation": "Injection decouples a class from the construction of its dependencies."
   },
@@ -1057,8 +1642,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "High cohesion means a class or module:",
-    "options": ["Has closely related responsibilities", "Depends on every other module", "Cannot have methods", "Must be abstract"],
-    "answerIndex": 0,
+    "options": [
+      "High cohesion",
+      "Dependency Inversion Principle",
+      "Interface Segregation Principle",
+      "Has closely related responsibilities"
+    ],
+    "answerIndex": 3,
     "explanation": "Cohesive code groups behavior that belongs together."
   },
   {
@@ -1066,8 +1656,13 @@
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "Low coupling is usually desirable because it:",
-    "options": ["Reduces dependency between modules", "Forces all code into one class", "Removes type checking", "Requires multiple inheritance"],
-    "answerIndex": 0,
+    "options": [
+      "Single Responsibility Principle",
+      "Reduces dependency between modules",
+      "Liskov Substitution Principle",
+      "Open-Closed Principle"
+    ],
+    "answerIndex": 1,
     "explanation": "Lower coupling makes code easier to change and test independently."
   },
   {
@@ -1075,8 +1670,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "The Open-Closed Principle says software entities should be open for extension but closed for:",
-    "options": ["Modification", "Testing", "Instantiation", "Compilation"],
-    "answerIndex": 0,
+    "options": [
+      "Open-Closed Principle",
+      "High cohesion",
+      "Interface Segregation Principle",
+      "Modification"
+    ],
+    "answerIndex": 3,
     "explanation": "The goal is to add behavior without editing stable existing code."
   },
   {
@@ -1084,8 +1684,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "Dependency inversion suggests high-level modules should depend on:",
-    "options": ["Abstractions", "Concrete low-level classes only", "Global variables", "Thread sleeps"],
-    "answerIndex": 0,
+    "options": [
+      "Liskov Substitution Principle",
+      "Interface Segregation Principle",
+      "Dependency Inversion Principle",
+      "Abstractions"
+    ],
+    "answerIndex": 3,
     "explanation": "Depending on abstractions reduces coupling between policy and details."
   },
   {
@@ -1093,8 +1698,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "The Strategy pattern is used to:",
-    "options": ["Swap algorithms behind a common interface", "Encrypt TCP packets only", "Allocate virtual memory", "Normalize a table"],
-    "answerIndex": 0,
+    "options": [
+      "Decorator",
+      "Strategy",
+      "Singleton",
+      "Swap algorithms behind a common interface"
+    ],
+    "answerIndex": 3,
     "explanation": "Strategy makes interchangeable behaviors selectable at runtime."
   },
   {
@@ -1102,8 +1712,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "The Factory Method pattern primarily delegates:",
-    "options": ["Object creation to subclasses or factory methods", "Packet routing to DNS", "Thread scheduling to users", "Memory paging to HTTP"],
-    "answerIndex": 0,
+    "options": [
+      "Singleton",
+      "Object creation to subclasses or factory methods",
+      "Decorator",
+      "Observer"
+    ],
+    "answerIndex": 1,
     "explanation": "Factory Method separates creation decisions from client code."
   },
   {
@@ -1111,8 +1726,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "The Visitor pattern is often used to add operations to object structures while avoiding:",
-    "options": ["Changing the element classes repeatedly", "All polymorphism", "All interfaces", "Every constructor"],
-    "answerIndex": 0,
+    "options": [
+      "Strategy",
+      "Observer",
+      "Changing the element classes repeatedly",
+      "Decorator"
+    ],
+    "answerIndex": 2,
     "explanation": "Visitor moves new operations into visitor classes."
   },
   {
@@ -1120,8 +1740,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "In Java, if two objects are equal according to equals, they must:",
-    "options": ["Have the same hashCode", "Be the same reference always", "Have different classes always", "Be immutable"],
-    "answerIndex": 0,
+    "options": [
+      "Interface default method",
+      "Static dispatch",
+      "Have the same hashCode",
+      "Method overloading"
+    ],
+    "answerIndex": 2,
     "explanation": "The equals/hashCode contract requires equal objects to produce equal hash codes."
   },
   {
@@ -1129,8 +1754,13 @@
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "A shallow copy of an object usually:",
-    "options": ["Copies top-level fields but shares nested referenced objects", "Deep-copies every reachable object", "Deletes all references", "Makes the object abstract"],
-    "answerIndex": 0,
+    "options": [
+      "Abstraction",
+      "Encapsulation",
+      "Method overloading",
+      "Copies top-level fields but shares nested referenced objects"
+    ],
+    "answerIndex": 3,
     "explanation": "Nested mutable objects can still be shared after a shallow copy."
   },
   {
@@ -1138,8 +1768,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "The kernel is responsible for:",
-    "options": ["Managing hardware and system resources", "Writing CSS", "Resolving only domain names", "Creating database schemas only"],
-    "answerIndex": 0,
+    "options": [
+      "Preemptive scheduling",
+      "Managing hardware and system resources",
+      "Context switch overhead",
+      "Shortest job first"
+    ],
+    "answerIndex": 1,
     "explanation": "The kernel mediates access to CPU, memory, devices, and files."
   },
   {
@@ -1147,8 +1782,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "CPU scheduling decides:",
-    "options": ["Which process or thread runs next", "Which image format to use", "Which HTML tag is valid", "Which DNS name is shortest"],
-    "answerIndex": 0,
+    "options": [
+      "Priority scheduling with aging",
+      "Round-robin scheduling",
+      "Which process or thread runs next",
+      "Preemptive scheduling"
+    ],
+    "answerIndex": 2,
     "explanation": "Schedulers choose work to run on the CPU."
   },
   {
@@ -1156,7 +1796,12 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "RAM is usually:",
-    "options": ["Volatile memory", "Permanent optical storage", "A network protocol", "A compiler phase"],
+    "options": [
+      "Volatile memory",
+      "Working set tracking",
+      "Page table entry",
+      "Page fault handling"
+    ],
     "answerIndex": 0,
     "explanation": "RAM normally loses contents when power is removed."
   },
@@ -1165,7 +1810,12 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "A file system is used to:",
-    "options": ["Organize and store files", "Route packets across the internet", "Choose Java access modifiers", "Calculate averages only"],
+    "options": [
+      "Organize and store files",
+      "Memory-mapped file",
+      "Inode metadata",
+      "File descriptor table"
+    ],
     "answerIndex": 0,
     "explanation": "File systems manage names, metadata, and storage layout for files."
   },
@@ -1174,8 +1824,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "An interrupt is:",
-    "options": ["A signal that needs CPU attention", "A sorted array", "A CSS selector", "A type of SQL join only"],
-    "answerIndex": 0,
+    "options": [
+      "System call boundary",
+      "Virtual address space",
+      "Process control block",
+      "A signal that needs CPU attention"
+    ],
+    "answerIndex": 3,
     "explanation": "Interrupts let hardware or software notify the CPU of events."
   },
   {
@@ -1183,8 +1838,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "A system call lets a program:",
-    "options": ["Request a service from the operating system", "Skip the CPU", "Edit DNS globally", "Avoid memory entirely"],
-    "answerIndex": 0,
+    "options": [
+      "Virtual address space",
+      "Request a service from the operating system",
+      "Kernel mode transition",
+      "System call boundary"
+    ],
+    "answerIndex": 1,
     "explanation": "System calls cross from user mode into kernel services."
   },
   {
@@ -1192,8 +1852,13 @@
     "category": "OS",
     "difficulty": "easy",
     "prompt": "Multitasking means the OS can:",
-    "options": ["Manage multiple tasks over time", "Run only one program forever", "Disable interrupts", "Store no files"],
-    "answerIndex": 0,
+    "options": [
+      "Virtual address space",
+      "Interrupt handling",
+      "Kernel mode transition",
+      "Manage multiple tasks over time"
+    ],
+    "answerIndex": 3,
     "explanation": "The OS shares CPU time among tasks."
   },
   {
@@ -1201,7 +1866,12 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "Round-robin scheduling gives each runnable process:",
-    "options": ["A time quantum", "A permanent CPU core", "A DNS name", "An infinite stack"],
+    "options": [
+      "A time quantum",
+      "Context switch overhead",
+      "Round-robin scheduling",
+      "Preemptive scheduling"
+    ],
     "answerIndex": 0,
     "explanation": "Round robin rotates tasks after a fixed time slice."
   },
@@ -1210,8 +1880,13 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "A mutex is used to provide:",
-    "options": ["Mutual exclusion", "Packet encryption", "Database replication", "Image rendering"],
-    "answerIndex": 0,
+    "options": [
+      "Race condition",
+      "Deadlock avoidance",
+      "Reader-writer lock",
+      "Mutual exclusion"
+    ],
+    "answerIndex": 3,
     "explanation": "A mutex allows only one thread to enter a critical section at a time."
   },
   {
@@ -1219,8 +1894,13 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "A race condition happens when correctness depends on:",
-    "options": ["Timing or interleaving of operations", "The filename length only", "The monitor resolution", "The number of HTTP headers"],
-    "answerIndex": 0,
+    "options": [
+      "Reader-writer lock",
+      "Timing or interleaving of operations",
+      "Mutex lock",
+      "Deadlock avoidance"
+    ],
+    "answerIndex": 1,
     "explanation": "Uncontrolled concurrent access can make results depend on execution order."
   },
   {
@@ -1228,8 +1908,13 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "Belady's anomaly is associated with:",
-    "options": ["FIFO page replacement", "Round-robin quantum only", "DNS caching", "Hash table resizing"],
-    "answerIndex": 0,
+    "options": [
+      "Page table entry",
+      "Copy-on-write page sharing",
+      "FIFO page replacement",
+      "Dirty page write-back"
+    ],
+    "answerIndex": 2,
     "explanation": "FIFO can sometimes have more page faults when more frames are added."
   },
   {
@@ -1237,8 +1922,13 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "A TLB caches:",
-    "options": ["Virtual-to-physical address translations", "HTTP responses only", "Java bytecode only", "Keyboard shortcuts"],
-    "answerIndex": 0,
+    "options": [
+      "Page fault handling",
+      "Virtual-to-physical address translations",
+      "Copy-on-write page sharing",
+      "Page table entry"
+    ],
+    "answerIndex": 1,
     "explanation": "The translation lookaside buffer speeds up address translation."
   },
   {
@@ -1246,7 +1936,12 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "Priority scheduling can cause starvation when:",
-    "options": ["Low-priority jobs wait indefinitely", "All jobs have equal priority", "No process exists", "The disk is empty"],
+    "options": [
+      "Low-priority jobs wait indefinitely",
+      "Context switch overhead",
+      "Priority scheduling with aging",
+      "Preemptive scheduling"
+    ],
     "answerIndex": 0,
     "explanation": "Higher-priority work can repeatedly prevent lower-priority work from running."
   },
@@ -1255,8 +1950,13 @@
     "category": "OS",
     "difficulty": "medium",
     "prompt": "Spooling is commonly used to:",
-    "options": ["Queue jobs for a device such as a printer", "Encrypt all memory pages", "Resolve IP addresses", "Balance binary trees"],
-    "answerIndex": 0,
+    "options": [
+      "Spooling queue",
+      "Memory-mapped file",
+      "Queue jobs for a device such as a printer",
+      "Directory entry mapping"
+    ],
+    "answerIndex": 2,
     "explanation": "Spooling stores jobs temporarily so a device can process them sequentially."
   },
   {
@@ -1264,8 +1964,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "The Banker's algorithm is used for:",
-    "options": ["Deadlock avoidance", "Disk formatting only", "TCP congestion control", "Sorting page tables"],
-    "answerIndex": 0,
+    "options": [
+      "Reader-writer lock",
+      "Deadlock avoidance",
+      "Spinlock busy-wait",
+      "Critical section"
+    ],
+    "answerIndex": 1,
     "explanation": "It checks whether granting a resource request keeps the system in a safe state."
   },
   {
@@ -1273,8 +1978,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "Preemptive scheduling means the OS can:",
-    "options": ["Interrupt a running task to schedule another", "Never switch tasks", "Disable user mode", "Store files without metadata"],
-    "answerIndex": 0,
+    "options": [
+      "Priority scheduling with aging",
+      "Context switch overhead",
+      "Interrupt a running task to schedule another",
+      "Shortest job first"
+    ],
+    "answerIndex": 2,
     "explanation": "Preemption lets the scheduler regain control from a running task."
   },
   {
@@ -1282,8 +1992,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "mmap is commonly used to:",
-    "options": ["Map files or memory regions into a process address space", "Create a DNS zone", "Hash passwords only", "Schedule network routes"],
-    "answerIndex": 0,
+    "options": [
+      "TLB lookup",
+      "Copy-on-write page sharing",
+      "Map files or memory regions into a process address space",
+      "Dirty page write-back"
+    ],
+    "answerIndex": 2,
     "explanation": "Memory mapping lets a process access file or anonymous memory through addresses."
   },
   {
@@ -1291,8 +2006,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "In many Unix-like file systems, a directory entry maps a filename to:",
-    "options": ["An inode number", "A CPU core", "A TCP port", "A Java package"],
-    "answerIndex": 0,
+    "options": [
+      "Inode metadata",
+      "Journaling update",
+      "An inode number",
+      "Memory-mapped file"
+    ],
+    "answerIndex": 2,
     "explanation": "The inode stores file metadata and block pointers."
   },
   {
@@ -1300,8 +2020,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "A journaling file system improves:",
-    "options": ["Crash recovery consistency", "CPU clock speed", "DNS lookup length", "Class inheritance"],
-    "answerIndex": 0,
+    "options": [
+      "Journaling update",
+      "Directory entry mapping",
+      "Inode metadata",
+      "Crash recovery consistency"
+    ],
+    "answerIndex": 3,
     "explanation": "A journal records intended metadata changes so recovery can finish or roll them back."
   },
   {
@@ -1309,8 +2034,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "A reader-writer lock allows:",
-    "options": ["Multiple readers or one exclusive writer", "Only writers forever", "No readers ever", "Only one process in the OS"],
-    "answerIndex": 0,
+    "options": [
+      "Counting semaphore",
+      "Mutex lock",
+      "Spinlock busy-wait",
+      "Multiple readers or one exclusive writer"
+    ],
+    "answerIndex": 3,
     "explanation": "Reader-writer locks improve concurrency for read-heavy shared data."
   },
   {
@@ -1318,8 +2048,13 @@
     "category": "OS",
     "difficulty": "hard",
     "prompt": "NUMA systems have performance differences because:",
-    "options": ["Memory access cost depends on where memory is located", "All memory is equally close to every CPU", "There is no cache", "The OS cannot schedule threads"],
-    "answerIndex": 0,
+    "options": [
+      "Dirty page write-back",
+      "TLB lookup",
+      "Memory access cost depends on where memory is located",
+      "Page table entry"
+    ],
+    "answerIndex": 2,
     "explanation": "Non-uniform memory access makes local memory faster than remote memory."
   },
   {
@@ -1327,8 +2062,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "A database index is mainly added to:",
-    "options": ["Speed up reads for matching queries", "Remove every write cost", "Replace backups", "Disable constraints"],
-    "answerIndex": 0,
+    "options": [
+      "Write-ahead log",
+      "Two-phase commit",
+      "Change data capture",
+      "Speed up reads for matching queries"
+    ],
+    "answerIndex": 3,
     "explanation": "Indexes speed lookups but can add overhead to writes."
   },
   {
@@ -1336,7 +2076,12 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "Replication means:",
-    "options": ["Keeping copies of data on multiple nodes", "Deleting old rows only", "Running a single server forever", "Compressing CSS"],
+    "options": [
+      "Keeping copies of data on multiple nodes",
+      "Vector clock metadata",
+      "Quorum read/write",
+      "Idempotent retry handling"
+    ],
     "answerIndex": 0,
     "explanation": "Replicas improve availability, durability, or read capacity."
   },
@@ -1345,8 +2090,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "A backup is:",
-    "options": ["A separate copy used for recovery", "A faster CPU", "A network port", "A sorting rule"],
-    "answerIndex": 0,
+    "options": [
+      "Health check probing",
+      "SLA target tracking",
+      "Circuit breaker state",
+      "A separate copy used for recovery"
+    ],
+    "answerIndex": 3,
     "explanation": "Backups protect against data loss or corruption."
   },
   {
@@ -1354,8 +2104,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "An API gateway often acts as:",
-    "options": ["A single entry point for client requests", "A local CPU scheduler", "A database row", "A CSS compiler"],
-    "answerIndex": 0,
+    "options": [
+      "Rate limiter bucket",
+      "Health check probing",
+      "A single entry point for client requests",
+      "API gateway routing"
+    ],
+    "answerIndex": 2,
     "explanation": "Gateways can route, authenticate, rate limit, and aggregate API traffic."
   },
   {
@@ -1363,8 +2118,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "A CDN is commonly used to deliver:",
-    "options": ["Static or cacheable content from edge locations", "Kernel interrupts", "Private class fields", "Only SQL transactions"],
-    "answerIndex": 0,
+    "options": [
+      "Read-through cache",
+      "Static or cacheable content from edge locations",
+      "Cache-aside lookup",
+      "Hot-key mitigation"
+    ],
+    "answerIndex": 1,
     "explanation": "CDNs reduce latency by serving assets close to users."
   },
   {
@@ -1372,8 +2132,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "A message queue helps systems by:",
-    "options": ["Decoupling producers and consumers", "Forcing synchronous calls", "Removing persistence always", "Preventing all bugs"],
-    "answerIndex": 0,
+    "options": [
+      "Consumer lag",
+      "Backpressure signal",
+      "Dead-letter queue",
+      "Decoupling producers and consumers"
+    ],
+    "answerIndex": 3,
     "explanation": "Queues buffer work so components can operate at different speeds."
   },
   {
@@ -1381,8 +2146,13 @@
     "category": "System Design",
     "difficulty": "easy",
     "prompt": "Monitoring is mainly about:",
-    "options": ["Watching metrics, logs, and system health", "Only naming servers", "Removing all alerts", "Writing UI copy"],
-    "answerIndex": 0,
+    "options": [
+      "Saga compensation",
+      "Watching metrics, logs, and system health",
+      "Write-ahead log",
+      "Shard key selection"
+    ],
+    "answerIndex": 1,
     "explanation": "Monitoring helps teams detect and understand production issues."
   },
   {
@@ -1390,8 +2160,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "A read replica is commonly used to:",
-    "options": ["Scale read traffic", "Guarantee no stale reads ever", "Delete the primary database", "Stop all writes"],
-    "answerIndex": 0,
+    "options": [
+      "Vector clock metadata",
+      "Consensus log replication",
+      "Scale read traffic",
+      "Idempotent retry handling"
+    ],
+    "answerIndex": 2,
     "explanation": "Read replicas can serve queries while the primary handles writes."
   },
   {
@@ -1399,8 +2174,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "Sharding means splitting data:",
-    "options": ["Across multiple nodes or partitions", "Only into backups", "Into CSS files", "Into CPU registers only"],
-    "answerIndex": 0,
+    "options": [
+      "Network partition tradeoff",
+      "Across multiple nodes or partitions",
+      "Vector clock metadata",
+      "Idempotent retry handling"
+    ],
+    "answerIndex": 1,
     "explanation": "Sharding distributes data to scale storage or throughput."
   },
   {
@@ -1408,8 +2188,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "Eventual consistency means replicas:",
-    "options": ["Converge if no new updates occur", "Are always identical instantly", "Never store data", "Reject all writes"],
-    "answerIndex": 0,
+    "options": [
+      "Network partition tradeoff",
+      "Converge if no new updates occur",
+      "Leader election",
+      "Consensus log replication"
+    ],
+    "answerIndex": 1,
     "explanation": "Temporary divergence is allowed, but replicas should settle to the same value."
   },
   {
@@ -1417,7 +2202,12 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "A circuit breaker protects a system by:",
-    "options": ["Stopping calls to a failing dependency temporarily", "Retrying forever with no delay", "Disabling all metrics", "Replacing every queue"],
+    "options": [
+      "Stopping calls to a failing dependency temporarily",
+      "SLA target tracking",
+      "Rate limiter bucket",
+      "Circuit breaker state"
+    ],
     "answerIndex": 0,
     "explanation": "Circuit breakers prevent cascading failures when dependencies are unhealthy."
   },
@@ -1426,8 +2216,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "With at-least-once message delivery, consumers should expect:",
-    "options": ["Possible duplicate messages", "Exactly one message always", "No message persistence", "Only sorted messages"],
-    "answerIndex": 0,
+    "options": [
+      "Dead-letter queue",
+      "Fan-out on write",
+      "Message deduplication",
+      "Possible duplicate messages"
+    ],
+    "answerIndex": 3,
     "explanation": "At-least-once systems may redeliver messages after failures."
   },
   {
@@ -1435,7 +2230,12 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "Cache invalidation means:",
-    "options": ["Removing or updating stale cached data", "Encrypting cache keys only", "Adding more CPUs", "Deleting the database"],
+    "options": [
+      "Removing or updating stale cached data",
+      "Hot-key mitigation",
+      "TTL invalidation",
+      "Write-through cache"
+    ],
     "answerIndex": 0,
     "explanation": "Invalidation keeps cached responses from becoming too stale."
   },
@@ -1444,8 +2244,13 @@
     "category": "System Design",
     "difficulty": "medium",
     "prompt": "Cursor pagination is often preferred over large offsets because it:",
-    "options": ["Can be more stable and efficient for changing datasets", "Requires no ordering", "Deletes skipped rows", "Only works for images"],
-    "answerIndex": 0,
+    "options": [
+      "Health check probing",
+      "Circuit breaker state",
+      "Can be more stable and efficient for changing datasets",
+      "Rate limiter bucket"
+    ],
+    "answerIndex": 2,
     "explanation": "Cursors continue from a known position rather than counting many skipped rows."
   },
   {
@@ -1453,8 +2258,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "Leader election is used to:",
-    "options": ["Choose a coordinator among nodes", "Sort local arrays", "Compress API payloads", "Remove all replicas"],
-    "answerIndex": 0,
+    "options": [
+      "Idempotent retry handling",
+      "Leader election",
+      "Consensus log replication",
+      "Choose a coordinator among nodes"
+    ],
+    "answerIndex": 3,
     "explanation": "Distributed systems often elect one node to coordinate decisions or writes."
   },
   {
@@ -1462,8 +2272,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "Two-phase commit is a protocol for:",
-    "options": ["Coordinating distributed transactions", "Rendering CSS in two steps", "Balancing binary trees", "Compressing logs"],
-    "answerIndex": 0,
+    "options": [
+      "Network partition tradeoff",
+      "Idempotent retry handling",
+      "Coordinating distributed transactions",
+      "Vector clock metadata"
+    ],
+    "answerIndex": 2,
     "explanation": "2PC asks participants to prepare, then commits or aborts together."
   },
   {
@@ -1471,7 +2286,12 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "A saga handles distributed work by using local transactions and:",
-    "options": ["Compensating actions", "Global locks only", "A single giant transaction always", "DNS retries"],
+    "options": [
+      "Compensating actions",
+      "Idempotent retry handling",
+      "Leader election",
+      "Quorum read/write"
+    ],
     "answerIndex": 0,
     "explanation": "Sagas undo prior local steps with compensations when later steps fail."
   },
@@ -1480,8 +2300,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "A hot partition is a problem because:",
-    "options": ["Too much traffic lands on one shard", "All shards are equally loaded", "Data is fully cached", "There are no writes"],
-    "answerIndex": 0,
+    "options": [
+      "TTL invalidation",
+      "Too much traffic lands on one shard",
+      "Consistent hashing",
+      "Write-through cache"
+    ],
+    "answerIndex": 1,
     "explanation": "Uneven key distribution can overload one partition while others sit idle."
   },
   {
@@ -1489,8 +2314,13 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "A write-ahead log records changes:",
-    "options": ["Before applying them to main storage", "Only after deleting all data", "Only in client memory", "After DNS resolution"],
-    "answerIndex": 0,
+    "options": [
+      "Change data capture",
+      "Transactional outbox",
+      "Saga compensation",
+      "Before applying them to main storage"
+    ],
+    "answerIndex": 3,
     "explanation": "WALs support durability and crash recovery."
   },
   {
@@ -1498,7 +2328,12 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "Change data capture is used to:",
-    "options": ["Stream database changes to other systems", "Capture screenshots only", "Compile source code", "Measure CPU temperature"],
+    "options": [
+      "Stream database changes to other systems",
+      "Idempotent retry handling",
+      "Leader election",
+      "Network partition tradeoff"
+    ],
     "answerIndex": 0,
     "explanation": "CDC turns database mutations into events for downstream consumers."
   },
@@ -1507,7 +2342,12 @@
     "category": "System Design",
     "difficulty": "hard",
     "prompt": "Exactly-once processing is hard mainly because failures can occur:",
-    "options": ["Between processing, committing, and acknowledging work", "Only before a service starts", "Only during CSS parsing", "Only when there is one server"],
+    "options": [
+      "Between processing, committing, and acknowledging work",
+      "Circuit breaker state",
+      "Health check probing",
+      "SLA target tracking"
+    ],
     "answerIndex": 0,
     "explanation": "Systems need idempotency or transactional coordination to avoid duplicates or loss."
   },
@@ -1516,8 +2356,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "A bit can represent:",
-    "options": ["0 or 1", "Any paragraph", "Only a floating point number", "A full database table"],
-    "answerIndex": 0,
+    "options": [
+      "Boolean conjunction",
+      "Binary representation",
+      "Unicode code point",
+      "0 or 1"
+    ],
+    "answerIndex": 3,
     "explanation": "A bit is the smallest binary unit of information."
   },
   {
@@ -1525,7 +2370,12 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "Character encodings such as ASCII or Unicode are used to:",
-    "options": ["Represent text as numbers", "Schedule processes", "Route IP packets", "Balance trees"],
+    "options": [
+      "Represent text as numbers",
+      "Floating-point rounding",
+      "Boolean conjunction",
+      "Binary representation"
+    ],
     "answerIndex": 0,
     "explanation": "Encodings map characters to numeric code values."
   },
@@ -1534,8 +2384,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "SQL is commonly used to work with:",
-    "options": ["Relational databases", "CPU registers only", "Network cables", "Image pixels only"],
-    "answerIndex": 0,
+    "options": [
+      "MVCC version chain",
+      "Relational databases",
+      "B-tree index",
+      "Snapshot isolation"
+    ],
+    "answerIndex": 1,
     "explanation": "SQL queries and modifies relational data."
   },
   {
@@ -1543,8 +2398,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "Recursion occurs when a function:",
-    "options": ["Calls itself", "Never returns", "Has no parameters", "Only runs in the kernel"],
-    "answerIndex": 0,
+    "options": [
+      "Hash load factor",
+      "Calls itself",
+      "Garbage collector reachability",
+      "CAP partition tradeoff"
+    ],
+    "answerIndex": 1,
     "explanation": "Recursive solutions reduce a problem by calling the same function on smaller cases."
   },
   {
@@ -1552,8 +2412,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "A variable is used to:",
-    "options": ["Store a value under a name", "Forward network packets", "Lock a database forever", "Power the CPU"],
-    "answerIndex": 0,
+    "options": [
+      "NP-hard reduction",
+      "CAP partition tradeoff",
+      "Store a value under a name",
+      "Consensus majority commit"
+    ],
+    "answerIndex": 2,
     "explanation": "Variables let programs refer to stored values."
   },
   {
@@ -1561,8 +2426,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "An API is best described as:",
-    "options": ["A contract for how software components interact", "A physical keyboard", "A memory chip only", "A sorting rule only"],
-    "answerIndex": 0,
+    "options": [
+      "REST statelessness",
+      "Git commit history",
+      "JSON object structure",
+      "A contract for how software components interact"
+    ],
+    "answerIndex": 3,
     "explanation": "APIs define operations, inputs, and outputs between components."
   },
   {
@@ -1570,8 +2440,13 @@
     "category": "Core CS",
     "difficulty": "easy",
     "prompt": "Git is mainly used for:",
-    "options": ["Version control", "Packet routing", "Memory allocation only", "CPU cooling"],
-    "answerIndex": 0,
+    "options": [
+      "REST statelessness",
+      "Git commit history",
+      "JSON object structure",
+      "Version control"
+    ],
+    "answerIndex": 3,
     "explanation": "Git tracks changes and supports collaboration on code."
   },
   {
@@ -1579,7 +2454,12 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "In ACID, durability means:",
-    "options": ["Committed data survives crashes as designed", "Every transaction is read-only", "No locks are ever needed", "Data is always cached"],
+    "options": [
+      "Committed data survives crashes as designed",
+      "Foreign key constraint",
+      "Snapshot isolation",
+      "Serializable isolation"
+    ],
     "answerIndex": 0,
     "explanation": "Durability ensures committed changes are not lost after failure."
   },
@@ -1588,8 +2468,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "A primary key is used to:",
-    "options": ["Uniquely identify a row", "Encrypt every column", "Start a process", "Resolve DNS names"],
-    "answerIndex": 0,
+    "options": [
+      "Primary key constraint",
+      "B-tree index",
+      "Uniquely identify a row",
+      "Snapshot isolation"
+    ],
+    "answerIndex": 2,
     "explanation": "Primary keys identify records uniquely in a table."
   },
   {
@@ -1597,8 +2482,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "A foreign key usually references:",
-    "options": ["A key in another table", "A CPU instruction", "A CSS selector", "A network switch only"],
-    "answerIndex": 0,
+    "options": [
+      "Snapshot isolation",
+      "A key in another table",
+      "Serializable isolation",
+      "Foreign key constraint"
+    ],
+    "answerIndex": 1,
     "explanation": "Foreign keys enforce relationships between tables."
   },
   {
@@ -1606,7 +2496,12 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "Big O notation describes:",
-    "options": ["How resource usage grows with input size", "The exact CPU brand", "Only syntax errors", "The color of UI elements"],
+    "options": [
+      "How resource usage grows with input size",
+      "Hash load factor",
+      "NP-hard reduction",
+      "Consensus majority commit"
+    ],
     "answerIndex": 0,
     "explanation": "Big O abstracts growth rate for time or space."
   },
@@ -1615,8 +2510,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "A stack overflow often happens when:",
-    "options": ["Recursive calls go too deep", "The network is idle", "A database has no rows", "A variable is named x"],
-    "answerIndex": 0,
+    "options": [
+      "Hash load factor",
+      "Garbage collector reachability",
+      "Recursive calls go too deep",
+      "Bloom filter false positive"
+    ],
+    "answerIndex": 2,
     "explanation": "Too many nested calls can exceed call stack capacity."
   },
   {
@@ -1624,8 +2524,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "JSON primarily represents data using:",
-    "options": ["Objects, arrays, and primitive values", "Only binary opcodes", "Only network frames", "Only CPU registers"],
-    "answerIndex": 0,
+    "options": [
+      "REST statelessness",
+      "HTTP idempotency",
+      "Base64 text encoding",
+      "Objects, arrays, and primitive values"
+    ],
+    "answerIndex": 3,
     "explanation": "JSON is a text format for structured data."
   },
   {
@@ -1633,8 +2538,13 @@
     "category": "Core CS",
     "difficulty": "medium",
     "prompt": "Base64 encoding is commonly used to:",
-    "options": ["Represent binary data as text", "Sort arrays faster", "Schedule processes", "Prevent all security issues"],
-    "answerIndex": 0,
+    "options": [
+      "API contract versioning",
+      "JSON object structure",
+      "Base64 text encoding",
+      "Represent binary data as text"
+    ],
+    "answerIndex": 3,
     "explanation": "Base64 maps binary bytes to printable characters."
   },
   {
@@ -1642,8 +2552,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "A problem is NP-complete if it is in NP and:",
-    "options": ["NP-hard", "Always solvable in O(1)", "Not decidable", "Only about networks"],
-    "answerIndex": 0,
+    "options": [
+      "NP-intermediate",
+      "P-complete",
+      "NP-hard",
+      "co-NP-complete"
+    ],
+    "answerIndex": 2,
     "explanation": "NP-complete problems are among the hardest problems in NP."
   },
   {
@@ -1651,8 +2566,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "A garbage collector primarily reclaims:",
-    "options": ["Objects that are no longer reachable", "All stack frames immediately", "Every open socket", "Only source code files"],
-    "answerIndex": 0,
+    "options": [
+      "Bloom filter false positive",
+      "NP-hard reduction",
+      "Objects that are no longer reachable",
+      "Garbage collector reachability"
+    ],
+    "answerIndex": 2,
     "explanation": "Reachability is commonly used to decide which heap objects are still live."
   },
   {
@@ -1660,8 +2580,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "B-trees are widely used in databases because they:",
-    "options": ["Keep indexes shallow and disk-friendly", "Avoid all disk reads", "Only store images", "Require unsorted keys"],
-    "answerIndex": 0,
+    "options": [
+      "B-tree index",
+      "Hash index collision",
+      "Foreign key constraint",
+      "Keep indexes shallow and disk-friendly"
+    ],
+    "answerIndex": 3,
     "explanation": "B-trees have high branching factor, reducing disk page accesses."
   },
   {
@@ -1669,8 +2594,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "MVCC improves concurrency by:",
-    "options": ["Keeping multiple versions of data", "Locking the whole database for every read", "Deleting old transactions immediately", "Using only one thread"],
-    "answerIndex": 0,
+    "options": [
+      "Primary key constraint",
+      "Keeping multiple versions of data",
+      "Hash index collision",
+      "B-tree index"
+    ],
+    "answerIndex": 1,
     "explanation": "Readers can see a consistent snapshot while writers create newer versions."
   },
   {
@@ -1678,8 +2608,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "In little-endian byte order, the least significant byte is stored:",
-    "options": ["At the lowest memory address", "At the highest memory address", "Only in CPU cache", "Only on disk"],
-    "answerIndex": 0,
+    "options": [
+      "Unicode code point",
+      "Two's-complement range",
+      "Binary representation",
+      "At the lowest memory address"
+    ],
+    "answerIndex": 3,
     "explanation": "Little-endian systems place the low-order byte first."
   },
   {
@@ -1687,8 +2622,13 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "Under a network partition, CAP theorem says a system must trade off:",
-    "options": ["Consistency and availability", "CPU and RAM only", "HTML and CSS", "Inheritance and encapsulation"],
-    "answerIndex": 0,
+    "options": [
+      "Bloom filter false positive",
+      "Consensus majority commit",
+      "Consistency and availability",
+      "Hash load factor"
+    ],
+    "answerIndex": 2,
     "explanation": "When partition tolerance is required, the system cannot fully guarantee both consistency and availability."
   },
   {
@@ -1696,7 +2636,12 @@
     "category": "Core CS",
     "difficulty": "hard",
     "prompt": "The signed range of an n-bit two's-complement integer is:",
-    "options": ["-2^(n-1) to 2^(n-1)-1", "0 to 2^n", "-2^n to 2^n", "1 to n^2"],
+    "options": [
+      "-2^(n-1) to 2^(n-1)-1",
+      "Unicode code point",
+      "Little-endian byte order",
+      "Binary representation"
+    ],
     "answerIndex": 0,
     "explanation": "One bit is used for sign, giving one extra negative value."
   },
@@ -1705,8 +2650,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "Simple interest on Rs. 1000 at 10% per year for 1 year is:",
-    "options": ["Rs. 100", "Rs. 110", "Rs. 900", "Rs. 1000"],
-    "answerIndex": 0,
+    "options": [
+      "Rs. 900",
+      "Rs. 100",
+      "Rs. 1000",
+      "Rs. 110"
+    ],
+    "answerIndex": 1,
     "explanation": "Simple interest is P x R x T / 100 = 1000 x 10 x 1 / 100 = 100."
   },
   {
@@ -1714,8 +2664,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "If distance is 90 km and time is 3 hours, speed is:",
-    "options": ["30 km/h", "60 km/h", "90 km/h", "270 km/h"],
-    "answerIndex": 0,
+    "options": [
+      "90 km/h",
+      "30 km/h",
+      "60 km/h",
+      "270 km/h"
+    ],
+    "answerIndex": 1,
     "explanation": "Speed is distance divided by time, so 90/3 = 30 km/h."
   },
   {
@@ -1723,8 +2678,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "Find the next number: 2, 4, 8, 16, ?",
-    "options": ["24", "28", "32", "36"],
-    "answerIndex": 2,
+    "options": [
+      "24",
+      "36",
+      "28",
+      "32"
+    ],
+    "answerIndex": 3,
     "explanation": "Each term doubles, so the next number is 32."
   },
   {
@@ -1732,8 +2692,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "15% of 200 is:",
-    "options": ["15", "20", "30", "40"],
-    "answerIndex": 2,
+    "options": [
+      "40",
+      "30",
+      "15",
+      "20"
+    ],
+    "answerIndex": 1,
     "explanation": "0.15 x 200 = 30."
   },
   {
@@ -1741,8 +2706,13 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "Three-fourths of 80 is:",
-    "options": ["40", "50", "60", "70"],
-    "answerIndex": 2,
+    "options": [
+      "60",
+      "40",
+      "50",
+      "70"
+    ],
+    "answerIndex": 0,
     "explanation": "80 x 3/4 = 60."
   },
   {
@@ -1750,7 +2720,12 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "If cost price is 80 and selling price is 100, profit is:",
-    "options": ["10", "20", "25", "80"],
+    "options": [
+      "25",
+      "20",
+      "80",
+      "10"
+    ],
     "answerIndex": 1,
     "explanation": "Profit is selling price minus cost price, so 100 - 80 = 20."
   },
@@ -1759,7 +2734,12 @@
     "category": "Aptitude",
     "difficulty": "easy",
     "prompt": "The perimeter of a rectangle with length 8 and width 5 is:",
-    "options": ["13", "26", "40", "80"],
+    "options": [
+      "40",
+      "26",
+      "80",
+      "13"
+    ],
     "answerIndex": 1,
     "explanation": "Perimeter is 2 x (8 + 5) = 26."
   },
@@ -1768,7 +2748,12 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "Compound amount on Rs. 1000 at 10% for 1 year is:",
-    "options": ["Rs. 1000", "Rs. 1010", "Rs. 1100", "Rs. 1200"],
+    "options": [
+      "Rs. 1000",
+      "Rs. 1200",
+      "Rs. 1100",
+      "Rs. 1010"
+    ],
     "answerIndex": 2,
     "explanation": "One year at 10% gives 1000 x 1.10 = 1100."
   },
@@ -1777,7 +2762,12 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "A person travels 60 km at 30 km/h. Time taken is:",
-    "options": ["1 hour", "2 hours", "3 hours", "4 hours"],
+    "options": [
+      "3 hours",
+      "2 hours",
+      "4 hours",
+      "1 hour"
+    ],
     "answerIndex": 1,
     "explanation": "Time is distance divided by speed, so 60/30 = 2 hours."
   },
@@ -1786,7 +2776,12 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "Divide 560 in the ratio 3:4. The two parts are:",
-    "options": ["210 and 350", "220 and 340", "240 and 320", "280 and 280"],
+    "options": [
+      "280 and 280",
+      "210 and 350",
+      "240 and 320",
+      "220 and 340"
+    ],
     "answerIndex": 2,
     "explanation": "There are 7 parts, each 80. The shares are 240 and 320."
   },
@@ -1795,8 +2790,13 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "A fair die is rolled once. Probability of getting an even number is:",
-    "options": ["1/6", "1/3", "1/2", "2/3"],
-    "answerIndex": 2,
+    "options": [
+      "1/2",
+      "1/6",
+      "1/3",
+      "2/3"
+    ],
+    "answerIndex": 0,
     "explanation": "Even outcomes are 2, 4, and 6, so 3 out of 6."
   },
   {
@@ -1804,8 +2804,13 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "A can do a job in 10 days and B in 15 days. Together they need:",
-    "options": ["5 days", "6 days", "8 days", "12 days"],
-    "answerIndex": 1,
+    "options": [
+      "5 days",
+      "8 days",
+      "6 days",
+      "12 days"
+    ],
+    "answerIndex": 2,
     "explanation": "Combined rate is 1/10 + 1/15 = 1/6 job per day."
   },
   {
@@ -1813,7 +2818,12 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "A number is divisible by 9 if:",
-    "options": ["Its digit sum is divisible by 9", "It ends in 9", "It is odd", "It has exactly two digits"],
+    "options": [
+      "Its digit sum is divisible by 9",
+      "It is odd",
+      "It has exactly two digits",
+      "It ends in 9"
+    ],
     "answerIndex": 0,
     "explanation": "The divisibility rule for 9 uses the sum of digits."
   },
@@ -1822,8 +2832,13 @@
     "category": "Aptitude",
     "difficulty": "medium",
     "prompt": "The average of five numbers is 18. Their total is:",
-    "options": ["23", "45", "90", "180"],
-    "answerIndex": 2,
+    "options": [
+      "45",
+      "90",
+      "180",
+      "23"
+    ],
+    "answerIndex": 1,
     "explanation": "Total is average x count = 18 x 5 = 90."
   },
   {
@@ -1831,8 +2846,13 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "A pipe fills a tank in 6 hours and another empties it in 9 hours. Together, filling time is:",
-    "options": ["12 hours", "15 hours", "18 hours", "24 hours"],
-    "answerIndex": 2,
+    "options": [
+      "15 hours",
+      "18 hours",
+      "24 hours",
+      "12 hours"
+    ],
+    "answerIndex": 1,
     "explanation": "Net rate is 1/6 - 1/9 = 1/18 tank per hour."
   },
   {
@@ -1840,8 +2860,13 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "How many distinct arrangements are possible for the letters in LEVEL?",
-    "options": ["20", "30", "60", "120"],
-    "answerIndex": 1,
+    "options": [
+      "30",
+      "20",
+      "120",
+      "60"
+    ],
+    "answerIndex": 0,
     "explanation": "LEVEL has two Ls and two Es, so 5!/(2! x 2!) = 30."
   },
   {
@@ -1849,7 +2874,12 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "The average of 6 numbers is 12. If one number 30 is added, the new average is:",
-    "options": ["96/7", "100/7", "102/7", "108/7"],
+    "options": [
+      "100/7",
+      "96/7",
+      "102/7",
+      "108/7"
+    ],
     "answerIndex": 2,
     "explanation": "Original total is 72. New total is 102 over 7 numbers, so the average is 102/7."
   },
@@ -1858,8 +2888,13 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "A is twice as old as B. After 5 years, A will be 25. B's present age is:",
-    "options": ["8", "10", "12", "15"],
-    "answerIndex": 1,
+    "options": [
+      "15",
+      "8",
+      "12",
+      "10"
+    ],
+    "answerIndex": 3,
     "explanation": "A is 20 now, so B is 10 now."
   },
   {
@@ -1867,8 +2902,13 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "Two successive discounts of 10% and 20% are equivalent to a single discount of:",
-    "options": ["28%", "30%", "32%", "35%"],
-    "answerIndex": 0,
+    "options": [
+      "30%",
+      "35%",
+      "32%",
+      "28%"
+    ],
+    "answerIndex": 3,
     "explanation": "Price multiplier is 0.9 x 0.8 = 0.72, so discount is 28%."
   },
   {
@@ -1876,7 +2916,12 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "A shopkeeper marks an item 25% above cost and gives 20% discount. Net result is:",
-    "options": ["No profit, no loss", "5% profit", "10% profit", "20% loss"],
+    "options": [
+      "No profit, no loss",
+      "5% profit",
+      "10% profit",
+      "20% loss"
+    ],
     "answerIndex": 0,
     "explanation": "Marked price is 1.25C and selling price is 0.8 x 1.25C = C."
   },
@@ -1885,8 +2930,1273 @@
     "category": "Aptitude",
     "difficulty": "hard",
     "prompt": "If 6 workers complete a task in 12 days, 9 workers at the same rate complete it in:",
-    "options": ["6 days", "8 days", "9 days", "18 days"],
-    "answerIndex": 1,
+    "options": [
+      "18 days",
+      "6 days",
+      "8 days",
+      "9 days"
+    ],
+    "answerIndex": 2,
     "explanation": "Work is 6 x 12 = 72 worker-days. 72/9 = 8 days."
+  },
+  {
+    "id": "dsa-e-011",
+    "category": "DSA",
+    "difficulty": "easy",
+    "prompt": "Which data structure is commonly used to count frequencies of elements in an array?",
+    "options": [
+      "Doubly linked list",
+      "Priority queue",
+      "Balanced BST",
+      "Hash map"
+    ],
+    "answerIndex": 3,
+    "explanation": "A hash map stores each value as a key and its frequency as the value."
+  },
+  {
+    "id": "dsa-e-012",
+    "category": "DSA",
+    "difficulty": "easy",
+    "prompt": "Appending to the end of a dynamic array is usually:",
+    "options": [
+      "O(log k)",
+      "O(n)",
+      "O(1) amortized",
+      "O(V + E)"
+    ],
+    "answerIndex": 2,
+    "explanation": "Occasional resizing is spread over many appends, giving amortized constant time."
+  },
+  {
+    "id": "dsa-e-013",
+    "category": "DSA",
+    "difficulty": "easy",
+    "prompt": "Level-order traversal of a binary tree is the same idea as:",
+    "options": [
+      "Doubly linked list",
+      "Deque",
+      "Breadth-first search",
+      "Hash map"
+    ],
+    "answerIndex": 2,
+    "explanation": "Level-order traversal visits nodes level by level using BFS."
+  },
+  {
+    "id": "dsa-e-014",
+    "category": "DSA",
+    "difficulty": "easy",
+    "prompt": "In a binary search tree, values in the left subtree are usually:",
+    "options": [
+      "Priority queue",
+      "Smaller than the node value",
+      "Trie",
+      "Queue"
+    ],
+    "answerIndex": 1,
+    "explanation": "BST ordering keeps smaller values on the left and larger values on the right."
+  },
+  {
+    "id": "dsa-m-011",
+    "category": "DSA",
+    "difficulty": "medium",
+    "prompt": "Which technique detects a cycle in a linked list using O(1) extra space?",
+    "options": [
+      "O(n)",
+      "Floyd slow and fast pointers",
+      "O(log n)",
+      "O(n^2)"
+    ],
+    "answerIndex": 1,
+    "explanation": "Floyd cycle detection moves one pointer slowly and another quickly."
+  },
+  {
+    "id": "dsa-m-012",
+    "category": "DSA",
+    "difficulty": "medium",
+    "prompt": "Kadane's algorithm is used to find:",
+    "options": [
+      "Memoized state transition",
+      "Backtracking over all states",
+      "Two-pointer scanning",
+      "Maximum subarray sum"
+    ],
+    "answerIndex": 3,
+    "explanation": "Kadane's algorithm tracks the best subarray ending at each position."
+  },
+  {
+    "id": "dsa-m-013",
+    "category": "DSA",
+    "difficulty": "medium",
+    "prompt": "To sort an array where every element is at most k positions away from its sorted place, use:",
+    "options": [
+      "A min-heap of size k + 1",
+      "Counting sort",
+      "Heap sort",
+      "Insertion sort"
+    ],
+    "answerIndex": 0,
+    "explanation": "The next smallest element must be within the next k + 1 candidates."
+  },
+  {
+    "id": "dsa-m-014",
+    "category": "DSA",
+    "difficulty": "medium",
+    "prompt": "A tree with n nodes has how many edges?",
+    "options": [
+      "Doubly linked list",
+      "Balanced BST",
+      "n - 1",
+      "Queue"
+    ],
+    "answerIndex": 2,
+    "explanation": "Every connected acyclic graph with n nodes has n - 1 edges."
+  },
+  {
+    "id": "dsa-m-015",
+    "category": "DSA",
+    "difficulty": "medium",
+    "prompt": "A stack supporting getMin in O(1) commonly uses:",
+    "options": [
+      "O(n)",
+      "O(log k)",
+      "O(1) amortized",
+      "An auxiliary stack of minimums"
+    ],
+    "answerIndex": 3,
+    "explanation": "A second stack can track the current minimum at each depth."
+  },
+  {
+    "id": "dsa-h-011",
+    "category": "DSA",
+    "difficulty": "hard",
+    "prompt": "Lowest common ancestor in a binary search tree can be found efficiently by using:",
+    "options": [
+      "Trie",
+      "The BST ordering property",
+      "Queue",
+      "Balanced BST"
+    ],
+    "answerIndex": 1,
+    "explanation": "If both target values are on one side, move that way; otherwise the current node is the split point."
+  },
+  {
+    "id": "dsa-h-012",
+    "category": "DSA",
+    "difficulty": "hard",
+    "prompt": "A Fenwick tree is commonly used for point updates and prefix queries in:",
+    "options": [
+      "O(n log n)",
+      "O(log n)",
+      "O(1) amortized",
+      "O(V + E)"
+    ],
+    "answerIndex": 1,
+    "explanation": "Fenwick tree operations move through indexed ranges using bit operations."
+  },
+  {
+    "id": "dsa-h-013",
+    "category": "DSA",
+    "difficulty": "hard",
+    "prompt": "Kosaraju's algorithm finds strongly connected components using DFS and:",
+    "options": [
+      "Dijkstra with non-negative weights",
+      "Topological sorting",
+      "Union-find connectivity",
+      "The transposed graph"
+    ],
+    "answerIndex": 3,
+    "explanation": "It runs DFS by finish order and then explores the reversed graph."
+  },
+  {
+    "id": "dsa-h-014",
+    "category": "DSA",
+    "difficulty": "hard",
+    "prompt": "A graph is bipartite if its vertices can be colored with:",
+    "options": [
+      "Dijkstra with non-negative weights",
+      "Two colors without same-color adjacent vertices",
+      "Topological sorting",
+      "Bellman-Ford relaxation"
+    ],
+    "answerIndex": 1,
+    "explanation": "Bipartite checking usually tries two-coloring with BFS or DFS."
+  },
+  {
+    "id": "dsa-h-015",
+    "category": "DSA",
+    "difficulty": "hard",
+    "prompt": "The O(n log n) LIS algorithm maintains:",
+    "options": [
+      "O(n)",
+      "O(V + E)",
+      "Smallest possible tail values for subsequence lengths",
+      "O(log k)"
+    ],
+    "answerIndex": 2,
+    "explanation": "The tails array is updated with binary search to keep future subsequences flexible."
+  },
+  {
+    "id": "cn-e-011",
+    "category": "CN",
+    "difficulty": "easy",
+    "prompt": "SMTP is mainly used for:",
+    "options": [
+      "FTP",
+      "Sending email",
+      "DHCP",
+      "TCP"
+    ],
+    "answerIndex": 1,
+    "explanation": "SMTP is the standard protocol for sending email between mail systems."
+  },
+  {
+    "id": "cn-e-012",
+    "category": "CN",
+    "difficulty": "easy",
+    "prompt": "FTP is commonly associated with:",
+    "options": [
+      "TCP",
+      "HTTP",
+      "File transfer",
+      "UDP"
+    ],
+    "answerIndex": 2,
+    "explanation": "FTP stands for File Transfer Protocol."
+  },
+  {
+    "id": "cn-e-013",
+    "category": "CN",
+    "difficulty": "easy",
+    "prompt": "A network switch commonly forwards frames using:",
+    "options": [
+      "Default gateway lookup",
+      "Private IPv4 range",
+      "Subnet prefix matching",
+      "MAC addresses"
+    ],
+    "answerIndex": 3,
+    "explanation": "Switches learn and use MAC address tables for local frame forwarding."
+  },
+  {
+    "id": "cn-e-014",
+    "category": "CN",
+    "difficulty": "easy",
+    "prompt": "A URL is used to identify:",
+    "options": [
+      "A resource on the web",
+      "SMTP",
+      "UDP",
+      "HTTP"
+    ],
+    "answerIndex": 0,
+    "explanation": "A URL locates a resource and often includes protocol, host, and path."
+  },
+  {
+    "id": "cn-m-011",
+    "category": "CN",
+    "difficulty": "medium",
+    "prompt": "TCP retransmits data mainly when it detects:",
+    "options": [
+      "Flow control window update",
+      "Packet loss through timeout or acknowledgments",
+      "Congestion window growth",
+      "Connection teardown with FIN"
+    ],
+    "answerIndex": 1,
+    "explanation": "Timeouts and duplicate acknowledgments can trigger TCP retransmission."
+  },
+  {
+    "id": "cn-m-012",
+    "category": "CN",
+    "difficulty": "medium",
+    "prompt": "HTTP status code 301 indicates:",
+    "options": [
+      "Temporary redirect",
+      "Permanent redirect",
+      "Bad request",
+      "Unauthorized"
+    ],
+    "answerIndex": 1,
+    "explanation": "301 means the resource has moved permanently."
+  },
+  {
+    "id": "cn-m-013",
+    "category": "CN",
+    "difficulty": "medium",
+    "prompt": "Which IPv4 address is from a private address range?",
+    "options": [
+      "MAC address resolution",
+      "Default gateway lookup",
+      "Subnet prefix matching",
+      "192.168.1.1"
+    ],
+    "answerIndex": 3,
+    "explanation": "192.168.0.0/16 is one of the private IPv4 ranges."
+  },
+  {
+    "id": "cn-m-014",
+    "category": "CN",
+    "difficulty": "medium",
+    "prompt": "CSMA/CD is associated with:",
+    "options": [
+      "FTP",
+      "TCP",
+      "HTTP",
+      "Classic shared Ethernet collision handling"
+    ],
+    "answerIndex": 3,
+    "explanation": "CSMA/CD detects collisions on shared Ethernet media."
+  },
+  {
+    "id": "cn-h-011",
+    "category": "CN",
+    "difficulty": "hard",
+    "prompt": "The TTL field in an IP packet helps prevent:",
+    "options": [
+      "Default gateway lookup",
+      "Packets looping forever",
+      "Subnet prefix matching",
+      "NAT port mapping"
+    ],
+    "answerIndex": 1,
+    "explanation": "Routers decrement TTL; the packet is discarded when it reaches zero."
+  },
+  {
+    "id": "cn-h-012",
+    "category": "CN",
+    "difficulty": "hard",
+    "prompt": "OSPF is an example of a:",
+    "options": [
+      "Path-vector routing",
+      "Link-state routing",
+      "Link-state routing protocol",
+      "Anycast advertisement"
+    ],
+    "answerIndex": 2,
+    "explanation": "OSPF routers exchange link-state information to compute routes."
+  },
+  {
+    "id": "cn-h-013",
+    "category": "CN",
+    "difficulty": "hard",
+    "prompt": "A DNS recursive resolver caches records based mainly on their:",
+    "options": [
+      "TTL value",
+      "ICMP",
+      "UDP",
+      "ARP"
+    ],
+    "answerIndex": 0,
+    "explanation": "DNS TTL tells resolvers how long a record may be cached."
+  },
+  {
+    "id": "cn-h-014",
+    "category": "CN",
+    "difficulty": "hard",
+    "prompt": "The TCP checksum is used to:",
+    "options": [
+      "Detect corruption in TCP segments",
+      "Congestion window growth",
+      "Duplicate ACK handling",
+      "Connection teardown with FIN"
+    ],
+    "answerIndex": 0,
+    "explanation": "The checksum helps detect bit errors across the TCP segment and pseudo-header."
+  },
+  {
+    "id": "oops-e-011",
+    "category": "OOPS",
+    "difficulty": "easy",
+    "prompt": "Polymorphism literally supports the idea of:",
+    "options": [
+      "Final method restriction",
+      "Interface default method",
+      "Static dispatch",
+      "One interface with many forms"
+    ],
+    "answerIndex": 3,
+    "explanation": "Polymorphism lets different object types respond through a common interface."
+  },
+  {
+    "id": "oops-e-012",
+    "category": "OOPS",
+    "difficulty": "easy",
+    "prompt": "A setter method is commonly used to:",
+    "options": [
+      "Modify an object field in a controlled way",
+      "Inheritance",
+      "Abstraction",
+      "Method overloading"
+    ],
+    "answerIndex": 0,
+    "explanation": "Setters provide controlled write access to object state."
+  },
+  {
+    "id": "oops-e-013",
+    "category": "OOPS",
+    "difficulty": "easy",
+    "prompt": "In many OOP languages, super refers to:",
+    "options": [
+      "The parent class or superclass context",
+      "Abstraction",
+      "Encapsulation",
+      "Composition"
+    ],
+    "answerIndex": 0,
+    "explanation": "super is used to access superclass constructors or members."
+  },
+  {
+    "id": "oops-e-014",
+    "category": "OOPS",
+    "difficulty": "easy",
+    "prompt": "A package or namespace mainly helps to:",
+    "options": [
+      "Composition",
+      "Inheritance",
+      "Group related code and avoid name conflicts",
+      "Encapsulation"
+    ],
+    "answerIndex": 2,
+    "explanation": "Packages organize code and reduce naming collisions."
+  },
+  {
+    "id": "oops-m-011",
+    "category": "OOPS",
+    "difficulty": "medium",
+    "prompt": "Method overriding usually requires a subclass method to have:",
+    "options": [
+      "Static dispatch",
+      "Interface default method",
+      "Final method restriction",
+      "A compatible signature with the superclass method"
+    ],
+    "answerIndex": 3,
+    "explanation": "Overriding replaces inherited behavior using a compatible method declaration."
+  },
+  {
+    "id": "oops-m-012",
+    "category": "OOPS",
+    "difficulty": "medium",
+    "prompt": "Association in OOP describes:",
+    "options": [
+      "has-a relationship",
+      "A relationship between objects",
+      "depends-on relationship",
+      "implements relationship"
+    ],
+    "answerIndex": 1,
+    "explanation": "Association models how objects know about or use one another."
+  },
+  {
+    "id": "oops-m-013",
+    "category": "OOPS",
+    "difficulty": "medium",
+    "prompt": "A final method in Java cannot be:",
+    "options": [
+      "Interface default method",
+      "Abstract class member",
+      "Overridden by a subclass",
+      "Method overriding"
+    ],
+    "answerIndex": 2,
+    "explanation": "final prevents overriding for methods."
+  },
+  {
+    "id": "oops-m-014",
+    "category": "OOPS",
+    "difficulty": "medium",
+    "prompt": "Interface default methods in Java can provide:",
+    "options": [
+      "Static dispatch",
+      "Interface default method",
+      "Method overloading",
+      "A method implementation inside an interface"
+    ],
+    "answerIndex": 3,
+    "explanation": "Default methods let interfaces include reusable method bodies."
+  },
+  {
+    "id": "oops-h-011",
+    "category": "OOPS",
+    "difficulty": "hard",
+    "prompt": "The Interface Segregation Principle says clients should not depend on:",
+    "options": [
+      "Dependency Inversion Principle",
+      "Single Responsibility Principle",
+      "Methods they do not use",
+      "Liskov Substitution Principle"
+    ],
+    "answerIndex": 2,
+    "explanation": "Smaller focused interfaces avoid forcing unnecessary dependencies."
+  },
+  {
+    "id": "oops-h-012",
+    "category": "OOPS",
+    "difficulty": "hard",
+    "prompt": "The Singleton pattern restricts a class to:",
+    "options": [
+      "Strategy",
+      "A single shared instance",
+      "Visitor",
+      "Singleton"
+    ],
+    "answerIndex": 1,
+    "explanation": "Singleton centralizes access to one instance, though it should be used carefully."
+  },
+  {
+    "id": "oops-h-013",
+    "category": "OOPS",
+    "difficulty": "hard",
+    "prompt": "The Adapter pattern is used to:",
+    "options": [
+      "Strategy",
+      "Factory Method",
+      "Make incompatible interfaces work together",
+      "Observer"
+    ],
+    "answerIndex": 2,
+    "explanation": "An adapter translates one interface into another expected by client code."
+  },
+  {
+    "id": "oops-h-014",
+    "category": "OOPS",
+    "difficulty": "hard",
+    "prompt": "The Decorator pattern adds behavior by:",
+    "options": [
+      "Wrapping an object with another object",
+      "Visitor",
+      "Decorator",
+      "Singleton"
+    ],
+    "answerIndex": 0,
+    "explanation": "Decorators wrap objects to add responsibilities dynamically."
+  },
+  {
+    "id": "os-e-011",
+    "category": "OS",
+    "difficulty": "easy",
+    "prompt": "A shell is mainly used to:",
+    "options": [
+      "Interpret user commands",
+      "Interrupt handling",
+      "Device driver request",
+      "Process control block"
+    ],
+    "answerIndex": 0,
+    "explanation": "Shells provide a command interface to OS services."
+  },
+  {
+    "id": "os-e-012",
+    "category": "OS",
+    "difficulty": "easy",
+    "prompt": "A process control block stores:",
+    "options": [
+      "Information about a process state",
+      "Deadlock avoidance",
+      "Race condition",
+      "Reader-writer lock"
+    ],
+    "answerIndex": 0,
+    "explanation": "The PCB stores metadata such as registers, state, and scheduling information."
+  },
+  {
+    "id": "os-e-013",
+    "category": "OS",
+    "difficulty": "easy",
+    "prompt": "Booting a computer means:",
+    "options": [
+      "System call boundary",
+      "Device driver request",
+      "Loading and starting the operating system",
+      "Kernel mode transition"
+    ],
+    "answerIndex": 2,
+    "explanation": "Booting initializes hardware and loads the OS."
+  },
+  {
+    "id": "os-e-014",
+    "category": "OS",
+    "difficulty": "easy",
+    "prompt": "Cache memory is usually faster than:",
+    "options": [
+      "Main memory",
+      "Copy-on-write page sharing",
+      "Page fault handling",
+      "Dirty page write-back"
+    ],
+    "answerIndex": 0,
+    "explanation": "CPU caches are small, fast memories closer to the processor than RAM."
+  },
+  {
+    "id": "os-m-011",
+    "category": "OS",
+    "difficulty": "medium",
+    "prompt": "Aging in priority scheduling is used to reduce:",
+    "options": [
+      "Round-robin scheduling",
+      "Starvation",
+      "Priority scheduling with aging",
+      "Preemptive scheduling"
+    ],
+    "answerIndex": 1,
+    "explanation": "Aging gradually increases waiting jobs' priority so they eventually run."
+  },
+  {
+    "id": "os-m-012",
+    "category": "OS",
+    "difficulty": "medium",
+    "prompt": "Demand paging loads a page into memory:",
+    "options": [
+      "TLB lookup",
+      "Working set tracking",
+      "When it is actually needed",
+      "Copy-on-write page sharing"
+    ],
+    "answerIndex": 2,
+    "explanation": "Demand paging avoids loading pages until a reference causes a need."
+  },
+  {
+    "id": "os-m-013",
+    "category": "OS",
+    "difficulty": "medium",
+    "prompt": "A critical section is code that accesses:",
+    "options": [
+      "Shared resources needing synchronization",
+      "Reader-writer lock",
+      "Mutex lock",
+      "Critical section"
+    ],
+    "answerIndex": 0,
+    "explanation": "Critical sections must be protected to avoid races."
+  },
+  {
+    "id": "os-m-014",
+    "category": "OS",
+    "difficulty": "medium",
+    "prompt": "First-come, first-served CPU scheduling is generally:",
+    "options": [
+      "Round-robin scheduling",
+      "First-come, first-served",
+      "Non-preemptive",
+      "Shortest job first"
+    ],
+    "answerIndex": 2,
+    "explanation": "FCFS runs jobs in arrival order without preempting them."
+  },
+  {
+    "id": "os-h-011",
+    "category": "OS",
+    "difficulty": "hard",
+    "prompt": "A dirty bit on a page usually indicates the page has been:",
+    "options": [
+      "TLB lookup",
+      "Page fault handling",
+      "Dirty page write-back",
+      "Modified since it was loaded"
+    ],
+    "answerIndex": 3,
+    "explanation": "Dirty pages may need to be written back before eviction."
+  },
+  {
+    "id": "os-h-012",
+    "category": "OS",
+    "difficulty": "hard",
+    "prompt": "The working set model tracks:",
+    "options": [
+      "Dirty page write-back",
+      "Copy-on-write page sharing",
+      "Working set tracking",
+      "Pages recently used by a process"
+    ],
+    "answerIndex": 3,
+    "explanation": "Working set approximates the memory a process needs to avoid excessive faults."
+  },
+  {
+    "id": "os-h-013",
+    "category": "OS",
+    "difficulty": "hard",
+    "prompt": "A spinlock waits for a lock by:",
+    "options": [
+      "Spinlock busy-wait",
+      "Repeatedly checking in a busy loop",
+      "Deadlock avoidance",
+      "Critical section"
+    ],
+    "answerIndex": 1,
+    "explanation": "Spinlocks busy-wait, which can be useful for very short waits."
+  },
+  {
+    "id": "os-h-014",
+    "category": "OS",
+    "difficulty": "hard",
+    "prompt": "The wait operation on a counting semaphore usually:",
+    "options": [
+      "Deadlock avoidance",
+      "Spinlock busy-wait",
+      "Decrements the count or blocks if unavailable",
+      "Mutex lock"
+    ],
+    "answerIndex": 2,
+    "explanation": "Semaphore wait acquires one unit of the protected resource if possible."
+  },
+  {
+    "id": "sd-e-011",
+    "category": "System Design",
+    "difficulty": "easy",
+    "prompt": "Latency measures:",
+    "options": [
+      "Circuit breaker state",
+      "Time taken to respond",
+      "SLA target tracking",
+      "Connection pool reuse"
+    ],
+    "answerIndex": 1,
+    "explanation": "Latency is the delay between request and response."
+  },
+  {
+    "id": "sd-e-012",
+    "category": "System Design",
+    "difficulty": "easy",
+    "prompt": "Throughput usually means:",
+    "options": [
+      "Partitioned workload",
+      "Work completed per unit time",
+      "Read replica routing",
+      "Autoscaling policy"
+    ],
+    "answerIndex": 1,
+    "explanation": "Throughput is often measured in requests or jobs per second."
+  },
+  {
+    "id": "sd-e-013",
+    "category": "System Design",
+    "difficulty": "easy",
+    "prompt": "An SLA usually describes:",
+    "options": [
+      "API gateway routing",
+      "Rate limiter bucket",
+      "Health check probing",
+      "A service-level commitment"
+    ],
+    "answerIndex": 3,
+    "explanation": "SLAs define expectations such as uptime or response time."
+  },
+  {
+    "id": "sd-e-014",
+    "category": "System Design",
+    "difficulty": "easy",
+    "prompt": "A health check endpoint helps determine whether:",
+    "options": [
+      "Connection pool reuse",
+      "Circuit breaker state",
+      "SLA target tracking",
+      "A service instance is healthy"
+    ],
+    "answerIndex": 3,
+    "explanation": "Load balancers and monitors use health checks to detect unhealthy instances."
+  },
+  {
+    "id": "sd-m-011",
+    "category": "System Design",
+    "difficulty": "medium",
+    "prompt": "A database connection pool improves performance by:",
+    "options": [
+      "Transactional outbox",
+      "Shard key selection",
+      "Reusing existing database connections",
+      "Two-phase commit"
+    ],
+    "answerIndex": 2,
+    "explanation": "Pooling avoids repeated connection setup overhead."
+  },
+  {
+    "id": "sd-m-012",
+    "category": "System Design",
+    "difficulty": "medium",
+    "prompt": "In a read-through cache, on cache miss the cache:",
+    "options": [
+      "Loads data from the backing store",
+      "Write-through cache",
+      "Hot-key mitigation",
+      "Cache-aside lookup"
+    ],
+    "answerIndex": 0,
+    "explanation": "Read-through caches fetch missing data and store it for later reads."
+  },
+  {
+    "id": "sd-m-013",
+    "category": "System Design",
+    "difficulty": "medium",
+    "prompt": "A leaky bucket rate limiter is used to:",
+    "options": [
+      "Circuit breaker state",
+      "SLA target tracking",
+      "Smooth outgoing request rate",
+      "Health check probing"
+    ],
+    "answerIndex": 2,
+    "explanation": "The leaky bucket drains at a steady rate to smooth bursts."
+  },
+  {
+    "id": "sd-m-014",
+    "category": "System Design",
+    "difficulty": "medium",
+    "prompt": "An idempotency key helps a server:",
+    "options": [
+      "Connection pool reuse",
+      "Rate limiter bucket",
+      "API gateway routing",
+      "Recognize duplicate retries of the same request"
+    ],
+    "answerIndex": 3,
+    "explanation": "The key lets retried requests return the original outcome instead of repeating side effects."
+  },
+  {
+    "id": "sd-m-015",
+    "category": "System Design",
+    "difficulty": "medium",
+    "prompt": "Fan-out on write in a feed system means:",
+    "options": [
+      "Fan-out on write",
+      "Backpressure signal",
+      "Message deduplication",
+      "Precomputing followers' feeds when content is posted"
+    ],
+    "answerIndex": 3,
+    "explanation": "Fan-out on write shifts work to write time to make feed reads faster."
+  },
+  {
+    "id": "sd-h-011",
+    "category": "System Design",
+    "difficulty": "hard",
+    "prompt": "Vector clocks are used to track:",
+    "options": [
+      "Causal ordering of events",
+      "Idempotent retry handling",
+      "Leader election",
+      "Consensus log replication"
+    ],
+    "answerIndex": 0,
+    "explanation": "Vector clocks help reason about causality in distributed systems."
+  },
+  {
+    "id": "sd-h-012",
+    "category": "System Design",
+    "difficulty": "hard",
+    "prompt": "Virtual nodes in consistent hashing help:",
+    "options": [
+      "Hot-key mitigation",
+      "Write-through cache",
+      "Consistent hashing",
+      "Improve load balance across physical nodes"
+    ],
+    "answerIndex": 3,
+    "explanation": "Virtual nodes spread ownership more evenly around the hash ring."
+  },
+  {
+    "id": "sd-h-013",
+    "category": "System Design",
+    "difficulty": "hard",
+    "prompt": "In quorum systems, a common condition for strong read/write overlap is:",
+    "options": [
+      "Idempotent retry handling",
+      "Leader election",
+      "R + W > N",
+      "Consensus log replication"
+    ],
+    "answerIndex": 2,
+    "explanation": "If read and write quorums overlap, reads can observe the latest committed write under the model."
+  },
+  {
+    "id": "sd-h-014",
+    "category": "System Design",
+    "difficulty": "hard",
+    "prompt": "The transactional outbox pattern helps ensure:",
+    "options": [
+      "Database changes and emitted events stay consistent",
+      "Two-phase commit",
+      "Write-ahead log",
+      "Shard key selection"
+    ],
+    "answerIndex": 0,
+    "explanation": "An outbox table records events in the same transaction as state changes."
+  },
+  {
+    "id": "core-e-011",
+    "category": "Core CS",
+    "difficulty": "easy",
+    "prompt": "The CPU is mainly responsible for:",
+    "options": [
+      "Consensus majority commit",
+      "Hash load factor",
+      "Bloom filter false positive",
+      "Executing program instructions"
+    ],
+    "answerIndex": 3,
+    "explanation": "The CPU fetches, decodes, and executes instructions."
+  },
+  {
+    "id": "core-e-012",
+    "category": "Core CS",
+    "difficulty": "easy",
+    "prompt": "RAM stands for:",
+    "options": [
+      "Garbage collector reachability",
+      "NP-hard reduction",
+      "Hash load factor",
+      "Random Access Memory"
+    ],
+    "answerIndex": 3,
+    "explanation": "RAM is Random Access Memory used for active program data."
+  },
+  {
+    "id": "core-e-013",
+    "category": "Core CS",
+    "difficulty": "easy",
+    "prompt": "The binary number 1010 equals which decimal number?",
+    "options": [
+      "Binary representation",
+      "10",
+      "Boolean conjunction",
+      "Floating-point rounding"
+    ],
+    "answerIndex": 1,
+    "explanation": "1010 in binary is 8 + 2 = 10."
+  },
+  {
+    "id": "core-e-014",
+    "category": "Core CS",
+    "difficulty": "easy",
+    "prompt": "Many web APIs commonly return structured data as:",
+    "options": [
+      "XML",
+      "JSON",
+      "YAML",
+      "Plain text"
+    ],
+    "answerIndex": 1,
+    "explanation": "JSON is a common response format for web APIs."
+  },
+  {
+    "id": "core-m-011",
+    "category": "Core CS",
+    "difficulty": "medium",
+    "prompt": "In ACID, isolation is meant to control:",
+    "options": [
+      "Effects of concurrent transactions",
+      "Snapshot isolation",
+      "Foreign key constraint",
+      "MVCC version chain"
+    ],
+    "answerIndex": 0,
+    "explanation": "Isolation defines how transactions interact when running concurrently."
+  },
+  {
+    "id": "core-m-012",
+    "category": "Core CS",
+    "difficulty": "medium",
+    "prompt": "A highly selective database index means:",
+    "options": [
+      "Snapshot isolation",
+      "Serializable isolation",
+      "Few rows match a typical indexed value",
+      "Foreign key constraint"
+    ],
+    "answerIndex": 2,
+    "explanation": "High selectivity makes an index more useful for filtering."
+  },
+  {
+    "id": "core-m-013",
+    "category": "Core CS",
+    "difficulty": "medium",
+    "prompt": "The lexical analysis phase of a compiler produces:",
+    "options": [
+      "Tokens",
+      "Semantic analysis",
+      "Code generation",
+      "Parsing syntax tree"
+    ],
+    "answerIndex": 0,
+    "explanation": "Lexers convert source text into token streams."
+  },
+  {
+    "id": "core-m-014",
+    "category": "Core CS",
+    "difficulty": "medium",
+    "prompt": "Floating point arithmetic can be surprising because:",
+    "options": [
+      "Some decimal fractions cannot be represented exactly in binary",
+      "Little-endian byte order",
+      "Two's-complement range",
+      "Binary representation"
+    ],
+    "answerIndex": 0,
+    "explanation": "Binary floating point has finite precision and cannot exactly encode many decimal fractions."
+  },
+  {
+    "id": "core-m-015",
+    "category": "Core CS",
+    "difficulty": "medium",
+    "prompt": "HTTP PUT is generally expected to be:",
+    "options": [
+      "REST statelessness",
+      "Idempotent",
+      "Git commit history",
+      "JSON object structure"
+    ],
+    "answerIndex": 1,
+    "explanation": "Repeating the same PUT should leave the resource in the same final state."
+  },
+  {
+    "id": "core-h-011",
+    "category": "Core CS",
+    "difficulty": "hard",
+    "prompt": "A hash table's load factor affects:",
+    "options": [
+      "Consensus majority commit",
+      "NP-hard reduction",
+      "CAP partition tradeoff",
+      "Collision probability and resizing behavior"
+    ],
+    "answerIndex": 3,
+    "explanation": "Higher load factors can increase collisions and trigger resizing policies."
+  },
+  {
+    "id": "core-h-012",
+    "category": "Core CS",
+    "difficulty": "hard",
+    "prompt": "In ACID, atomicity means a transaction:",
+    "options": [
+      "Commits all changes or none",
+      "Snapshot isolation",
+      "B-tree index",
+      "Serializable isolation"
+    ],
+    "answerIndex": 0,
+    "explanation": "Atomicity prevents partial transaction effects from becoming visible permanently."
+  },
+  {
+    "id": "core-h-013",
+    "category": "Core CS",
+    "difficulty": "hard",
+    "prompt": "Snapshot isolation can still allow which anomaly?",
+    "options": [
+      "Consensus majority commit",
+      "Hash load factor",
+      "Write skew",
+      "NP-hard reduction"
+    ],
+    "answerIndex": 2,
+    "explanation": "Transactions can read the same snapshot and make conflicting decisions on different rows."
+  },
+  {
+    "id": "core-h-014",
+    "category": "Core CS",
+    "difficulty": "hard",
+    "prompt": "In Raft, a log entry is committed after it is stored on:",
+    "options": [
+      "A majority of servers",
+      "Hash load factor",
+      "Consensus majority commit",
+      "CAP partition tradeoff"
+    ],
+    "answerIndex": 0,
+    "explanation": "Raft uses majority agreement for committed log entries."
+  },
+  {
+    "id": "apt-e-011",
+    "category": "Aptitude",
+    "difficulty": "easy",
+    "prompt": "25% of 240 is:",
+    "options": [
+      "120",
+      "60",
+      "40",
+      "80"
+    ],
+    "answerIndex": 1,
+    "explanation": "25% is one-fourth, and 240/4 = 60."
+  },
+  {
+    "id": "apt-e-012",
+    "category": "Aptitude",
+    "difficulty": "easy",
+    "prompt": "Find the next number: 3, 6, 11, 18, ?",
+    "options": [
+      "24",
+      "27",
+      "29",
+      "32"
+    ],
+    "answerIndex": 1,
+    "explanation": "The differences are 3, 5, 7, so the next difference is 9 and the next term is 27."
+  },
+  {
+    "id": "apt-e-013",
+    "category": "Aptitude",
+    "difficulty": "easy",
+    "prompt": "If 5 pens cost Rs. 50, the cost of one pen is:",
+    "options": [
+      "Rs. 20",
+      "Rs. 5",
+      "Rs. 10",
+      "Rs. 25"
+    ],
+    "answerIndex": 2,
+    "explanation": "50 divided by 5 is 10."
+  },
+  {
+    "id": "apt-e-014",
+    "category": "Aptitude",
+    "difficulty": "easy",
+    "prompt": "The area of a square with side 7 is:",
+    "options": [
+      "49",
+      "14",
+      "28",
+      "56"
+    ],
+    "answerIndex": 0,
+    "explanation": "Area of a square is side squared, so 7 x 7 = 49."
+  },
+  {
+    "id": "apt-m-011",
+    "category": "Aptitude",
+    "difficulty": "medium",
+    "prompt": "A:B is 5:7 and A + B = 96. What is A?",
+    "options": [
+      "56",
+      "35",
+      "48",
+      "40"
+    ],
+    "answerIndex": 3,
+    "explanation": "There are 12 parts, each worth 8. A has 5 parts, so A = 40."
+  },
+  {
+    "id": "apt-m-012",
+    "category": "Aptitude",
+    "difficulty": "medium",
+    "prompt": "Simple interest on Rs. 2000 at 8% per year for 2 years is:",
+    "options": [
+      "Rs. 400",
+      "Rs. 160",
+      "Rs. 320",
+      "Rs. 240"
+    ],
+    "answerIndex": 2,
+    "explanation": "Simple interest is 2000 x 8 x 2 / 100 = 320."
+  },
+  {
+    "id": "apt-m-013",
+    "category": "Aptitude",
+    "difficulty": "medium",
+    "prompt": "The probability of drawing an ace from a standard 52-card deck is:",
+    "options": [
+      "4/13",
+      "1/4",
+      "1/13",
+      "1/52"
+    ],
+    "answerIndex": 2,
+    "explanation": "There are 4 aces out of 52 cards, so probability is 4/52 = 1/13."
+  },
+  {
+    "id": "apt-m-014",
+    "category": "Aptitude",
+    "difficulty": "medium",
+    "prompt": "For equal distances at speeds 30 km/h and 60 km/h, the average speed is:",
+    "options": [
+      "50 km/h",
+      "40 km/h",
+      "90 km/h",
+      "45 km/h"
+    ],
+    "answerIndex": 1,
+    "explanation": "For equal distances, average speed is 2ab/(a+b) = 2 x 30 x 60 / 90 = 40."
+  },
+  {
+    "id": "apt-m-015",
+    "category": "Aptitude",
+    "difficulty": "medium",
+    "prompt": "How many 3-digit numbers can be formed using 1, 2, and 3 without repetition?",
+    "options": [
+      "9",
+      "3",
+      "12",
+      "6"
+    ],
+    "answerIndex": 3,
+    "explanation": "The count is 3! = 6."
+  },
+  {
+    "id": "apt-h-011",
+    "category": "Aptitude",
+    "difficulty": "hard",
+    "prompt": "20 liters of 30% acid solution is mixed with 30 liters of 20% acid solution. The final concentration is:",
+    "options": [
+      "26%",
+      "24%",
+      "25%",
+      "30%"
+    ],
+    "answerIndex": 1,
+    "explanation": "Acid amount is 6 + 6 = 12 liters in 50 liters total, so concentration is 24%."
+  },
+  {
+    "id": "apt-h-012",
+    "category": "Aptitude",
+    "difficulty": "hard",
+    "prompt": "A boat speed in still water is 10 km/h and stream speed is 2 km/h. Its downstream speed is:",
+    "options": [
+      "12 km/h",
+      "10 km/h",
+      "20 km/h",
+      "8 km/h"
+    ],
+    "answerIndex": 0,
+    "explanation": "Downstream speed is boat speed plus stream speed, so 10 + 2 = 12."
+  },
+  {
+    "id": "apt-h-013",
+    "category": "Aptitude",
+    "difficulty": "hard",
+    "prompt": "A, B, and C can do a job in 8, 12, and 24 days. Together they finish it in:",
+    "options": [
+      "8 days",
+      "12 days",
+      "4 days",
+      "6 days"
+    ],
+    "answerIndex": 2,
+    "explanation": "Their combined rate is 1/8 + 1/12 + 1/24 = 1/4 job per day."
+  },
+  {
+    "id": "apt-h-014",
+    "category": "Aptitude",
+    "difficulty": "hard",
+    "prompt": "Compound amount on Rs. 10000 at 10% per year for 2 years is:",
+    "options": [
+      "Rs. 11000",
+      "Rs. 12100",
+      "Rs. 12000",
+      "Rs. 12200"
+    ],
+    "answerIndex": 1,
+    "explanation": "Amount is 10000 x 1.1 x 1.1 = 12100."
+  },
+  {
+    "id": "apt-h-015",
+    "category": "Aptitude",
+    "difficulty": "hard",
+    "prompt": "How many distinct arrangements are possible for the letters in MISSISSIPPI?",
+    "options": [
+      "11550",
+      "34650",
+      "83160",
+      "39916800"
+    ],
+    "answerIndex": 1,
+    "explanation": "The count is 11! divided by 4! for I, 4! for S, and 2! for P, which is 34650."
   }
 ]
