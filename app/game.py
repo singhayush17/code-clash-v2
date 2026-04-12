@@ -272,6 +272,11 @@ class GameManager:
                 str(payload.get("questionId", "")),
                 payload.get("optionIndex"),
             )
+        elif message_type == "skip":
+            await self.skip(
+                conn,
+                str(payload.get("questionId", "")),
+            )
         else:
             await self.send_error(conn, "Unknown action.")
 
@@ -478,9 +483,10 @@ class GameManager:
         player.answered += 1
 
         if correct:
-            player.score += 1
+            player.score += 2
             player.streak += 1
         else:
+            player.score -= 1
             player.streak = 0
 
         player.answer_history.append(
@@ -490,6 +496,7 @@ class GameManager:
                 "correctIndex": question["answerIndex"],
                 "correct": correct,
                 "explanation": question.get("explanation", ""),
+                "tags": question.get("tags", []),
                 "answeredAt": now_ms(),
             }
         )
@@ -503,8 +510,55 @@ class GameManager:
                 "score": player.score,
                 "streak": player.streak,
                 "explanation": question.get("explanation", ""),
+                "tags": question.get("tags", []),
             },
         )
+        await self.broadcast_scoreboard(room)
+
+        if room.status == "active" and room.ends_at and time.time() < room.ends_at:
+            await self.send_next_question(conn, room, player)
+
+    async def skip(self, conn: Connection, question_id: str) -> None:
+        room = self.rooms.get(conn.room_id or "")
+        if not room or room.status != "active":
+            await self.send_error(conn, "No active battle.")
+            return
+
+        if room.ends_at is None or time.time() >= room.ends_at:
+            await self.finish_game(room.id, "time")
+            return
+
+        player = room.players.get(conn.player_id)
+        if not player:
+            await self.send_error(conn, "You are not in this battle.")
+            return
+
+        if player.current_question_id != question_id:
+            await self.send_error(conn, "That question is no longer active.")
+            return
+
+        question = self.question_bank.get(question_id)
+        if not question:
+            await self.send_error(conn, "That question was removed from the bank.")
+            return
+
+        player.current_question_id = None
+        player.answered += 1
+        player.streak = 0
+
+        player.answer_history.append(
+            {
+                "question": public_question(question),
+                "selectedIndex": None,
+                "correctIndex": question["answerIndex"],
+                "correct": False,
+                "skipped": True,
+                "explanation": question.get("explanation", ""),
+                "tags": question.get("tags", []),
+                "answeredAt": now_ms(),
+            }
+        )
+
         await self.broadcast_scoreboard(room)
 
         if room.status == "active" and room.ends_at and time.time() < room.ends_at:
