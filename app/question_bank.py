@@ -60,6 +60,13 @@ class QuestionBank:
             if not isinstance(answer_index, int) or not 0 <= answer_index < len(options):
                 raise QuestionBankError(f"{question_id} has an invalid answerIndex.")
 
+            raw_tags = item.get("tags", [])
+            tags = (
+                [str(tag).strip() for tag in raw_tags if str(tag).strip()]
+                if isinstance(raw_tags, list)
+                else []
+            )
+
             normalized = {
                 "id": question_id,
                 "category": str(item["category"]).strip(),
@@ -68,6 +75,7 @@ class QuestionBank:
                 "options": [str(option).strip() for option in options],
                 "answerIndex": answer_index,
                 "explanation": str(item.get("explanation", "")).strip(),
+                "tags": tags,
             }
 
             if not normalized["category"]:
@@ -150,10 +158,12 @@ class QuestionBank:
 
 
 def public_question(question: dict[str, Any]) -> dict[str, Any]:
-    return {
+    result = {
         "id": question["id"],
         "category": question["category"],
         "difficulty": question["difficulty"],
         "prompt": question["prompt"],
         "options": question["options"],
+        "tags": question.get("tags", []),
     }
+    return result

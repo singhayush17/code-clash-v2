@@ -201,10 +201,45 @@ button {
   color: #006f50;
 }
 
+
 .wrong-pill {
   border-color: rgba(215, 38, 61, 0.28);
   background: rgba(215, 38, 61, 0.08);
   color: #9f1c2d;
+}
+
+.company-tag {
+  border-color: rgba(99, 102, 241, 0.30);
+  background: rgba(99, 102, 241, 0.08);
+  color: #4338ca;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.company-tag.small {
+  min-height: 24px;
+  padding: 0 8px;
+  font-size: 0.76rem;
+}
+
+.pill.small {
+  min-height: 22px;
+  padding: 0 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
+
+.pill.danger {
+  border-color: rgba(215, 38, 61, 0.25);
+  background: rgba(215, 38, 61, 0.05);
+  color: var(--red);
+}
+
+.scoring-guide {
+  display: flex;
+  justify-content: space-between;
+  gap: 4px;
+  margin-top: 2px;
 }
 
 .mode-grid {
@@ -556,6 +591,23 @@ button {
   border: 1px solid var(--line);
   background: var(--wash);
   color: var(--muted);
+}
+
+.question-actions {
+  display: flex;
+  justify-content: center;
+  margin: 4px 0;
+}
+
+.skip-button {
+  min-height: 38px;
+  padding: 0 20px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.skip-button:hover {
+  opacity: 1;
 }
 
 .feedback.correct {

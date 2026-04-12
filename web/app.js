@@ -566,6 +566,11 @@ function renderTimer() {
         <span class="timer" data-timer>${formatTimeLeft(currentDurationSeconds() * 1000)}</span>
       </div>
       <div class="meter" aria-hidden="true"><span data-meter></span></div>
+      <div class="scoring-guide">
+        <span class="pill small">+2 Correct</span>
+        <span class="pill small danger">-1 Wrong</span>
+        <span class="pill small">0 Skip</span>
+      </div>
     </div>
   `;
 }
@@ -602,6 +607,9 @@ function renderQuestionPanel() {
       <div class="question-meta">
         <span class="pill strong">${escapeHtml(state.question.category)}</span>
         <span class="pill">${escapeHtml(state.question.difficulty)}</span>
+        ${(state.question.tags || [])
+          .map((tag) => `<span class="pill company-tag">${escapeHtml(tag)}</span>`)
+          .join("")}
       </div>
       <h2 class="question-text">${escapeHtml(state.question.prompt)}</h2>
       <div class="answers">
@@ -616,6 +624,9 @@ function renderQuestionPanel() {
           )
           .join("")}
       </div>
+      <div class="question-actions">
+        <button class="secondary-button skip-button" data-action="skip" data-id="${state.question.id}">Skip Question</button>
+      </div>
       ${renderFeedback()}
     </section>
   `;
@@ -623,7 +634,7 @@ function renderQuestionPanel() {
 
 function renderFeedback() {
   if (!state.result) {
-    return `<div class="feedback">Pick quickly. Correct answers add 1 point.</div>`;
+    return `<div class="feedback">Pick quickly. Correct: +2 pts | Wrong: -1 pt</div>`;
   }
   const text = state.result.correct
     ? `Correct. Score ${state.result.score}. ${state.result.explanation || ""}`
@@ -802,6 +813,15 @@ document.addEventListener("click", async (event) => {
     });
   }
 
+  if (action === "skip") {
+    if (!state.question || state.answerLocked || timeLeftMs() <= 0) {
+      return;
+    }
+    send("skip", {
+      questionId: state.question.id,
+    });
+  }
+
   if (action === "toggle-review") {
     state.showReview = !state.showReview;
     render();
@@ -870,6 +890,17 @@ document.addEventListener("keydown", (event) => {
     send("answer", {
       questionId: state.question.id,
       optionIndex,
+    });
+  }
+
+  if (
+    event.key.toLowerCase() === "s" &&
+    state.question &&
+    !state.answerLocked &&
+    timeLeftMs() > 0
+  ) {
+    send("skip", {
+      questionId: state.question.id,
     });
   }
 });
