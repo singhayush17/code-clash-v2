@@ -204,13 +204,16 @@ class GameManager:
                 "durations": list(ALLOWED_GAME_SECONDS),
                 "defaultDurationSeconds": DEFAULT_GAME_SECONDS,
                 "serverNow": now_ms(),
+                "onlineCount": len(self.connections),
             },
         )
+        await self.broadcast_global_stats()
         return conn
 
     async def disconnect(self, conn: Connection) -> None:
         self.connections.pop(conn.id, None)
         self._remove_from_queue(conn)
+        await self.broadcast_global_stats()
 
         if not conn.room_id:
             return
@@ -670,6 +673,11 @@ class GameManager:
             conn = self._connection_for_player(player.id)
             if conn:
                 await self.send(conn, payload)
+
+    async def broadcast_global_stats(self) -> None:
+        payload = {"type": "global_stats", "onlineCount": len(self.connections)}
+        for conn in list(self.connections.values()):
+            await self.send(conn, payload)
 
     async def send(self, conn: Connection, payload: dict[str, Any]) -> None:
         try:
