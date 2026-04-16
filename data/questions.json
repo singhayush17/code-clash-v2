@@ -10097,7 +10097,7 @@
     ]
   },
   {
-    "id": "oops-0200",
+    "id": "oops-0200_582",
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "What does the 'L' in SOLID principles stand for?",
@@ -10115,7 +10115,7 @@
     ]
   },
   {
-    "id": "oops-0201",
+    "id": "oops-0201_583",
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "What is 'Composition over Inheritance' design principle?",
@@ -10133,7 +10133,7 @@
     ]
   },
   {
-    "id": "oops-0202",
+    "id": "oops-0202_584",
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "Which concept allows an object to take many forms based on the context?",
@@ -10151,7 +10151,7 @@
     ]
   },
   {
-    "id": "oops-0203",
+    "id": "oops-0203_585",
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "What is the primary difference between an 'Abstract Class' and an 'Interface' (pre-Java 8)?",
@@ -10169,7 +10169,7 @@
     ]
   },
   {
-    "id": "oops-0204",
+    "id": "oops-0204_586",
     "category": "OOPS",
     "difficulty": "medium",
     "prompt": "What is 'Encapsulation' in Object Oriented Programming?",
@@ -10187,7 +10187,7 @@
     ]
   },
   {
-    "id": "oops-0205",
+    "id": "oops-0205_587",
     "category": "OOPS",
     "difficulty": "hard",
     "prompt": "In Design Patterns, which pattern is used to provide a single point of access to a complex subsystem?",
