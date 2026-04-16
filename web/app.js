@@ -22,6 +22,7 @@ const state = {
   serverOffsetMs: 0,
   timerId: null,
   routeRoomId: getRouteRoomId(),
+  onlineCount: 0,
 };
 
 const app = document.querySelector("#app");
@@ -88,6 +89,7 @@ function handleMessage(message) {
       state.selectedCategories = [...state.categories];
       state.durations = message.durations || state.durations;
       state.durationSeconds = message.defaultDurationSeconds || state.durationSeconds;
+      state.onlineCount = message.onlineCount || 0;
       if (state.routeRoomId) {
         send("join_room", { roomId: state.routeRoomId });
         state.routeRoomId = "";
@@ -201,6 +203,10 @@ function handleMessage(message) {
     case "questions_reloaded":
       state.bank = message.bank;
       state.error = "Question bank reloaded.";
+      break;
+
+    case "global_stats":
+      state.onlineCount = message.onlineCount || state.onlineCount;
       break;
 
     case "error":
@@ -381,7 +387,7 @@ function renderTopbar() {
       </div>
       <div class="connection">
         <span class="dot ${state.connected ? "ok" : ""}"></span>
-        ${state.connected ? "Live socket" : "Connecting"}
+        ${state.connected ? `${state.onlineCount} players live` : "Connecting"}
       </div>
     </header>
   `;
