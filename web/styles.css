@@ -46,7 +46,7 @@ button {
 }
 
 .app {
-  width: min(1120px, calc(100% - 32px));
+  width: min(1440px, calc(100% - 32px));
   margin: 0 auto;
   padding: 24px 0 32px;
 }
@@ -95,6 +95,31 @@ button {
   background: var(--surface);
   color: var(--muted);
   white-space: nowrap;
+}
+
+.top-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.nav-button {
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.nav-button.active {
+  border-color: rgba(0, 166, 118, 0.45);
+  background: rgba(0, 166, 118, 0.12);
+  color: #006f50;
+  font-weight: 800;
 }
 
 .dot {
@@ -746,6 +771,278 @@ button {
   font-size: 0.9rem;
 }
 
+.sql-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.sql-sidebar,
+.sql-workspace,
+.sql-panel {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.sql-sidebar {
+  position: sticky;
+  top: 16px;
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  max-height: calc(100vh - 32px);
+  overflow: auto;
+}
+
+.sql-sidebar-head h2,
+.sql-lesson-head h2,
+.sql-panel h3 {
+  margin: 0;
+}
+
+.sql-chapter-list {
+  display: grid;
+  gap: 8px;
+}
+
+.sql-chapter,
+.sql-task {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-height: 48px;
+  padding: 8px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+}
+
+.sql-chapter span,
+.sql-task span {
+  display: grid;
+  place-items: center;
+  min-width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: var(--wash);
+  color: var(--muted);
+  font-weight: 800;
+  font-size: 0.8rem;
+}
+
+.sql-chapter b,
+.sql-task b {
+  overflow-wrap: anywhere;
+  line-height: 1.25;
+}
+
+.sql-chapter small {
+  color: var(--muted);
+  white-space: nowrap;
+}
+
+.sql-chapter.active,
+.sql-task.active {
+  border-color: rgba(0, 166, 118, 0.45);
+  background: rgba(0, 166, 118, 0.08);
+}
+
+.sql-task.solved span {
+  background: rgba(0, 166, 118, 0.14);
+  color: #006f50;
+}
+
+.sql-workspace {
+  display: grid;
+  gap: 14px;
+  padding: 16px;
+  min-width: 0;
+}
+
+.sql-lesson-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.sql-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  align-items: start;
+}
+
+.lesson-tools {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.notes-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid rgba(0, 166, 118, 0.35);
+  border-radius: 8px;
+  background: rgba(0, 166, 118, 0.10);
+  color: #006f50;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.sql-left,
+.sql-right,
+.sql-table-stack,
+.sql-task-list {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.sql-panel {
+  display: grid;
+  gap: 12px;
+  padding: 14px;
+  box-shadow: none;
+}
+
+.sql-panel-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.compact {
+  min-height: 34px;
+  padding: 0 12px;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
+.data-table-card {
+  display: grid;
+  gap: 8px;
+  min-width: 0;
+}
+
+.data-table-title {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  color: var(--muted);
+}
+
+.data-table-title b {
+  color: var(--ink);
+}
+
+.data-table-wrap {
+  overflow: visible;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.data-table-wrap table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  table-layout: auto;
+}
+
+.data-table-wrap th,
+.data-table-wrap td {
+  padding: 8px 10px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  vertical-align: top;
+}
+
+.data-table-wrap th {
+  position: sticky;
+  top: 0;
+  background: var(--wash);
+  color: var(--muted);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+.data-table-wrap tr:last-child td {
+  border-bottom: 0;
+}
+
+.task-panel {
+  overflow: visible;
+}
+
+.editor-panel textarea {
+  width: 100%;
+  min-height: 180px;
+  resize: vertical;
+  border: 1px solid #252525;
+  border-radius: 8px;
+  padding: 12px;
+  background: #101417;
+  color: #f5f7fa;
+  font-family:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  tab-size: 2;
+}
+
+.sql-hint,
+.sql-message {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.45;
+}
+
+.feedback pre {
+  margin: 10px 0 0;
+  overflow: auto;
+  border-radius: 8px;
+  padding: 10px;
+  background: #ffffff;
+  color: var(--ink);
+  font-family:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+  white-space: pre-wrap;
+}
+
+.compact-empty {
+  min-height: 120px;
+}
+
+.expected-block {
+  display: grid;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.result-grid {
+  max-height: none;
+}
+
 @media (max-width: 820px) {
   .app {
     width: min(100% - 20px, 1120px);
@@ -753,6 +1050,7 @@ button {
   }
 
   .topbar,
+  .top-actions,
   .identity,
   .duration-picker,
   .category-picker {
@@ -766,8 +1064,31 @@ button {
   }
 
   .mode-grid,
-  .arena {
+  .arena,
+  .sql-shell,
+  .sql-grid {
     grid-template-columns: 1fr;
+  }
+
+  .sql-sidebar {
+    position: static;
+    max-height: none;
+  }
+
+  .sql-lesson-head,
+  .sql-panel-head,
+  .lesson-tools {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .sql-task,
+  .sql-chapter {
+    grid-template-columns: 32px minmax(0, 1fr);
+  }
+
+  .sql-chapter small {
+    grid-column: 2;
   }
 
   .mode-button {

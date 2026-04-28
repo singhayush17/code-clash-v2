@@ -23,6 +23,21 @@ const state = {
   timerId: null,
   routeRoomId: getRouteRoomId(),
   onlineCount: 0,
+  sql: {
+    lessons: [],
+    lesson: null,
+    selectedLessonId: getSqlLessonId(),
+    selectedTaskId: "",
+    query: "",
+    result: null,
+    check: null,
+    loading: false,
+    error: "",
+    showSolution: false,
+    solved: loadSqlSolved(),
+    autoCheckTimer: null,
+    autoCheckSeq: 0,
+  },
 };
 
 const app = document.querySelector("#app");
@@ -30,6 +45,27 @@ const app = document.querySelector("#app");
 function getRouteRoomId() {
   const match = window.location.pathname.match(/^\/room\/([A-Za-z0-9]+)/);
   return match ? match[1].toUpperCase() : "";
+}
+
+function isSqlRoute() {
+  return window.location.pathname === "/sql" || window.location.pathname.startsWith("/sql/");
+}
+
+function getSqlLessonId() {
+  const match = window.location.pathname.match(/^\/sql\/([^/]+)/);
+  return match ? decodeURIComponent(match[1]) : "";
+}
+
+function loadSqlSolved() {
+  try {
+    return JSON.parse(window.localStorage.getItem("codeClashSqlSolved") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveSqlSolved() {
+  window.localStorage.setItem("codeClashSqlSolved", JSON.stringify(state.sql.solved));
 }
 
 function wsUrl() {
@@ -366,7 +402,7 @@ function render() {
     <main class="shell">
       ${renderMain()}
     </main>
-    <p class="footer-note">Configurable timed battles. No profiles. No match history. Invite links expire after 30 minutes.</p>
+    <p class="footer-note">${isSqlRoute() ? "SQL practice runs in a fresh local sandbox for every query." : "Configurable timed battles. No profiles. No match history. Invite links expire after 30 minutes."}</p>
   `;
 }
 
@@ -382,12 +418,16 @@ function renderTopbar() {
         })}" />
         <div>
           <h1>Code Clash</h1>
-          <p>MCQ speed rounds for core CS prep.</p>
+          <p>${isSqlRoute() ? "Interactive SQL exercises." : "MCQ speed rounds for core CS prep."}</p>
         </div>
       </div>
-      <div class="connection">
-        <span class="dot ${state.connected ? "ok" : ""}"></span>
-        ${state.connected ? `${state.onlineCount} players live` : "Connecting"}
+      <div class="top-actions">
+        <button class="nav-button ${!isSqlRoute() ? "active" : ""}" data-action="nav-battle">Battles</button>
+        <button class="nav-button ${isSqlRoute() ? "active" : ""}" data-action="nav-sql">SQL Practice</button>
+        <div class="connection">
+          <span class="dot ${state.connected ? "ok" : ""}"></span>
+          ${state.connected ? `${state.onlineCount} players live` : "Connecting"}
+        </div>
       </div>
     </header>
   `;
@@ -403,6 +443,9 @@ function renderNotice() {
 }
 
 function renderMain() {
+  if (isSqlRoute()) {
+    return renderSqlPractice();
+  }
   if (state.gameOver) {
     return renderGameOver();
   }
@@ -742,6 +785,464 @@ function renderReviewPanel() {
   `;
 }
 
+async function loadSqlIndex() {
+  if (state.sql.loading || state.sql.lessons.length) {
+    return;
+  }
+  state.sql.loading = true;
+  state.sql.error = "";
+  render();
+  try {
+    const response = await fetch("/api/sql/lessons");
+    const payload = await response.json();
+    state.sql.lessons = payload.lessons || [];
+    const lessonId = state.sql.selectedLessonId || state.sql.lessons[0]?.id || "";
+    if (lessonId) {
+      await loadSqlLesson(lessonId, false);
+    }
+  } catch (error) {
+    state.sql.error = error.message || "Could not load SQL lessons.";
+  } finally {
+    state.sql.loading = false;
+    render();
+  }
+}
+
+async function loadSqlLesson(lessonId, pushRoute = true) {
+  if (!lessonId) {
+    return;
+  }
+  state.sql.loading = true;
+  state.sql.error = "";
+  state.sql.result = null;
+  state.sql.check = null;
+  state.sql.showSolution = false;
+  render();
+  try {
+    const response = await fetch(`/api/sql/lessons/${encodeURIComponent(lessonId)}`);
+    const payload = await response.json();
+    state.sql.lesson = payload.lesson;
+    state.sql.selectedLessonId = payload.lesson.id;
+    const route = `/sql/${payload.lesson.id}`;
+    if (pushRoute && window.location.pathname !== route) {
+      window.history.pushState({}, "", route);
+    }
+
+    const currentTask = payload.lesson.tasks.find(
+      (task) => task.id === state.sql.selectedTaskId,
+    );
+    state.sql.selectedTaskId = currentTask?.id || payload.lesson.tasks[0]?.id || "";
+    setSqlQueryFromTask();
+  } catch (error) {
+    state.sql.error = error.message || "Could not load this chapter.";
+  } finally {
+    state.sql.loading = false;
+    render();
+  }
+}
+
+function setSqlQueryFromTask() {
+  if (state.sql.autoCheckTimer) {
+    window.clearTimeout(state.sql.autoCheckTimer);
+    state.sql.autoCheckTimer = null;
+  }
+  const task = currentSqlTask();
+  state.sql.query = task?.starter || "";
+  state.sql.result = null;
+  state.sql.check = null;
+  state.sql.showSolution = false;
+}
+
+function currentSqlTask() {
+  return state.sql.lesson?.tasks.find((task) => task.id === state.sql.selectedTaskId);
+}
+
+function isSqlTaskSolved(taskId) {
+  const lessonId = state.sql.lesson?.id;
+  return Boolean(lessonId && state.sql.solved[lessonId]?.[taskId]);
+}
+
+function markSqlTaskSolved(taskId) {
+  const lessonId = state.sql.lesson?.id;
+  if (!lessonId) {
+    return;
+  }
+  state.sql.solved[lessonId] = state.sql.solved[lessonId] || {};
+  state.sql.solved[lessonId][taskId] = true;
+  saveSqlSolved();
+}
+
+function nextSqlTaskId() {
+  const tasks = state.sql.lesson?.tasks || [];
+  const currentIndex = tasks.findIndex((task) => task.id === state.sql.selectedTaskId);
+  if (currentIndex === -1) {
+    return "";
+  }
+  const laterUnsolved = tasks
+    .slice(currentIndex + 1)
+    .find((task) => !isSqlTaskSolved(task.id));
+  return laterUnsolved?.id || tasks[currentIndex + 1]?.id || "";
+}
+
+function advanceSqlTask() {
+  const nextTaskId = nextSqlTaskId();
+  if (!nextTaskId) {
+    return false;
+  }
+  state.sql.selectedTaskId = nextTaskId;
+  setSqlQueryFromTask();
+  return true;
+}
+
+function restoreSqlEditorFocus(selection) {
+  if (!selection) {
+    return;
+  }
+  const editor = document.querySelector("#sqlEditor");
+  if (!editor) {
+    return;
+  }
+  editor.focus();
+  const start = Math.min(selection.start, editor.value.length);
+  const end = Math.min(selection.end, editor.value.length);
+  editor.setSelectionRange(start, end);
+}
+
+function sqlEditorSelection() {
+  const editor = document.querySelector("#sqlEditor");
+  if (!editor || document.activeElement !== editor) {
+    return null;
+  }
+  return {
+    start: editor.selectionStart,
+    end: editor.selectionEnd,
+  };
+}
+
+function scheduleSqlAutoCheck() {
+  if (state.sql.autoCheckTimer) {
+    window.clearTimeout(state.sql.autoCheckTimer);
+  }
+  const sql = state.sql.query.trim();
+  if (!sql || !state.sql.lesson || !currentSqlTask()) {
+    return;
+  }
+  const seq = ++state.sql.autoCheckSeq;
+  state.sql.autoCheckTimer = window.setTimeout(() => {
+    runSqlAction(true, {
+      auto: true,
+      advanceOnCorrect: true,
+      preserveEditor: true,
+      seq,
+    });
+  }, 850);
+}
+
+function solvedCountForLesson(lessonId) {
+  const lesson = state.sql.lessons.find((item) => item.id === lessonId);
+  const solved = state.sql.solved[lessonId] || {};
+  return lesson ? Object.keys(solved).filter((taskId) => solved[taskId]).length : 0;
+}
+
+function renderSqlPractice() {
+  if (!state.sql.lessons.length && !state.sql.loading && !state.sql.error) {
+    window.setTimeout(loadSqlIndex, 0);
+  }
+
+  return `
+    <section class="sql-shell">
+      ${renderSqlSidebar()}
+      ${renderSqlWorkspace()}
+    </section>
+  `;
+}
+
+function renderSqlSidebar() {
+  return `
+    <aside class="sql-sidebar" aria-label="SQL chapters">
+      <div class="sql-sidebar-head">
+        <p class="eyebrow">SQL Practice</p>
+        <h2>Chapters</h2>
+      </div>
+      <div class="sql-chapter-list">
+        ${state.sql.lessons
+          .map((lesson) => {
+            const solved = solvedCountForLesson(lesson.id);
+            return `
+              <button class="sql-chapter ${state.sql.lesson?.id === lesson.id ? "active" : ""}" data-action="sql-lesson" data-lesson-id="${escapeHtml(lesson.id)}">
+                <span>${lesson.number}</span>
+                <b>${escapeHtml(lesson.title)}</b>
+                <small>${solved}/${lesson.taskCount}</small>
+              </button>
+            `;
+          })
+          .join("")}
+      </div>
+    </aside>
+  `;
+}
+
+function renderSqlWorkspace() {
+  if (state.sql.error) {
+    return `<section class="sql-workspace"><div class="empty">${escapeHtml(state.sql.error)}</div></section>`;
+  }
+  if (state.sql.loading && !state.sql.lesson) {
+    return `<section class="sql-workspace"><div class="empty">Loading SQL practice.</div></section>`;
+  }
+  if (!state.sql.lesson) {
+    return `<section class="sql-workspace"><div class="empty">Choose a SQL chapter.</div></section>`;
+  }
+
+  return `
+    <section class="sql-workspace">
+      <div class="sql-lesson-head">
+        <div>
+          <p class="eyebrow">Chapter ${state.sql.lesson.number}</p>
+          <h2>${escapeHtml(state.sql.lesson.title)}</h2>
+        </div>
+        <div class="lesson-tools">
+          <div class="question-meta">
+            ${state.sql.lesson.focus.map((focus) => `<span class="pill">${escapeHtml(focus)}</span>`).join("")}
+          </div>
+          ${state.sql.lesson.notesUrl ? `<a class="notes-link" href="${escapeHtml(state.sql.lesson.notesUrl)}" target="_blank" rel="noreferrer">Notes</a>` : ""}
+        </div>
+      </div>
+      <div class="sql-grid">
+        <div class="sql-left">
+          ${renderSqlTables()}
+        </div>
+        <div class="sql-right">
+          ${renderSqlTasks()}
+          ${renderSqlEditor()}
+          ${renderSqlFeedback()}
+          ${renderSqlResult()}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderSqlTables() {
+  const task = currentSqlTask();
+  const tables = task?.tables?.length ? task.tables : state.sql.lesson.tables;
+  return `
+    <section class="sql-panel">
+      <div class="sql-panel-head">
+        <h3>Tables</h3>
+        <button class="secondary-button compact" data-action="sql-reset">Reset Query</button>
+      </div>
+      <div class="sql-table-stack">
+        ${tables.map((table) => renderSqlTable(table)).join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderSqlTable(table) {
+  return `
+    <article class="data-table-card">
+      <div class="data-table-title">
+        <b>${escapeHtml(table.name)}</b>
+        <span>${table.total} rows</span>
+      </div>
+      <div class="data-table-wrap">
+        <table>
+          <thead>
+            <tr>${table.columns.map((column) => `<th>${escapeHtml(column)}</th>`).join("")}</tr>
+          </thead>
+          <tbody>
+            ${table.rows
+              .map(
+                (row) => `
+                  <tr>${row.map((value) => `<td>${escapeHtml(value ?? "NULL")}</td>`).join("")}</tr>
+                `,
+              )
+              .join("")}
+          </tbody>
+        </table>
+      </div>
+    </article>
+  `;
+}
+
+function renderSqlTasks() {
+  return `
+    <section class="sql-panel task-panel">
+      <div class="sql-panel-head">
+        <h3>Exercises</h3>
+        <span class="pill strong">${solvedCountForLesson(state.sql.lesson.id)}/${state.sql.lesson.tasks.length} solved</span>
+      </div>
+      <div class="sql-task-list">
+        ${state.sql.lesson.tasks
+          .map(
+            (task, index) => `
+              <button class="sql-task ${task.id === state.sql.selectedTaskId ? "active" : ""} ${isSqlTaskSolved(task.id) ? "solved" : ""}" data-action="sql-task" data-task-id="${escapeHtml(task.id)}">
+                <span>${isSqlTaskSolved(task.id) ? "Done" : index + 1}</span>
+                <b>${escapeHtml(task.prompt)}</b>
+              </button>
+            `,
+          )
+          .join("")}
+      </div>
+    </section>
+  `;
+}
+
+function renderSqlEditor() {
+  const task = currentSqlTask();
+  return `
+    <section class="sql-panel editor-panel">
+      <div class="sql-panel-head">
+        <h3>${escapeHtml(task?.prompt || "SQL")}</h3>
+        <div class="editor-actions">
+          <button class="secondary-button compact" data-action="sql-solution">${state.sql.showSolution ? "Hide Solution" : "Solution"}</button>
+          <button class="secondary-button compact" data-action="sql-run">Run</button>
+          <button class="primary-button compact" data-action="sql-check">Check</button>
+        </div>
+      </div>
+      <textarea id="sqlEditor" spellcheck="false">${escapeHtml(state.sql.query)}</textarea>
+      ${task?.hint ? `<p class="sql-hint">${escapeHtml(task.hint)}</p>` : ""}
+    </section>
+  `;
+}
+
+function renderSqlFeedback() {
+  if (!state.sql.check && !state.sql.showSolution) {
+    return "";
+  }
+  const task = currentSqlTask();
+  const check = state.sql.check;
+  return `
+    <section class="feedback ${check?.correct ? "correct" : check ? "wrong" : ""}">
+      ${check ? escapeHtml(check.message) : ""}
+      ${state.sql.showSolution && check?.solution ? `<pre>${escapeHtml(check.solution)}</pre>` : ""}
+      ${state.sql.showSolution && !check?.solution && task ? `<pre>Run Check to reveal the solution for this task.</pre>` : ""}
+    </section>
+  `;
+}
+
+function renderSqlResult() {
+  const result = state.sql.result || state.sql.check?.result;
+  if (!result) {
+    return `<section class="sql-panel"><div class="empty compact-empty">Run a query to see the result grid.</div></section>`;
+  }
+
+  return `
+    <section class="sql-panel">
+      <div class="sql-panel-head">
+        <h3>Result</h3>
+        <span class="pill">${result.rowCount || 0} rows</span>
+      </div>
+      ${result.message ? `<p class="sql-message">${escapeHtml(result.message)}</p>` : ""}
+      ${renderResultGrid(result)}
+      ${state.sql.check?.expected ? `
+        <div class="expected-block">
+          <h3>Expected</h3>
+          ${renderResultGrid(state.sql.check.expected)}
+        </div>
+      ` : ""}
+    </section>
+  `;
+}
+
+function renderResultGrid(result) {
+  if (!result.columns?.length) {
+    return "";
+  }
+  return `
+    <div class="data-table-wrap result-grid">
+      <table>
+        <thead>
+          <tr>${result.columns.map((column) => `<th>${escapeHtml(column)}</th>`).join("")}</tr>
+        </thead>
+        <tbody>
+          ${result.rows
+            .map(
+              (row) => `
+                <tr>${row.map((value) => `<td>${escapeHtml(value ?? "NULL")}</td>`).join("")}</tr>
+              `,
+            )
+            .join("")}
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+async function runSqlAction(check = false, options = {}) {
+  if (!state.sql.lesson || !currentSqlTask()) {
+    return;
+  }
+  let advanced = false;
+  const selection = options.preserveEditor ? sqlEditorSelection() : null;
+  state.sql.loading = !options.auto;
+  state.sql.error = "";
+  if (!options.auto) {
+    state.sql.check = null;
+  }
+  if (!check) {
+    state.sql.result = null;
+  }
+  if (!options.auto) {
+    render();
+  }
+
+  const url = check ? "/api/sql/check" : "/api/sql/run";
+  const payload = {
+    lessonId: state.sql.lesson.id,
+    sql: state.sql.query,
+  };
+  if (check) {
+    payload.taskId = state.sql.selectedTaskId;
+  }
+
+  try {
+    const response = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
+    });
+    const data = await response.json();
+    if (!data.ok) {
+      throw new Error(data.error || "SQL failed.");
+    }
+    if (options.seq && options.seq !== state.sql.autoCheckSeq) {
+      return;
+    }
+    if (check) {
+      state.sql.check = data;
+      state.sql.result = data.result;
+      if (data.correct) {
+        markSqlTaskSolved(state.sql.selectedTaskId);
+        if (options.advanceOnCorrect) {
+          advanced = advanceSqlTask();
+        }
+      } else if (options.auto) {
+        state.sql.check = {
+          correct: false,
+          message: "Runs, not solved yet.",
+        };
+      }
+    } else {
+      state.sql.result = data.result;
+    }
+  } catch (error) {
+    if (options.seq && options.seq !== state.sql.autoCheckSeq) {
+      return;
+    }
+    state.sql.check = {
+      correct: false,
+      message: error.message || "SQL failed.",
+    };
+  } finally {
+    state.sql.loading = false;
+    render();
+    if (options.preserveEditor && !advanced && !state.sql.check?.correct) {
+      restoreSqlEditorFocus(selection);
+    }
+  }
+}
+
 document.addEventListener("click", async (event) => {
   const button = event.target.closest("[data-action]");
   if (!button) {
@@ -752,6 +1253,49 @@ document.addEventListener("click", async (event) => {
 
   if (action === "clear-error") {
     clearError();
+  }
+
+  if (action === "nav-sql") {
+    window.history.pushState({}, "", state.sql.selectedLessonId ? `/sql/${state.sql.selectedLessonId}` : "/sql");
+    loadSqlIndex();
+    render();
+  }
+
+  if (action === "nav-battle") {
+    window.history.pushState({}, "", "/");
+    render();
+  }
+
+  if (action === "sql-lesson") {
+    await loadSqlLesson(button.dataset.lessonId);
+  }
+
+  if (action === "sql-task") {
+    state.sql.selectedTaskId = button.dataset.taskId;
+    setSqlQueryFromTask();
+    render();
+  }
+
+  if (action === "sql-reset") {
+    setSqlQueryFromTask();
+    render();
+  }
+
+  if (action === "sql-run") {
+    await runSqlAction(false);
+  }
+
+  if (action === "sql-check") {
+    await runSqlAction(true, { advanceOnCorrect: true });
+  }
+
+  if (action === "sql-solution") {
+    state.sql.showSolution = !state.sql.showSolution;
+    if (state.sql.showSolution && !state.sql.check?.solution) {
+      await runSqlAction(true, { advanceOnCorrect: false });
+      state.sql.showSolution = true;
+    }
+    render();
   }
 
   if (action === "create-room") {
@@ -875,7 +1419,22 @@ document.addEventListener("change", (event) => {
   }
 });
 
+document.addEventListener("input", (event) => {
+  if (event.target?.id === "sqlEditor") {
+    state.sql.query = event.target.value;
+    state.sql.check = null;
+    scheduleSqlAutoCheck();
+  }
+});
+
 document.addEventListener("keydown", (event) => {
+  if (event.target?.id === "sqlEditor") {
+    if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
+      runSqlAction(event.shiftKey);
+    }
+    return;
+  }
+
   if (event.key === "Enter" && event.target?.id === "roomCodeInput") {
     const roomId = event.target.value;
     if (roomId.trim()) {
@@ -911,5 +1470,21 @@ document.addEventListener("keydown", (event) => {
   }
 });
 
+window.addEventListener("popstate", () => {
+  state.routeRoomId = getRouteRoomId();
+  state.sql.selectedLessonId = getSqlLessonId();
+  if (isSqlRoute()) {
+    if (state.sql.selectedLessonId && state.sql.selectedLessonId !== state.sql.lesson?.id) {
+      loadSqlLesson(state.sql.selectedLessonId, false);
+    } else {
+      loadSqlIndex();
+    }
+  }
+  render();
+});
+
 connect();
+if (isSqlRoute()) {
+  loadSqlIndex();
+}
 render();
