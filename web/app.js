@@ -37,6 +37,11 @@ const state = {
     solved: loadSqlSolved(),
     autoCheckTimer: null,
     autoCheckSeq: 0,
+    chapterStartTime: null,
+    chapterStoppedMs: null,
+    questionStartTime: null,
+    sqlTimerId: null,
+    taskTimes: loadSqlTaskTimes(),
   },
 };
 
@@ -66,6 +71,123 @@ function loadSqlSolved() {
 
 function saveSqlSolved() {
   window.localStorage.setItem("codeClashSqlSolved", JSON.stringify(state.sql.solved));
+}
+
+function loadSqlTaskTimes() {
+  try {
+    return JSON.parse(window.localStorage.getItem("codeClashSqlTaskTimes") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveSqlTaskTimes() {
+  window.localStorage.setItem("codeClashSqlTaskTimes", JSON.stringify(state.sql.taskTimes));
+}
+
+function recordTaskTime(taskId) {
+  const lessonId = state.sql.lesson?.id;
+  if (!lessonId || !state.sql.questionStartTime) return;
+  const elapsed = Math.floor((Date.now() - state.sql.questionStartTime) / 1000);
+  state.sql.taskTimes[lessonId] = state.sql.taskTimes[lessonId] || {};
+  if (!state.sql.taskTimes[lessonId][taskId]) {
+    state.sql.taskTimes[lessonId][taskId] = elapsed;
+    saveSqlTaskTimes();
+  }
+  if (isChapterComplete()) {
+    state.sql.chapterStoppedMs = chapterElapsedMs();
+    state.sql.questionStartTime = null;
+  }
+}
+
+function isChapterComplete() {
+  const lesson = state.sql.lesson;
+  if (!lesson) return false;
+  const solvedMap = state.sql.solved[lesson.id] || {};
+  return lesson.tasks.every((task) => solvedMap[task.id]);
+}
+
+function getTaskTime(lessonId, taskId) {
+  return state.sql.taskTimes[lessonId]?.[taskId] || null;
+}
+
+function chapterElapsedMs() {
+  if (state.sql.chapterStoppedMs != null) return state.sql.chapterStoppedMs;
+  if (!state.sql.chapterStartTime) return 0;
+  return Date.now() - state.sql.chapterStartTime;
+}
+
+function questionElapsedMs() {
+  if (!state.sql.questionStartTime) return 0;
+  return Date.now() - state.sql.questionStartTime;
+}
+
+function formatElapsed(ms) {
+  const totalSeconds = Math.floor(ms / 1000);
+  const hours = Math.floor(totalSeconds / 3600);
+  const minutes = Math.floor((totalSeconds % 3600) / 60);
+  const seconds = totalSeconds % 60;
+  if (hours > 0) {
+    return `${hours}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
+function formatElapsedCompact(seconds) {
+  if (seconds == null) return "";
+  const m = Math.floor(seconds / 60);
+  const s = seconds % 60;
+  if (m > 0) return `${m}m ${s}s`;
+  return `${s}s`;
+}
+
+function startSqlTimers() {
+  stopSqlTimers();
+  state.sql.sqlTimerId = window.setInterval(updateSqlTimers, 1000);
+}
+
+function stopSqlTimers() {
+  if (state.sql.sqlTimerId) {
+    window.clearInterval(state.sql.sqlTimerId);
+    state.sql.sqlTimerId = null;
+  }
+}
+
+function updateSqlTimers() {
+  const chapterTimer = document.querySelector("[data-sql-chapter-timer]");
+  if (chapterTimer) {
+    chapterTimer.textContent = formatElapsed(chapterElapsedMs());
+  }
+  const questionTimer = document.querySelector("[data-sql-question-timer]");
+  if (questionTimer) {
+    questionTimer.textContent = formatElapsed(questionElapsedMs());
+  }
+}
+
+function totalChapterTime(lessonId) {
+  const times = state.sql.taskTimes[lessonId] || {};
+  const values = Object.values(times);
+  if (!values.length) return null;
+  return values.reduce((a, b) => a + b, 0);
+}
+
+function resetChapterTimers() {
+  const lessonId = state.sql.lesson?.id;
+  if (!lessonId) return;
+  delete state.sql.taskTimes[lessonId];
+  saveSqlTaskTimes();
+  delete state.sql.solved[lessonId];
+  saveSqlSolved();
+  state.sql.chapterStartTime = Date.now();
+  state.sql.chapterStoppedMs = null;
+  state.sql.questionStartTime = Date.now();
+  state.sql.selectedTaskId = state.sql.lesson.tasks[0]?.id || "";
+  if (state.sql.autoCheckTimer) {
+    window.clearTimeout(state.sql.autoCheckTimer);
+    state.sql.autoCheckTimer = null;
+  }
+  setSqlQueryFromTask();
+  startSqlTimers();
 }
 
 function wsUrl() {
@@ -832,6 +954,10 @@ async function loadSqlLesson(lessonId, pushRoute = true) {
       (task) => task.id === state.sql.selectedTaskId,
     );
     state.sql.selectedTaskId = currentTask?.id || payload.lesson.tasks[0]?.id || "";
+    state.sql.chapterStartTime = Date.now();
+    state.sql.chapterStoppedMs = null;
+    state.sql.questionStartTime = Date.now();
+    startSqlTimers();
     setSqlQueryFromTask();
   } catch (error) {
     state.sql.error = error.message || "Could not load this chapter.";
@@ -851,6 +977,7 @@ function setSqlQueryFromTask() {
   state.sql.result = null;
   state.sql.check = null;
   state.sql.showSolution = false;
+  state.sql.questionStartTime = Date.now();
 }
 
 function currentSqlTask() {
@@ -968,11 +1095,12 @@ function renderSqlSidebar() {
         ${state.sql.lessons
           .map((lesson) => {
             const solved = solvedCountForLesson(lesson.id);
+            const totalTime = totalChapterTime(lesson.id);
             return `
               <button class="sql-chapter ${state.sql.lesson?.id === lesson.id ? "active" : ""}" data-action="sql-lesson" data-lesson-id="${escapeHtml(lesson.id)}">
                 <span>${lesson.number}</span>
                 <b>${escapeHtml(lesson.title)}</b>
-                <small>${solved}/${lesson.taskCount}</small>
+                <small>${solved}/${lesson.taskCount}${totalTime != null ? ` · ${formatElapsedCompact(totalTime)}` : ""}</small>
               </button>
             `;
           })
@@ -1001,6 +1129,11 @@ function renderSqlWorkspace() {
           <h2>${escapeHtml(state.sql.lesson.title)}</h2>
         </div>
         <div class="lesson-tools">
+          <div class="sql-chapter-timer-block${state.sql.chapterStoppedMs != null ? ' stopped' : ''}">
+            <span class="sql-timer-icon">⏱</span>
+            <span class="sql-timer-value" data-sql-chapter-timer>${formatElapsed(chapterElapsedMs())}</span>
+            ${state.sql.chapterStartTime || state.sql.chapterStoppedMs != null ? `<button class="sql-timer-reset" data-action="sql-reset-timers" title="Reset chapter & question timers">↻</button>` : ""}
+          </div>
           <div class="question-meta">
             ${state.sql.lesson.focus.map((focus) => `<span class="pill">${escapeHtml(focus)}</span>`).join("")}
           </div>
@@ -1075,12 +1208,16 @@ function renderSqlTasks() {
       <div class="sql-task-list">
         ${state.sql.lesson.tasks
           .map(
-            (task, index) => `
+            (task, index) => {
+              const solveTime = getTaskTime(state.sql.lesson.id, task.id);
+              return `
               <button class="sql-task ${task.id === state.sql.selectedTaskId ? "active" : ""} ${isSqlTaskSolved(task.id) ? "solved" : ""}" data-action="sql-task" data-task-id="${escapeHtml(task.id)}">
-                <span>${isSqlTaskSolved(task.id) ? "Done" : index + 1}</span>
+                <span>${isSqlTaskSolved(task.id) ? "✓" : index + 1}</span>
                 <b>${escapeHtml(task.prompt)}</b>
+                ${solveTime != null ? `<small class="task-time">${formatElapsedCompact(solveTime)}</small>` : ""}
               </button>
-            `,
+            `;
+            },
           )
           .join("")}
       </div>
@@ -1095,6 +1232,10 @@ function renderSqlEditor() {
       <div class="sql-panel-head">
         <h3>${escapeHtml(task?.prompt || "SQL")}</h3>
         <div class="editor-actions">
+          <div class="sql-question-timer-block">
+            <span class="sql-timer-icon">⏱</span>
+            <span class="sql-timer-value" data-sql-question-timer>${formatElapsed(questionElapsedMs())}</span>
+          </div>
           <button class="secondary-button compact" data-action="sql-solution">${state.sql.showSolution ? "Hide Solution" : "Solution"}</button>
           <button class="secondary-button compact" data-action="sql-run">Run</button>
           <button class="primary-button compact" data-action="sql-check">Check</button>
@@ -1214,6 +1355,7 @@ async function runSqlAction(check = false, options = {}) {
       state.sql.result = data.result;
       if (data.correct) {
         markSqlTaskSolved(state.sql.selectedTaskId);
+        recordTaskTime(state.sql.selectedTaskId);
         if (options.advanceOnCorrect) {
           advanced = advanceSqlTask();
         }
@@ -1278,6 +1420,11 @@ document.addEventListener("click", async (event) => {
 
   if (action === "sql-reset") {
     setSqlQueryFromTask();
+    render();
+  }
+
+  if (action === "sql-reset-timers") {
+    resetChapterTimers();
     render();
   }
 
