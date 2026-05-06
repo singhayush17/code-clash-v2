@@ -42,6 +42,7 @@ const state = {
     questionStartTime: null,
     sqlTimerId: null,
     taskTimes: loadSqlTaskTimes(),
+    savedQueries: loadSqlQueries(),
   },
 };
 
@@ -83,6 +84,53 @@ function loadSqlTaskTimes() {
 
 function saveSqlTaskTimes() {
   window.localStorage.setItem("codeClashSqlTaskTimes", JSON.stringify(state.sql.taskTimes));
+}
+
+function loadSqlQueries() {
+  try {
+    return JSON.parse(window.localStorage.getItem("codeClashSqlQueries") || "{}");
+  } catch {
+    return {};
+  }
+}
+
+function saveSqlQueries() {
+  window.localStorage.setItem("codeClashSqlQueries", JSON.stringify(state.sql.savedQueries));
+}
+
+function saveSqlQueryForTask() {
+  const lessonId = state.sql.lesson?.id;
+  const taskId = state.sql.selectedTaskId;
+  if (!lessonId || !taskId) return;
+  const query = state.sql.query.trim();
+  const task = currentSqlTask();
+  const starter = (task?.starter || "").trim();
+  state.sql.savedQueries[lessonId] = state.sql.savedQueries[lessonId] || {};
+  if (query && query !== starter) {
+    state.sql.savedQueries[lessonId][taskId] = state.sql.query;
+  } else {
+    delete state.sql.savedQueries[lessonId]?.[taskId];
+  }
+  saveSqlQueries();
+}
+
+function getSavedQueryForTask(lessonId, taskId) {
+  return state.sql.savedQueries[lessonId]?.[taskId] || null;
+}
+
+function saveSqlLastPosition() {
+  const pos = {};
+  if (state.sql.selectedLessonId) pos.lessonId = state.sql.selectedLessonId;
+  if (state.sql.selectedTaskId) pos.taskId = state.sql.selectedTaskId;
+  window.localStorage.setItem("codeClashSqlPosition", JSON.stringify(pos));
+}
+
+function loadSqlLastPosition() {
+  try {
+    return JSON.parse(window.localStorage.getItem("codeClashSqlPosition") || "{}");
+  } catch {
+    return {};
+  }
 }
 
 function recordTaskTime(taskId) {
@@ -178,6 +226,8 @@ function resetChapterTimers() {
   saveSqlTaskTimes();
   delete state.sql.solved[lessonId];
   saveSqlSolved();
+  delete state.sql.savedQueries[lessonId];
+  saveSqlQueries();
   state.sql.chapterStartTime = Date.now();
   state.sql.chapterStoppedMs = null;
   state.sql.questionStartTime = Date.now();
@@ -518,6 +568,12 @@ function renderAvatar(player, className = "avatar") {
 }
 
 function render() {
+  const editor = document.querySelector("#sqlEditor");
+  const hadFocus = editor && document.activeElement === editor;
+  const savedSel = hadFocus
+    ? { start: editor.selectionStart, end: editor.selectionEnd }
+    : null;
+
   app.innerHTML = `
     ${renderTopbar()}
     ${state.error ? renderNotice() : ""}
@@ -526,6 +582,10 @@ function render() {
     </main>
     <p class="footer-note">${isSqlRoute() ? "SQL practice runs in a fresh local sandbox for every query." : "Configurable timed battles. No profiles. No match history. Invite links expire after 30 minutes."}</p>
   `;
+
+  if (savedSel) {
+    restoreSqlEditorFocus(savedSel);
+  }
 }
 
 function renderTopbar() {
@@ -918,7 +978,11 @@ async function loadSqlIndex() {
     const response = await fetch("/api/sql/lessons");
     const payload = await response.json();
     state.sql.lessons = payload.lessons || [];
-    const lessonId = state.sql.selectedLessonId || state.sql.lessons[0]?.id || "";
+    const lastPos = loadSqlLastPosition();
+    const lessonId = state.sql.selectedLessonId || lastPos.lessonId || state.sql.lessons[0]?.id || "";
+    if (lastPos.taskId && lessonId === lastPos.lessonId) {
+      state.sql.selectedTaskId = lastPos.taskId;
+    }
     if (lessonId) {
       await loadSqlLesson(lessonId, false);
     }
@@ -950,14 +1014,20 @@ async function loadSqlLesson(lessonId, pushRoute = true) {
       window.history.pushState({}, "", route);
     }
 
+    const lastPos = loadSqlLastPosition();
     const currentTask = payload.lesson.tasks.find(
       (task) => task.id === state.sql.selectedTaskId,
     );
-    state.sql.selectedTaskId = currentTask?.id || payload.lesson.tasks[0]?.id || "";
+    const resumeTaskId = currentTask?.id
+      || (lastPos.lessonId === payload.lesson.id ? lastPos.taskId : "")
+      || payload.lesson.tasks[0]?.id
+      || "";
+    state.sql.selectedTaskId = resumeTaskId;
     state.sql.chapterStartTime = Date.now();
     state.sql.chapterStoppedMs = null;
     state.sql.questionStartTime = Date.now();
     startSqlTimers();
+    saveSqlLastPosition();
     setSqlQueryFromTask();
   } catch (error) {
     state.sql.error = error.message || "Could not load this chapter.";
@@ -973,11 +1043,15 @@ function setSqlQueryFromTask() {
     state.sql.autoCheckTimer = null;
   }
   const task = currentSqlTask();
-  state.sql.query = task?.starter || "";
+  const lessonId = state.sql.lesson?.id;
+  const taskId = state.sql.selectedTaskId;
+  const saved = lessonId && taskId ? getSavedQueryForTask(lessonId, taskId) : null;
+  state.sql.query = saved != null ? saved : (task?.starter || "");
   state.sql.result = null;
   state.sql.check = null;
   state.sql.showSolution = false;
   state.sql.questionStartTime = Date.now();
+  saveSqlLastPosition();
 }
 
 function currentSqlTask() {
@@ -1356,6 +1430,12 @@ async function runSqlAction(check = false, options = {}) {
       if (data.correct) {
         markSqlTaskSolved(state.sql.selectedTaskId);
         recordTaskTime(state.sql.selectedTaskId);
+        // Clear saved query for solved task since it's no longer in-progress
+        const solvedLessonId = state.sql.lesson?.id;
+        if (solvedLessonId && state.sql.savedQueries[solvedLessonId]) {
+          delete state.sql.savedQueries[solvedLessonId][state.sql.selectedTaskId];
+          saveSqlQueries();
+        }
         if (options.advanceOnCorrect) {
           advanced = advanceSqlTask();
         }
@@ -1413,6 +1493,7 @@ document.addEventListener("click", async (event) => {
   }
 
   if (action === "sql-task") {
+    saveSqlQueryForTask();
     state.sql.selectedTaskId = button.dataset.taskId;
     setSqlQueryFromTask();
     render();
@@ -1570,6 +1651,7 @@ document.addEventListener("input", (event) => {
   if (event.target?.id === "sqlEditor") {
     state.sql.query = event.target.value;
     state.sql.check = null;
+    saveSqlQueryForTask();
     scheduleSqlAutoCheck();
   }
 });

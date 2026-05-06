@@ -84,12 +84,12 @@ SEED: dict[str, list[tuple[Any, ...]]] = {
         (3, "Noise Cancelling Headphones", "Electronics", 149.00, 19, 4.8, 0),
         (4, "Standing Desk Mat", "Office", 36.00, 41, 4.2, 0),
         (5, "Notebook Pack", "Office", 12.75, 120, 4.1, 0),
-        (6, "Desk Lamp", "Office", 28.40, 64, 4.3, 0),
+        (6, "Desk Lamp", "Office", 36.00, 64, 4.3, 0),
         (7, "Travel Mug", "Kitchen", 18.25, 76, 4.0, 0),
         (8, "Pour Over Kit", "Kitchen", 31.80, 22, 4.6, 0),
-        (9, "Trail Backpack", "Outdoor", 72.00, 15, 4.5, 0),
-        (10, "Rain Jacket", "Outdoor", 95.00, 9, 4.2, 0),
-        (11, "Yoga Block", "Fitness", 10.00, 88, 3.9, 0),
+        (9, "Alpine Rucksack", "Outdoor", 89.99, 15, 4.5, 0),
+        (10, "Windbreaker", "Outdoor", 95.00, 0, 4.2, 0),
+        (11, "Balance Block", "Fitness", 10.00, 15, 3.9, 0),
         (12, "Smart Scale", "Fitness", 55.00, 0, 4.0, 1),
     ],
     "customers": [
@@ -98,7 +98,7 @@ SEED: dict[str, list[tuple[Any, ...]]] = {
         (3, "Mia Chen", "Singapore", "Singapore", "2023-03-05", "gold", 1),
         (4, "Luis Garcia", "Austin", "USA", "2023-03-18", "bronze", None),
         (5, "Emma Stone", "London", "UK", "2023-04-22", "silver", 3),
-        (6, "Kabir Mehta", "Mumbai", "India", "2023-06-01", "gold", 1),
+        (6, "Kabir Mehta", "Mumbai", "India", "2023-03-05", "gold", 1),
         (7, "Zoe Miller", "Berlin", "Germany", "2023-07-17", "bronze", 5),
         (8, "Ivy Tan", "Singapore", "Singapore", "2023-09-30", "silver", 3),
     ],
@@ -106,12 +106,12 @@ SEED: dict[str, list[tuple[Any, ...]]] = {
         (101, 1, "2024-01-05", "delivered", "web"),
         (102, 2, "2024-01-09", "delivered", "mobile"),
         (103, 3, "2024-01-11", "cancelled", "web"),
-        (104, 1, "2024-02-02", "delivered", "web"),
+        (104, 1, "2024-01-09", "delivered", "web"),
         (105, 4, "2024-02-10", "processing", "mobile"),
         (106, 5, "2024-02-14", "delivered", "store"),
         (107, 6, "2024-03-03", "shipped", "web"),
         (108, 3, "2024-03-09", "delivered", "mobile"),
-        (109, 8, "2024-03-19", "processing", "web"),
+        (109, 8, "2024-03-03", "processing", "web"),
         (110, 7, "2024-04-01", "delivered", "web"),
     ],
     "order_items": [
@@ -121,7 +121,7 @@ SEED: dict[str, list[tuple[Any, ...]]] = {
         (1004, 102, 7, 2, 18.25),
         (1005, 103, 3, 1, 149.00),
         (1006, 104, 8, 1, 31.80),
-        (1007, 104, 6, 2, 28.40),
+        (1007, 104, 6, 2, 36.00),
         (1008, 105, 10, 1, 95.00),
         (1009, 106, 4, 2, 36.00),
         (1010, 106, 5, 5, 12.75),
@@ -131,7 +131,7 @@ SEED: dict[str, list[tuple[Any, ...]]] = {
         (1014, 108, 2, 2, 42.50),
         (1015, 109, 11, 4, 10.00),
         (1016, 110, 3, 1, 149.00),
-        (1017, 110, 6, 1, 28.40),
+        (1017, 110, 6, 1, 36.00),
     ],
     "shipments": [
         (1, 101, "ShipFast", "2024-01-06", "2024-01-09", 6.50),
@@ -185,17 +185,20 @@ class Lesson:
 
 
 LESSONS = [
-    Lesson("select-columns", 1, "SELECT Columns", ["SELECT", "FROM", "*"], ["products"], [
+    Lesson("select-columns", 1, "SELECT Columns", ["SELECT", "FROM", "*", "LOWER", "UPPER"], ["products", "customers"], [
         Task("l1-t1", "Show every product name.", "", "SELECT name FROM products ORDER BY id;", hint="Return only the name column."),
         Task("l1-t2", "Show product names with their categories.", "", "SELECT name, category FROM products ORDER BY id;", hint="List two columns after SELECT."),
         Task("l1-t3", "Show the full products table.", "", "SELECT * FROM products ORDER BY id;", hint="Use the star shorthand."),
         Task("l1-t4", "Show product id, name, price, and stock from the products table.", "", "SELECT id, name, price, stock FROM products ORDER BY id;"),
         Task("l1-t5", "Show customer names and cities from the customers table.", "", "SELECT name, city FROM customers ORDER BY id;"),
+        Task("l1-t6", "Show all product names in lowercase (as 'name_lower'), sorted by name_lower.", "", "SELECT LOWER(name) AS name_lower FROM products ORDER BY name_lower;"),
+        Task("l1-t7", "Show all customer names in uppercase (as 'name_upper') with their country, sorted by name_upper.", "", "SELECT UPPER(name) AS name_upper, country FROM customers ORDER BY name_upper;"),
+        Task("l1-t8", "Show product names where the lowercase name contains 'kit'. Show name, sorted by name.", "", "SELECT name FROM products WHERE LOWER(name) LIKE '%kit%' ORDER BY name;"),
     ]),
     Lesson("where-numeric", 2, "WHERE Constraints", ["WHERE", "AND", "OR"], ["products", "orders"], [
         Task("l2-t1", "Find products priced at 50 or more. Show name and price, sorted by price then name.", "", "SELECT name, price FROM products WHERE price >= 50 ORDER BY price, name;"),
         Task("l2-t2", "Find products with stock below 20. Show name and stock, sorted by stock then name.", "", "SELECT name, stock FROM products WHERE stock < 20 ORDER BY stock, name;"),
-        Task("l2-t3", "Find electronics with a rating of at least 4.5. Show name, category, and rating, sorted by rating descending then name.", "", "SELECT name, category, rating FROM products WHERE category = 'Electronics' AND rating >= 4.5 ORDER BY rating DESC, name;"),
+        Task("l2-t3", "Find electronics with a rating of at least 4.5. Show name, category, and rating, sorted by rating descending.", "", "SELECT name, category, rating FROM products WHERE category = 'Electronics' AND rating >= 4.5 ORDER BY rating DESC;"),
         Task("l2-t4", "Find orders that are processing or shipped. Show id and status, sorted by id.", "", "SELECT id, status FROM orders WHERE status = 'processing' OR status = 'shipped' ORDER BY id;"),
         Task("l2-t5", "Find active (not discontinued) products with zero stock. Show name, stock, and discontinued, sorted by id.", "", "SELECT name, stock, discontinued FROM products WHERE stock = 0 AND discontinued = 0 ORDER BY id;"),
     ]),
@@ -214,11 +217,11 @@ LESSONS = [
         Task("l4-t5", "Show products sorted by category, then by highest price within each category, then by name. Return name, category, and price.", "", "SELECT name, category, price FROM products ORDER BY category, price DESC, name;"),
     ]),
     Lesson("select-review", 5, "SELECT Review", ["SELECT", "WHERE", "ORDER BY"], ["products", "customers", "orders"], [
-        Task("l5-t1", "Find non-discontinued products under 30. Show name and price, sorted by price then name.", "", "SELECT name, price FROM products WHERE discontinued = 0 AND price < 30 ORDER BY price, name;"),
+        Task("l5-t1", "Find non-discontinued products with price less than 30. Show name and price, sorted by price.", "", "SELECT name, price FROM products WHERE discontinued = 0 AND price < 30 ORDER BY price;"),
         Task("l5-t2", "Show gold-tier customers outside India. Return name, country, and tier, sorted by name.", "", "SELECT name, country, tier FROM customers WHERE tier = 'gold' AND country <> 'India' ORDER BY name;"),
         Task("l5-t3", "Show web orders placed in March 2024. Return id, customer_id, and ordered_at, sorted by ordered_at.", "", "SELECT id, customer_id, ordered_at FROM orders WHERE channel = 'web' AND ordered_at >= '2024-03-01' AND ordered_at < '2024-04-01' ORDER BY ordered_at;"),
-        Task("l5-t4", "Show the two lowest-stock active (not discontinued) products. Return name and stock.", "", "SELECT name, stock FROM products WHERE discontinued = 0 ORDER BY stock, name LIMIT 2;"),
-        Task("l5-t5", "Show name, city, and tier for silver-tier customers, sorted by city then name.", "", "SELECT name, city, tier FROM customers WHERE tier = 'silver' ORDER BY city, name;"),
+        Task("l5-t4", "Show the two lowest-stock active (not discontinued) products. Return name and stock, sorted by stock.", "", "SELECT name, stock FROM products WHERE discontinued = 0 ORDER BY stock LIMIT 2;"),
+        Task("l5-t5", "Show name, city, and tier for silver-tier customers, sorted by city.", "", "SELECT name, city, tier FROM customers WHERE tier = 'silver' ORDER BY city;"),
     ]),
     Lesson("inner-joins", 6, "INNER JOINs", ["JOIN", "ON"], ["orders", "customers", "order_items", "products"], [
         Task("l6-t1", "Show each order id with the customer name, sorted by order id.", "", "SELECT orders.id, customers.name FROM orders JOIN customers ON customers.id = orders.customer_id ORDER BY orders.id;"),
@@ -228,11 +231,11 @@ LESSONS = [
         Task("l6-t5", "Show customer name (as 'customer'), product name (as 'product'), and quantity for every order item, sorted by order id then product name.", "", "SELECT customers.name AS customer, products.name AS product, order_items.quantity FROM orders JOIN customers ON customers.id = orders.customer_id JOIN order_items ON order_items.order_id = orders.id JOIN products ON products.id = order_items.product_id ORDER BY orders.id, products.name;"),
     ]),
     Lesson("outer-joins", 7, "LEFT JOINs", ["LEFT JOIN", "missing rows"], ["products", "order_items", "orders", "shipments"], [
-        Task("l7-t1", "Show every product name and any order item id (as 'item_id') that references it, sorted by product id then item_id. Use a LEFT JOIN.", "", "SELECT products.name, order_items.id AS item_id FROM products LEFT JOIN order_items ON order_items.product_id = products.id ORDER BY products.id, item_id;"),
+        Task("l7-t1", "Show every product name and any order item id (as 'item_id') that references it, sorted by product name. Use a LEFT JOIN.", "", "SELECT products.name, order_items.id AS item_id FROM products LEFT JOIN order_items ON order_items.product_id = products.id ORDER BY products.name;"),
         Task("l7-t2", "Find products that have never been ordered. Show name, sorted by name. Use a LEFT JOIN.", "", "SELECT products.name FROM products LEFT JOIN order_items ON order_items.product_id = products.id WHERE order_items.id IS NULL ORDER BY products.name;"),
         Task("l7-t3", "Show every order's id, status, and delivered_at from shipments (NULL if no shipment), sorted by order id. Use a LEFT JOIN.", "", "SELECT orders.id, orders.status, shipments.delivered_at FROM orders LEFT JOIN shipments ON shipments.order_id = orders.id ORDER BY orders.id;"),
         Task("l7-t4", "Find orders with no shipment row. Show id and status, sorted by id. Use a LEFT JOIN.", "", "SELECT orders.id, orders.status FROM orders LEFT JOIN shipments ON shipments.order_id = orders.id WHERE shipments.id IS NULL ORDER BY orders.id;"),
-        Task("l7-t5", "Show all customer names and the id of any order they placed (as 'order_id'), sorted by customer name then order_id. Use a LEFT JOIN.", "", "SELECT customers.name, orders.id AS order_id FROM customers LEFT JOIN orders ON orders.customer_id = customers.id ORDER BY customers.name, order_id;"),
+        Task("l7-t5", "Show all customer names and the id of any order they placed (as 'order_id'), sorted by customer name. Use a LEFT JOIN.", "", "SELECT customers.name, orders.id AS order_id FROM customers LEFT JOIN orders ON orders.customer_id = customers.id ORDER BY customers.name;"),
     ]),
     Lesson("nulls", 8, "Working with NULL", ["IS NULL", "COALESCE"], ["customers", "employees", "shipments"], [
         Task("l8-t1", "Show customer name and referrer id as 'referrer', replacing NULL referrer_id with 'Direct' using COALESCE. Sort by name.", "", "SELECT name, COALESCE(CAST(referrer_id AS TEXT), 'Direct') AS referrer FROM customers ORDER BY name;"),
@@ -265,7 +268,7 @@ LESSONS = [
     Lesson("execution-order", 12, "Query Order", ["WHERE", "GROUP BY", "HAVING", "ORDER BY"], ["orders", "order_items", "customers"], [
         Task("l12-t1", "For delivered orders only, show total revenue per order (as 'order_total', rounded to 2 decimals). Keep only orders with total above 100. Sort by order_total descending.", "", "SELECT orders.id, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS order_total FROM orders JOIN order_items ON order_items.order_id = orders.id WHERE orders.status = 'delivered' GROUP BY orders.id HAVING SUM(order_items.quantity * order_items.unit_price) > 100 ORDER BY order_total DESC;"),
         Task("l12-t2", "By country, count delivered orders and keep countries with at least two. Show country and count as 'delivered_orders', sorted by delivered_orders descending then country.", "", "SELECT customers.country, COUNT(orders.id) AS delivered_orders FROM customers JOIN orders ON orders.customer_id = customers.id WHERE orders.status = 'delivered' GROUP BY customers.country HAVING COUNT(orders.id) >= 2 ORDER BY delivered_orders DESC, customers.country;"),
-        Task("l12-t3", "Show each customer's total spending (as 'spend', rounded to 2 decimals) for non-cancelled orders, sorted by spend descending then name. Join customers, orders, and order_items.", "", "SELECT customers.name, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status <> 'cancelled' GROUP BY customers.id, customers.name ORDER BY spend DESC, customers.name;"),
+        Task("l12-t3", "Show each customer's total spending (as 'spend', rounded to 2 decimals) for non-cancelled orders, sorted by spend descending. Join customers, orders, and order_items.", "", "SELECT customers.name, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status <> 'cancelled' GROUP BY customers.id, customers.name ORDER BY spend DESC;"),
         Task("l12-t4", "Show order channels with average order total above 75 (as 'avg_total', rounded to 2 decimals). Use a subquery to calculate each order's total first. Sort by avg_total descending.", "", "SELECT orders.channel, ROUND(AVG(order_totals.total), 2) AS avg_total FROM orders JOIN (SELECT order_id, SUM(quantity * unit_price) AS total FROM order_items GROUP BY order_id) AS order_totals ON order_totals.order_id = orders.id GROUP BY orders.channel HAVING AVG(order_totals.total) > 75 ORDER BY avg_total DESC;"),
         Task("l12-t5", "Find active (not discontinued) product categories with more than one product in stock (stock > 0). Show category and count as 'stocked_products', sorted by category.", "", "SELECT category, COUNT(*) AS stocked_products FROM products WHERE discontinued = 0 AND stock > 0 GROUP BY category HAVING COUNT(*) > 1 ORDER BY category;"),
     ]),
@@ -310,7 +313,7 @@ LESSONS = [
         Task("l19-t2", "Find customers who have placed at least one delivered order. Show name, sorted by name. Use a subquery with IN.", "", "SELECT name FROM customers WHERE id IN (SELECT customer_id FROM orders WHERE status = 'delivered') ORDER BY name;"),
         Task("l19-t3", "List all unique countries from customers combined with the literal value 'Canada' using UNION. Sort by country.", "", "SELECT country FROM customers UNION SELECT 'Canada' AS country ORDER BY country;"),
         Task("l19-t4", "Find products that have never appeared in order_items using EXCEPT. Show id and name, sorted by id.", "", "SELECT id, name FROM products EXCEPT SELECT products.id, products.name FROM products JOIN order_items ON order_items.product_id = products.id ORDER BY id;"),
-        Task("l19-t5", "Find customers whose total non-cancelled spend exceeds the average order total. Show name and spend (rounded to 2 decimals, as 'spend'), sorted by spend descending then name.", "", "SELECT customer_totals.name, ROUND(customer_totals.spend, 2) AS spend FROM (SELECT customers.id, customers.name, SUM(order_items.quantity * order_items.unit_price) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status <> 'cancelled' GROUP BY customers.id, customers.name) AS customer_totals WHERE customer_totals.spend > (SELECT AVG(order_total) FROM (SELECT SUM(quantity * unit_price) AS order_total FROM order_items GROUP BY order_id)) ORDER BY spend DESC, name;"),
+        Task("l19-t5", "Find customers whose total non-cancelled spend exceeds the average order total. Show name and spend (rounded to 2 decimals, as 'spend'), sorted by spend descending.", "", "SELECT customer_totals.name, ROUND(customer_totals.spend, 2) AS spend FROM (SELECT customers.id, customers.name, SUM(order_items.quantity * order_items.unit_price) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status <> 'cancelled' GROUP BY customers.id, customers.name) AS customer_totals WHERE customer_totals.spend > (SELECT AVG(order_total) FROM (SELECT SUM(quantity * unit_price) AS order_total FROM order_items GROUP BY order_id)) ORDER BY spend DESC;"),
     ]),
 ]
 
@@ -327,7 +330,7 @@ LESSONS.extend(
         Lesson("string-functions", 21, "String Functions", ["LOWER", "SUBSTR", "LENGTH"], ["customers", "products"], [
             Task("l21-t1", "Show customer names in lowercase (as 'name_lower') with their city, sorted by name_lower.", "", "SELECT lower(name) AS name_lower, city FROM customers ORDER BY name_lower;"),
             Task("l21-t2", "Show product name and the first four characters of each category (as 'category_prefix'), sorted by name.", "", "SELECT name, substr(category, 1, 4) AS category_prefix FROM products ORDER BY name;"),
-            Task("l21-t3", "Find customers whose city name has more than 6 characters. Show name, city, and length(city) as 'city_length', sorted by city_length descending then name.", "", "SELECT name, city, length(city) AS city_length FROM customers WHERE length(city) > 6 ORDER BY city_length DESC, name;"),
+            Task("l21-t3", "Find customers whose city name has more than 6 characters. Show name, city, and length(city) as 'city_length', sorted by city_length descending.", "", "SELECT name, city, length(city) AS city_length FROM customers WHERE length(city) > 6 ORDER BY city_length DESC;"),
             Task("l21-t4", "Build a customer label formatted as 'name - country' (as 'customer_label'), sorted by customer_label.", "", "SELECT name || ' - ' || country AS customer_label FROM customers ORDER BY customer_label;"),
             Task("l21-t5", "Find products whose lowercase name contains 'usb' or 'desk'. Show name, sorted by name.", "", "SELECT name FROM products WHERE lower(name) LIKE '%usb%' OR lower(name) LIKE '%desk%' ORDER BY name;"),
         ]),
@@ -335,8 +338,8 @@ LESSONS.extend(
             Task("l22-t1", "Count orders by calendar month. Show month (first 7 chars of ordered_at, as 'order_month') and count as 'order_count', sorted by order_month.", "", "SELECT substr(ordered_at, 1, 7) AS order_month, COUNT(*) AS order_count FROM orders GROUP BY order_month ORDER BY order_month;"),
             Task("l22-t2", "Find the number of days between shipment and delivery for delivered shipments. Show order_id and days as 'delivery_days' (integer), sorted by order_id.", "", "SELECT order_id, CAST(julianday(delivered_at) - julianday(shipped_at) AS INTEGER) AS delivery_days FROM shipments WHERE delivered_at IS NOT NULL ORDER BY order_id;"),
             Task("l22-t3", "Show customer name and signup quarter (as 'signup_quarter', formatted like 'Q1'). Sort by signup_date.", "", "SELECT name, 'Q' || ((CAST(strftime('%m', signup_date) AS INTEGER) + 2) / 3) AS signup_quarter FROM customers ORDER BY signup_date;"),
-            Task("l22-t4", "Find orders placed in Q1 2024 (Jan-Mar). Show id and ordered_at, sorted by ordered_at then id.", "", "SELECT id, ordered_at FROM orders WHERE ordered_at >= '2024-01-01' AND ordered_at < '2024-04-01' ORDER BY ordered_at, id;"),
-            Task("l22-t5", "Calculate days from each customer's signup to their first order (as 'days_to_first_order', integer). Join customers and orders, group by customer. Sort by days_to_first_order then name.", "", "SELECT customers.name, CAST(julianday(MIN(orders.ordered_at)) - julianday(customers.signup_date) AS INTEGER) AS days_to_first_order FROM customers JOIN orders ON orders.customer_id = customers.id GROUP BY customers.id, customers.name, customers.signup_date ORDER BY days_to_first_order, customers.name;"),
+            Task("l22-t4", "Find orders placed in Q1 2024 (Jan-Mar). Show id and ordered_at, sorted by ordered_at.", "", "SELECT id, ordered_at FROM orders WHERE ordered_at >= '2024-01-01' AND ordered_at < '2024-04-01' ORDER BY ordered_at;"),
+            Task("l22-t5", "Calculate days from each customer's signup to their first order (as 'days_to_first_order', integer). Join customers and orders, group by customer. Sort by days_to_first_order.", "", "SELECT customers.name, CAST(julianday(MIN(orders.ordered_at)) - julianday(customers.signup_date) AS INTEGER) AS days_to_first_order FROM customers JOIN orders ON orders.customer_id = customers.id GROUP BY customers.id, customers.name, customers.signup_date ORDER BY days_to_first_order;"),
         ]),
         Lesson("conditional-aggregation", 23, "Conditional Aggregation", ["SUM(CASE)", "COUNT(CASE)"], ["orders", "order_items", "customers", "products"], [
             Task("l23-t1", "For each order channel, count delivered orders (as 'delivered_orders') and non-delivered orders (as 'other_orders') using SUM(CASE...). Sort by channel.", "", "SELECT channel, SUM(CASE WHEN status = 'delivered' THEN 1 ELSE 0 END) AS delivered_orders, SUM(CASE WHEN status <> 'delivered' THEN 1 ELSE 0 END) AS other_orders FROM orders GROUP BY channel ORDER BY channel;"),
@@ -367,7 +370,7 @@ LESSONS.extend(
             Task("l26-t5", "Find the two newest orders per channel. Use ROW_NUMBER in a subquery. Show channel, order id (as 'order_id'), and ordered_at, sorted by channel then ordered_at descending.", "", "SELECT channel, id AS order_id, ordered_at FROM (SELECT channel, id, ordered_at, ROW_NUMBER() OVER (PARTITION BY channel ORDER BY ordered_at DESC, id DESC) AS rn FROM orders) AS ranked WHERE rn <= 2 ORDER BY channel, ordered_at DESC;"),
         ]),
         Lesson("ctes", 27, "Common Table Expressions", ["WITH", "readability"], ["customers", "orders", "order_items", "products"], [
-            Task("l27-t1", "Use a CTE named 'order_totals' to calculate each order's total, then return totals above 100. Show order_id and total (rounded to 2 decimals), sorted by total descending then order_id.", "", "WITH order_totals AS (SELECT order_id, SUM(quantity * unit_price) AS total FROM order_items GROUP BY order_id) SELECT order_id, ROUND(total, 2) AS total FROM order_totals WHERE total > 100 ORDER BY total DESC, order_id;"),
+            Task("l27-t1", "Use a CTE named 'order_totals' to calculate each order's total, then return totals above 100. Show order_id and total (rounded to 2 decimals), sorted by total descending.", "", "WITH order_totals AS (SELECT order_id, SUM(quantity * unit_price) AS total FROM order_items GROUP BY order_id) SELECT order_id, ROUND(total, 2) AS total FROM order_totals WHERE total > 100 ORDER BY total DESC;"),
             Task("l27-t2", "Use two CTEs: 'customer_spend' (non-cancelled spend per customer) and 'avg_spend' (average of customer_spend). Return customers whose spend exceeds avg_spend. Show name and spend (rounded to 2 decimals), sorted by spend descending.", "", "WITH customer_spend AS (SELECT customers.id, customers.name, SUM(order_items.quantity * order_items.unit_price) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status <> 'cancelled' GROUP BY customers.id, customers.name), avg_spend AS (SELECT AVG(spend) AS avg_spend FROM customer_spend) SELECT name, ROUND(spend, 2) AS spend FROM customer_spend, avg_spend WHERE spend > avg_spend ORDER BY spend DESC;"),
             Task("l27-t3", "Use a CTE named 'product_revenue' to find each product's revenue by category. Then sum by category. Show category and total as 'category_revenue' (rounded to 2 decimals), sorted by category_revenue descending.", "", "WITH product_revenue AS (SELECT products.category, products.name, SUM(order_items.quantity * order_items.unit_price) AS revenue FROM products JOIN order_items ON order_items.product_id = products.id GROUP BY products.id, products.category, products.name) SELECT category, ROUND(SUM(revenue), 2) AS category_revenue FROM product_revenue GROUP BY category ORDER BY category_revenue DESC;"),
             Task("l27-t4", "Use a CTE named 'delivered_orders' to filter delivered orders, then list distinct customer names, sorted by name.", "", "WITH delivered_orders AS (SELECT * FROM orders WHERE status = 'delivered') SELECT DISTINCT customers.name FROM delivered_orders JOIN customers ON customers.id = delivered_orders.customer_id ORDER BY customers.name;"),
@@ -377,7 +380,7 @@ LESSONS.extend(
             Task("l28-t1", "List the employee hierarchy starting from the top-level employee (no manager), including depth (0 for top). Show name and depth, sorted by depth then name.", "", "WITH RECURSIVE org(id, name, manager_id, depth) AS (SELECT id, name, manager_id, 0 FROM employees WHERE manager_id IS NULL UNION ALL SELECT employees.id, employees.name, employees.manager_id, org.depth + 1 FROM employees JOIN org ON employees.manager_id = org.id) SELECT name, depth FROM org ORDER BY depth, name;"),
             Task("l28-t2", "Find all employees under manager 'Owen Brooks' (exclude Owen himself). Show name, sorted by name.", "", "WITH RECURSIVE reports(id, name, manager_id) AS (SELECT id, name, manager_id FROM employees WHERE name = 'Owen Brooks' UNION ALL SELECT employees.id, employees.name, employees.manager_id FROM employees JOIN reports ON employees.manager_id = reports.id) SELECT name FROM reports WHERE name <> 'Owen Brooks' ORDER BY name;"),
             Task("l28-t3", "Build a management path for every employee (e.g., 'Rina Kapoor > Owen Brooks > Mei Lin'). Show name and path, sorted by path.", "", "WITH RECURSIVE org(id, name, manager_id, path) AS (SELECT id, name, manager_id, name FROM employees WHERE manager_id IS NULL UNION ALL SELECT employees.id, employees.name, employees.manager_id, org.path || ' > ' || employees.name FROM employees JOIN org ON employees.manager_id = org.id) SELECT name, path FROM org ORDER BY path;"),
-            Task("l28-t4", "Walk customer referrals starting from 'Asha Rao' and show referral depth (0 for Asha). Show name and depth, sorted by depth then name.", "", "WITH RECURSIVE referrals(id, name, depth) AS (SELECT id, name, 0 FROM customers WHERE name = 'Asha Rao' UNION ALL SELECT customers.id, customers.name, referrals.depth + 1 FROM customers JOIN referrals ON customers.referrer_id = referrals.id) SELECT name, depth FROM referrals ORDER BY depth, name;"),
+            Task("l28-t4", "Walk customer referrals starting from 'Asha Rao' and show referral depth (0 for Asha). Show name and depth, sorted by depth.", "", "WITH RECURSIVE referrals(id, name, depth) AS (SELECT id, name, 0 FROM customers WHERE name = 'Asha Rao' UNION ALL SELECT customers.id, customers.name, referrals.depth + 1 FROM customers JOIN referrals ON customers.referrer_id = referrals.id) SELECT name, depth FROM referrals ORDER BY depth;"),
             Task("l28-t5", "Generate numbers 1 through 5 using a recursive CTE with column 'n'. Sort by n.", "", "WITH RECURSIVE numbers(n) AS (SELECT 1 UNION ALL SELECT n + 1 FROM numbers WHERE n < 5) SELECT n FROM numbers ORDER BY n;"),
         ]),
         Lesson("semi-anti-joins", 29, "EXISTS and Anti-Joins", ["EXISTS", "NOT EXISTS"], ["customers", "orders", "products", "order_items", "shipments"], [
@@ -390,9 +393,9 @@ LESSONS.extend(
         Lesson("self-joins", 30, "Self Joins", ["self join", "hierarchies"], ["employees", "customers"], [
             Task("l30-t1", "Show each employee name (as 'employee') with their manager name (as 'manager'). Use a LEFT JOIN on employees. Sort by employee name.", "", "SELECT e.name AS employee, m.name AS manager FROM employees e LEFT JOIN employees m ON m.id = e.manager_id ORDER BY e.name;"),
             Task("l30-t2", "Show each customer name (as 'customer') with their referrer name (as 'referrer'). Use a LEFT JOIN on customers. Sort by customer name.", "", "SELECT c.name AS customer, r.name AS referrer FROM customers c LEFT JOIN customers r ON r.id = c.referrer_id ORDER BY c.name;"),
-            Task("l30-t3", "Find pairs of customers from the same country without duplicate mirrored pairs (a.id < b.id). Show customer_a, customer_b, and country. Sort by country then customer_a then customer_b.", "", "SELECT a.name AS customer_a, b.name AS customer_b, a.country FROM customers a JOIN customers b ON a.country = b.country AND a.id < b.id ORDER BY a.country, customer_a, customer_b;"),
-            Task("l30-t4", "Find employees who share a manager (exclude NULL managers, use a.id < b.id). Show employee_a, employee_b, and manager_id. Sort by manager_id then employee_a.", "", "SELECT a.name AS employee_a, b.name AS employee_b, a.manager_id FROM employees a JOIN employees b ON a.manager_id = b.manager_id AND a.id < b.id WHERE a.manager_id IS NOT NULL ORDER BY a.manager_id, employee_a;"),
-            Task("l30-t5", "Show manager names (as 'manager') and how many direct reports they have (as 'direct_reports'). Join employees to itself. Sort by direct_reports descending then manager.", "", "SELECT managers.name AS manager, COUNT(reports.id) AS direct_reports FROM employees managers JOIN employees reports ON reports.manager_id = managers.id GROUP BY managers.id, managers.name ORDER BY direct_reports DESC, manager;"),
+            Task("l30-t3", "Find pairs of customers from the same country without duplicate mirrored pairs (a.id < b.id). Show customer_a, customer_b, and country. Sort by country.", "", "SELECT a.name AS customer_a, b.name AS customer_b, a.country FROM customers a JOIN customers b ON a.country = b.country AND a.id < b.id ORDER BY a.country;"),
+            Task("l30-t4", "Find employees who share a manager (exclude NULL managers, use a.id < b.id). Show employee_a, employee_b, and manager_id. Sort by employee_a.", "", "SELECT a.name AS employee_a, b.name AS employee_b, a.manager_id FROM employees a JOIN employees b ON a.manager_id = b.manager_id AND a.id < b.id WHERE a.manager_id IS NOT NULL ORDER BY employee_a;"),
+            Task("l30-t5", "Show manager names (as 'manager') and how many direct reports they have (as 'direct_reports'). Join employees to itself. Sort by direct_reports descending.", "", "SELECT managers.name AS manager, COUNT(reports.id) AS direct_reports FROM employees managers JOIN employees reports ON reports.manager_id = managers.id GROUP BY managers.id, managers.name ORDER BY direct_reports DESC;"),
         ]),
         Lesson("set-operations-advanced", 31, "Set Operations", ["UNION", "INTERSECT", "EXCEPT"], ["customers", "orders", "products", "order_items"], [
             Task("l31-t1", "List countries that have both gold and silver customers using INTERSECT. Show country, sorted by country.", "", "SELECT country FROM customers WHERE tier = 'gold' INTERSECT SELECT country FROM customers WHERE tier = 'silver' ORDER BY country;"),
@@ -423,10 +426,10 @@ LESSONS.extend(
             Task("l34-t5", "Create an index named 'idx_order_items_product_id' on order_items(product_id) to speed up product joins.", "", "CREATE INDEX idx_order_items_product_id ON order_items(product_id);", "SELECT name, tbl_name FROM sqlite_master WHERE type = 'index' AND name = 'idx_order_items_product_id';"),
         ]),
         Lesson("final-interview-sets", 35, "Final Interview Sets", ["multi-step", "analytics", "business SQL"], ["customers", "orders", "order_items", "products", "shipments", "support_tickets"], [
-            Task("l35-t1", "Find the top three customers by delivered revenue (only delivered orders). Show customer name and delivered_revenue (rounded to 2 decimals), sorted by delivered_revenue descending then name. Use LIMIT 3.", "", "SELECT customers.name, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS delivered_revenue FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status = 'delivered' GROUP BY customers.id, customers.name ORDER BY delivered_revenue DESC, customers.name LIMIT 3;"),
+            Task("l35-t1", "Find the top three customers by delivered revenue (only delivered orders). Show customer name and delivered_revenue (rounded to 2 decimals), sorted by delivered_revenue descending. Use LIMIT 3.", "", "SELECT customers.name, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS delivered_revenue FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status = 'delivered' GROUP BY customers.id, customers.name ORDER BY delivered_revenue DESC LIMIT 3;"),
             Task("l35-t2", "For each month, show total orders (as 'orders_count'), total revenue, and count of delivered orders (as 'delivered_orders'). Use substr for month. Sort by month.", "", "SELECT substr(orders.ordered_at, 1, 7) AS month, COUNT(DISTINCT orders.id) AS orders_count, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS revenue, COUNT(DISTINCT CASE WHEN orders.status = 'delivered' THEN orders.id END) AS delivered_orders FROM orders JOIN order_items ON order_items.order_id = orders.id GROUP BY month ORDER BY month;"),
-            Task("l35-t3", "Find products with above-average product revenue. Use a CTE 'product_revenue'. Show name and revenue (rounded to 2 decimals), sorted by revenue descending then name.", "", "WITH product_revenue AS (SELECT products.id, products.name, SUM(order_items.quantity * order_items.unit_price) AS revenue FROM products JOIN order_items ON order_items.product_id = products.id GROUP BY products.id, products.name) SELECT name, ROUND(revenue, 2) AS revenue FROM product_revenue WHERE revenue > (SELECT AVG(revenue) FROM product_revenue) ORDER BY revenue DESC, name;"),
-            Task("l35-t4", "Find customers who have both a support ticket and delivered revenue above 100. Use a CTE 'delivered_spend' and EXISTS. Show name and spend (rounded to 2 decimals), sorted by spend descending then name.", "", "WITH delivered_spend AS (SELECT customers.id, customers.name, SUM(order_items.quantity * order_items.unit_price) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status = 'delivered' GROUP BY customers.id, customers.name) SELECT name, ROUND(spend, 2) AS spend FROM delivered_spend WHERE spend > 100 AND EXISTS (SELECT 1 FROM support_tickets WHERE support_tickets.customer_id = delivered_spend.id) ORDER BY spend DESC, name;"),
+            Task("l35-t3", "Find products with above-average product revenue. Use a CTE 'product_revenue'. Show name and revenue (rounded to 2 decimals), sorted by revenue descending.", "", "WITH product_revenue AS (SELECT products.id, products.name, SUM(order_items.quantity * order_items.unit_price) AS revenue FROM products JOIN order_items ON order_items.product_id = products.id GROUP BY products.id, products.name) SELECT name, ROUND(revenue, 2) AS revenue FROM product_revenue WHERE revenue > (SELECT AVG(revenue) FROM product_revenue) ORDER BY revenue DESC;"),
+            Task("l35-t4", "Find customers who have both a support ticket and delivered revenue above 100. Use a CTE 'delivered_spend' and EXISTS. Show name and spend (rounded to 2 decimals), sorted by spend descending.", "", "WITH delivered_spend AS (SELECT customers.id, customers.name, SUM(order_items.quantity * order_items.unit_price) AS spend FROM customers JOIN orders ON orders.customer_id = customers.id JOIN order_items ON order_items.order_id = orders.id WHERE orders.status = 'delivered' GROUP BY customers.id, customers.name) SELECT name, ROUND(spend, 2) AS spend FROM delivered_spend WHERE spend > 100 AND EXISTS (SELECT 1 FROM support_tickets WHERE support_tickets.customer_id = delivered_spend.id) ORDER BY spend DESC;"),
             Task("l35-t5", "Build an operations dashboard by order: show order id, order_total (rounded to 2 decimals), shipment_state ('delivered'/'in_transit'/'not_shipped'), and ticket_count. Use LEFT JOINs for shipments and support_tickets. Sort by order id.", "", "SELECT orders.id, ROUND(SUM(order_items.quantity * order_items.unit_price), 2) AS order_total, CASE WHEN shipments.delivered_at IS NOT NULL THEN 'delivered' WHEN shipments.shipped_at IS NOT NULL THEN 'in_transit' ELSE 'not_shipped' END AS shipment_state, COUNT(DISTINCT support_tickets.id) AS ticket_count FROM orders JOIN order_items ON order_items.order_id = orders.id LEFT JOIN shipments ON shipments.order_id = orders.id LEFT JOIN support_tickets ON support_tickets.order_id = orders.id GROUP BY orders.id, shipments.delivered_at, shipments.shipped_at ORDER BY orders.id;"),
         ]),
     ]
