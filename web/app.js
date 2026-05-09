@@ -1113,7 +1113,9 @@ function restoreSqlEditorFocus(selection) {
   editor.focus();
   const start = Math.min(selection.start, editor.value.length);
   const end = Math.min(selection.end, editor.value.length);
-  editor.setSelectionRange(start, end);
+  if (editor.selectionStart !== start || editor.selectionEnd !== end) {
+    editor.setSelectionRange(start, end);
+  }
 }
 
 function sqlEditorSelection() {
@@ -1663,10 +1665,12 @@ document.addEventListener("change", (event) => {
 document.addEventListener("input", (event) => {
   if (event.target?.id === "sqlEditor") {
     state.sql.query = event.target.value;
-    state.sql.queryEditSeq += 1;
+    saveCurrentSqlResponse();
     state.sql.check = null;
-    saveSqlQueryForTask();
+    state.sql.runResult = null;
     scheduleSqlAutoCheck();
+    // Defer render to next frame to allow browser caret update to complete
+    requestAnimationFrame(() => render());
   }
 });
 
