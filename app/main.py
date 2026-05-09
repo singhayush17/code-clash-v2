@@ -11,6 +11,7 @@ from fastapi.staticfiles import StaticFiles
 
 from .game import GameManager
 from .question_bank import QuestionBank, QuestionBankError
+from .lld_practice import check_lld, lesson_index as lld_lesson_index, lesson_payload as lld_lesson_payload, run_python
 from .sql_practice import check_sql, lesson_index, lesson_payload, run_sql
 
 
@@ -31,6 +32,19 @@ class SqlRunRequest(BaseModel):
 
 class SqlCheckRequest(SqlRunRequest):
     taskId: str
+
+
+class LldRunRequest(BaseModel):
+    lessonId: str
+    taskId: str
+    code: str
+
+
+class LldCheckRequest(BaseModel):
+    lessonId: str
+    taskId: str
+    answer: int | None = None
+    code: str | None = None
 
 
 @app.on_event("startup")
@@ -85,6 +99,39 @@ async def sql_check(request: SqlCheckRequest) -> JSONResponse:
     return JSONResponse({"ok": True, **result})
 
 
+@app.get("/api/lld/lessons")
+async def lld_lessons() -> dict[str, object]:
+    return {"lessons": lld_lesson_index()}
+
+
+@app.get("/api/lld/lessons/{lesson_id}")
+async def lld_lesson(lesson_id: str) -> dict[str, object]:
+    return {"lesson": lld_lesson_payload(lesson_id)}
+
+
+@app.post("/api/lld/run")
+async def lld_run(request: LldRunRequest) -> JSONResponse:
+    try:
+        result = run_python(request.lessonId, request.taskId, request.code)
+    except Exception as exc:
+        return JSONResponse({"ok": False, "error": str(exc)}, status_code=400)
+    return JSONResponse({"ok": True, **result})
+
+
+@app.post("/api/lld/check")
+async def lld_check(request: LldCheckRequest) -> JSONResponse:
+    try:
+        result = check_lld(
+            request.lessonId,
+            request.taskId,
+            answer=request.answer,
+            code=request.code,
+        )
+    except Exception as exc:
+        return JSONResponse({"ok": False, "error": str(exc)}, status_code=400)
+    return JSONResponse({"ok": True, **result})
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket) -> None:
     conn = await manager.register(websocket)
@@ -117,6 +164,16 @@ async def sql_practice_page() -> FileResponse:
 @app.get("/sql/{lesson_id}")
 async def sql_practice_lesson(lesson_id: str) -> FileResponse:
     return FileResponse(WEB_DIR / "index.html")
+
+
+@app.get("/lld")
+async def lld_practice_page() -> FileResponse:
+    return FileResponse(WEB_DIR / "lld.html")
+
+
+@app.get("/lld/{lesson_id}")
+async def lld_practice_lesson(lesson_id: str) -> FileResponse:
+    return FileResponse(WEB_DIR / "lld.html")
 
 
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")

@@ -16,6 +16,8 @@ Code Clash is hosted on Render at [https://code-clash-3uwa.onrender.com/](https:
 - Play solo with the same strict timed format.
 - Server-authoritative scoring: 1 point per correct answer, no negatives, no skips, highest score wins.
 - Review your own answered questions at the end of the current game, including your pick and the correct option. Reviews stay in memory only for the current room.
+- A dedicated SQL practice track with progressive sandboxed query exercises.
+- A dedicated Python LLD practice track with design-pattern drills, scenario-heavy quizzes, and machine-coding labs.
 - Random usernames and generated SVG avatars.
 - Adaptive questions: players start on easy questions and move toward medium/hard as they answer more and build score/streak.
 - 300 starter MCQs across all supported subjects, with balanced correct-answer positions across A, B, C, and D.
@@ -33,6 +35,11 @@ uvicorn app.main:app --reload
 ```
 
 Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+
+Practice routes:
+
+- [http://127.0.0.1:8000/sql](http://127.0.0.1:8000/sql)
+- [http://127.0.0.1:8000/lld](http://127.0.0.1:8000/lld)
 
 For 1v1 testing, open two browser windows. Create a link in one window and open it in the other, or click "Find Random Player" in both.
 
