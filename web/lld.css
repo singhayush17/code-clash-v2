@@ -1,0 +1,319 @@
+.lld-body .app {
+  width: min(1480px, calc(100% - 32px));
+}
+
+.lld-topbar .nav-button,
+.lld-topbar a.nav-button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.lld-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(0, 166, 118, 0.95), rgba(46, 196, 182, 0.9));
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  flex: 0 0 auto;
+}
+
+.lld-workspace-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.lld-workspace-head p,
+.lld-workspace-head h2 {
+  margin-top: 0;
+}
+
+.lld-workspace-head-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.lld-workspace-head-copy p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.lld-lesson-tools {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+.lld-focus-pills,
+.lld-meta-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.lld-left {
+  display: grid;
+  gap: 18px;
+}
+
+.lld-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lld-stat {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--wash);
+}
+
+.lld-stat b {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.lld-stat span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.pattern-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.pattern-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+  display: grid;
+  gap: 10px;
+}
+
+.pattern-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.pattern-head b {
+  font-size: 1rem;
+}
+
+.pattern-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.pattern-card strong {
+  color: var(--ink);
+}
+
+.task-summary {
+  display: grid;
+  gap: 12px;
+}
+
+.task-summary h3,
+.task-summary p {
+  margin: 0;
+}
+
+.task-summary-copy {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.brief-list {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--muted);
+  display: grid;
+  gap: 6px;
+}
+
+.brief-list li {
+  line-height: 1.45;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 10px;
+}
+
+.quiz-option {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.quiz-option:hover {
+  border-color: rgba(0, 166, 118, 0.35);
+  background: rgba(0, 166, 118, 0.05);
+}
+
+.quiz-option.selected {
+  border-color: rgba(0, 166, 118, 0.45);
+  background: rgba(0, 166, 118, 0.10);
+}
+
+.quiz-option.correct {
+  border-color: rgba(0, 166, 118, 0.45);
+  background: rgba(0, 166, 118, 0.08);
+}
+
+.quiz-option.wrong {
+  border-color: rgba(215, 38, 61, 0.3);
+  background: rgba(215, 38, 61, 0.06);
+}
+
+.quiz-option-key {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  background: var(--wash);
+  color: var(--muted);
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.quiz-actions,
+.lld-editor-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.task-kind-pill {
+  text-transform: capitalize;
+}
+
+.task-time {
+  color: var(--muted);
+}
+
+.result-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.result-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.result-card h3,
+.result-card p,
+.result-card pre {
+  margin-top: 0;
+}
+
+.result-card p:last-child {
+  margin-bottom: 0;
+}
+
+.result-card pre {
+  margin-bottom: 0;
+  overflow: auto;
+  border-radius: 8px;
+  padding: 12px;
+  background: #101417;
+  color: #f5f7fa;
+  white-space: pre-wrap;
+  font-family:
+    "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+}
+
+.check-list {
+  display: grid;
+  gap: 8px;
+}
+
+.check-item {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 10px 12px;
+  background: #ffffff;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+}
+
+.check-item.ok {
+  border-color: rgba(0, 166, 118, 0.3);
+  background: rgba(0, 166, 118, 0.05);
+}
+
+.check-item.bad {
+  border-color: rgba(215, 38, 61, 0.22);
+  background: rgba(215, 38, 61, 0.04);
+}
+
+.check-item b {
+  flex: 0 0 auto;
+}
+
+.solution-block pre {
+  margin-top: 10px;
+}
+
+.lld-empty {
+  min-height: 200px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--muted);
+}
+
+.lld-footnote {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 900px) {
+  .lld-workspace-head,
+  .lld-lesson-tools {
+    grid-auto-flow: row;
+  }
+
+  .lld-workspace-head {
+    flex-direction: column;
+  }
+
+  .lld-lesson-tools {
+    justify-items: start;
+  }
+
+  .lld-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}

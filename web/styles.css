@@ -106,6 +106,8 @@ button {
 }
 
 .nav-button {
+  display: inline-flex;
+  align-items: center;
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid var(--line);
@@ -113,6 +115,7 @@ button {
   background: var(--surface);
   color: var(--ink);
   cursor: pointer;
+  text-decoration: none;
 }
 
 .nav-button.active {
@@ -120,6 +123,95 @@ button {
   background: rgba(0, 166, 118, 0.12);
   color: #006f50;
   font-weight: 800;
+}
+
+.nav-dropdown {
+  position: relative;
+}
+
+.nav-dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 34px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--ink);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.nav-dropdown-trigger.active {
+  border-color: rgba(0, 166, 118, 0.45);
+  background: rgba(0, 166, 118, 0.12);
+  color: #006f50;
+  font-weight: 800;
+}
+
+.nav-dropdown-trigger::after {
+  content: "▾";
+  font-size: 0.7rem;
+  opacity: 0.55;
+}
+
+.nav-dropdown-menu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  min-width: 170px;
+  padding: 6px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--surface);
+  box-shadow: 0 12px 36px rgba(20, 20, 20, 0.12);
+  z-index: 100;
+  animation: dropIn 120ms ease;
+}
+
+.nav-dropdown:hover .nav-dropdown-menu,
+.nav-dropdown:focus-within .nav-dropdown-menu {
+  display: grid;
+  gap: 2px;
+}
+
+@keyframes dropIn {
+  from { opacity: 0; transform: translateY(-6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--ink);
+  text-decoration: none;
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+}
+
+.nav-dropdown-item:hover {
+  background: var(--wash);
+}
+
+.nav-dropdown-item.active {
+  background: rgba(0, 166, 118, 0.08);
+  color: #006f50;
+  font-weight: 700;
+}
+
+.nav-dropdown-item small {
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 400;
 }
 
 .dot {

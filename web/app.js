@@ -43,6 +43,7 @@ const state = {
     sqlTimerId: null,
     taskTimes: loadSqlTaskTimes(),
     savedQueries: loadSqlQueries(),
+    queryEditSeq: 0,
   },
 };
 
@@ -605,7 +606,13 @@ function renderTopbar() {
       </div>
       <div class="top-actions">
         <button class="nav-button ${!isSqlRoute() ? "active" : ""}" data-action="nav-battle">Battles</button>
-        <button class="nav-button ${isSqlRoute() ? "active" : ""}" data-action="nav-sql">SQL Practice</button>
+        <div class="nav-dropdown">
+          <span class="nav-dropdown-trigger ${isSqlRoute() ? "active" : ""}">Practice</span>
+          <div class="nav-dropdown-menu">
+            <button class="nav-dropdown-item ${isSqlRoute() ? "active" : ""}" data-action="nav-sql">SQL Practice</button>
+            <a class="nav-dropdown-item" href="/lld">LLD Practice</a>
+          </div>
+        </div>
         <div class="connection">
           <span class="dot ${state.connected ? "ok" : ""}"></span>
           ${state.connected ? `${state.onlineCount} players live` : "Connecting"}
@@ -1390,6 +1397,7 @@ async function runSqlAction(check = false, options = {}) {
   }
   let advanced = false;
   const selection = options.preserveEditor ? sqlEditorSelection() : null;
+  const editSeqAtStart = state.sql.queryEditSeq;
   state.sql.loading = !options.auto;
   state.sql.error = "";
   if (!options.auto) {
@@ -1459,7 +1467,12 @@ async function runSqlAction(check = false, options = {}) {
   } finally {
     state.sql.loading = false;
     render();
-    if (options.preserveEditor && !advanced && !state.sql.check?.correct) {
+    if (
+      options.preserveEditor &&
+      !advanced &&
+      !state.sql.check?.correct &&
+      state.sql.queryEditSeq === editSeqAtStart
+    ) {
       restoreSqlEditorFocus(selection);
     }
   }
@@ -1650,6 +1663,7 @@ document.addEventListener("change", (event) => {
 document.addEventListener("input", (event) => {
   if (event.target?.id === "sqlEditor") {
     state.sql.query = event.target.value;
+    state.sql.queryEditSeq += 1;
     state.sql.check = null;
     saveSqlQueryForTask();
     scheduleSqlAutoCheck();
