@@ -23,6 +23,7 @@ const state = {
   timerId: null,
   routeRoomId: getRouteRoomId(),
   onlineCount: 0,
+  dropdownOpen: false,
   sql: {
     lessons: [],
     lesson: null,
@@ -42,6 +43,7 @@ const state = {
     chapterPausedMs: null,
     questionStartTime: null,
     questionPausedMs: null,
+    tasksCollapsed: false,
     sqlTimerId: null,
     taskTimes: loadSqlTaskTimes(),
     savedQueries: loadSqlQueries(),
@@ -645,8 +647,8 @@ function renderTopbar() {
       <div class="top-actions">
         <button class="nav-button ${!isSqlRoute() ? "active" : ""}" data-action="nav-battle">Battles</button>
         <div class="nav-dropdown">
-          <span class="nav-dropdown-trigger ${isSqlRoute() ? "active" : ""}">Practice</span>
-          <div class="nav-dropdown-menu">
+          <span class="nav-dropdown-trigger ${isSqlRoute() ? "active" : ""}" data-action="nav-dropdown-toggle">Practice</span>
+          <div class="nav-dropdown-menu${state.dropdownOpen ? ' open' : ''}">
             <button class="nav-dropdown-item ${isSqlRoute() ? "active" : ""}" data-action="nav-sql">SQL Practice</button>
             <a class="nav-dropdown-item" href="/lld">LLD Practice</a>
           </div>
@@ -1329,16 +1331,24 @@ function renderSqlTable(table) {
 }
 
 function renderSqlTasks() {
+  const collapsed = state.sql.tasksCollapsed;
+  const tasks = collapsed
+    ? state.sql.lesson.tasks.filter((t) => t.id === state.sql.selectedTaskId)
+    : state.sql.lesson.tasks;
   return `
     <section class="sql-panel task-panel">
       <div class="sql-panel-head">
         <h3>Exercises</h3>
-        <span class="pill strong">${solvedCountForLesson(state.sql.lesson.id)}/${state.sql.lesson.tasks.length} solved</span>
+        <div style="display:flex;gap:8px;align-items:center;">
+          <span class="pill strong">${solvedCountForLesson(state.sql.lesson.id)}/${state.sql.lesson.tasks.length} solved</span>
+          <button class="secondary-button compact" data-action="sql-toggle-tasks" title="${collapsed ? 'Show all exercises' : 'Focus on current exercise'}">${collapsed ? 'All' : 'Focus'}</button>
+        </div>
       </div>
       <div class="sql-task-list">
-        ${state.sql.lesson.tasks
+        ${tasks
           .map(
-            (task, index) => {
+            (task) => {
+              const index = state.sql.lesson.tasks.indexOf(task);
               const solveTime = getTaskTime(state.sql.lesson.id, task.id);
               return `
               <button class="sql-task ${task.id === state.sql.selectedTaskId ? "active" : ""} ${isSqlTaskSolved(task.id) ? "solved" : ""}" data-action="sql-task" data-task-id="${escapeHtml(task.id)}">
@@ -1530,12 +1540,29 @@ async function runSqlAction(check = false, options = {}) {
 }
 
 document.addEventListener("click", async (event) => {
+  // Close dropdown if click is outside the nav-dropdown
+  if (!event.target.closest(".nav-dropdown")) {
+    if (state.dropdownOpen) {
+      state.dropdownOpen = false;
+      render();
+    }
+  }
+
   const button = event.target.closest("[data-action]");
   if (!button) {
     return;
   }
 
   const action = button.dataset.action;
+
+  if (action === "nav-dropdown-toggle") {
+    state.dropdownOpen = !state.dropdownOpen;
+    render();
+    return;
+  }
+
+  // Close dropdown on any other action
+  state.dropdownOpen = false;
 
   if (action === "clear-error") {
     clearError();
@@ -1565,6 +1592,11 @@ document.addEventListener("click", async (event) => {
 
   if (action === "sql-reset") {
     setSqlQueryFromTask();
+    render();
+  }
+
+  if (action === "sql-toggle-tasks") {
+    state.sql.tasksCollapsed = !state.sql.tasksCollapsed;
     render();
   }
 

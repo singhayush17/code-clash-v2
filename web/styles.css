@@ -161,10 +161,9 @@ button {
   position: absolute;
   top: 100%;
   right: 0;
+  margin-top: 6px;
   min-width: 170px;
   padding: 6px;
-  padding-top: 12px;
-  margin-top: 0;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);
@@ -173,8 +172,7 @@ button {
   animation: dropIn 120ms ease;
 }
 
-.nav-dropdown:hover .nav-dropdown-menu,
-.nav-dropdown:focus-within .nav-dropdown-menu {
+.nav-dropdown-menu.open {
   display: grid;
   gap: 2px;
 }
