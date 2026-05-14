@@ -1513,10 +1513,7 @@ async function runSqlAction(check = false, options = {}) {
           advanced = advanceSqlTask();
         }
       } else if (options.auto) {
-        state.sql.check = {
-          correct: false,
-          message: "Runs, not solved yet.",
-        };
+        state.sql.check = null;
       }
     } else {
       state.sql.result = data.result;
@@ -1779,9 +1776,8 @@ document.addEventListener("change", (event) => {
 document.addEventListener("input", (event) => {
   if (event.target?.id === "sqlEditor") {
     state.sql.query = event.target.value;
-    saveCurrentSqlResponse();
+    saveSqlQueryForTask();
     state.sql.check = null;
-    state.sql.runResult = null;
     scheduleSqlAutoCheck();
     // Defer render to next frame to allow browser caret update to complete
     requestAnimationFrame(() => render());
