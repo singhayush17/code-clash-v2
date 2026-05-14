@@ -44,6 +44,7 @@ const state = {
     questionStartTime: null,
     questionPausedMs: null,
     tasksCollapsed: false,
+    tablesHidden: false,
     sqlTimerId: null,
     taskTimes: loadSqlTaskTimes(),
     savedQueries: loadSqlQueries(),
@@ -1269,13 +1270,16 @@ function renderSqlWorkspace() {
           <div class="question-meta">
             ${state.sql.lesson.focus.map((focus) => `<span class="pill">${escapeHtml(focus)}</span>`).join("")}
           </div>
+          <button class="secondary-button compact" data-action="sql-toggle-tables">${state.sql.tablesHidden ? '⊞ Show Tables' : '⊟ Hide Tables'}</button>
           ${state.sql.lesson.notesUrl ? `<a class="notes-link" href="${escapeHtml(state.sql.lesson.notesUrl)}" target="_blank" rel="noreferrer">Notes</a>` : ""}
         </div>
       </div>
       <div class="sql-grid">
+        ${!state.sql.tablesHidden ? `
         <div class="sql-left">
           ${renderSqlTables()}
         </div>
+        ` : ''}
         <div class="sql-right">
           ${renderSqlTasks()}
           ${renderSqlEditor()}
@@ -1597,6 +1601,11 @@ document.addEventListener("click", async (event) => {
 
   if (action === "sql-toggle-tasks") {
     state.sql.tasksCollapsed = !state.sql.tasksCollapsed;
+    render();
+  }
+
+  if (action === "sql-toggle-tables") {
+    state.sql.tablesHidden = !state.sql.tablesHidden;
     render();
   }
 

@@ -318,7 +318,15 @@ LESSONS = [
         Task("l18-t3", "Create a table named scratch with columns id (INTEGER PRIMARY KEY) and note (TEXT), then drop it.", "", "CREATE TABLE scratch (id INTEGER PRIMARY KEY, note TEXT); DROP TABLE scratch;", "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'scratch';"),
         Task("l18-t4", "Drop the order_items table.", "", "DROP TABLE order_items;", "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'order_items';"),
     ]),
-    Lesson("advanced-review", 19, "Subqueries and Sets", ["subquery", "UNION", "EXCEPT"], ["products", "customers", "orders", "order_items"], [
+    Lesson("union-intersect-except", 19, "UNION / INTERSECT / EXCEPT", ["UNION", "UNION ALL", "INTERSECT", "EXCEPT"], ["customers", "orders", "products", "order_items", "shipments"], [
+        Task("l19u-t1", "List every distinct country that appears in the customers table combined with the single value 'Canada'. Show country, sorted alphabetically. Use UNION.", "", "SELECT country FROM customers UNION SELECT 'Canada' AS country ORDER BY country;"),
+        Task("l19u-t2", "Show all customer cities AND all shipment carriers in a single column named 'label'. Include duplicates. Sort by label. Use UNION ALL.", "", "SELECT city AS label FROM customers UNION ALL SELECT carrier AS label FROM shipments ORDER BY label;"),
+        Task("l19u-t3", "Find countries that have BOTH gold-tier AND silver-tier customers. Show country, sorted by country. Use INTERSECT.", "", "SELECT country FROM customers WHERE tier = 'gold' INTERSECT SELECT country FROM customers WHERE tier = 'silver' ORDER BY country;"),
+        Task("l19u-t4", "Find product ids that exist in the products table but have never appeared in order_items. Show id, sorted by id. Use EXCEPT.", "", "SELECT id FROM products EXCEPT SELECT product_id FROM order_items ORDER BY id;"),
+        Task("l19u-t5", "Find customer ids who placed orders via 'web' AND via 'mobile' (both channels). Show customer_id, sorted. Use INTERSECT.", "", "SELECT customer_id FROM orders WHERE channel = 'web' INTERSECT SELECT customer_id FROM orders WHERE channel = 'mobile' ORDER BY customer_id;"),
+        Task("l19u-t6", "Build a unified order status report: for each status show 'delivered', 'cancelled', or 'other' orders count. Use UNION ALL to combine three separate SELECT statements (one per status group), each returning status_group and order_count. Sort by status_group.", "", "SELECT 'delivered' AS status_group, COUNT(*) AS order_count FROM orders WHERE status = 'delivered' UNION ALL SELECT 'cancelled' AS status_group, COUNT(*) AS order_count FROM orders WHERE status = 'cancelled' UNION ALL SELECT 'other' AS status_group, COUNT(*) AS order_count FROM orders WHERE status NOT IN ('delivered', 'cancelled') ORDER BY status_group;"),
+    ]),
+    Lesson("advanced-review", 20, "Subqueries and Sets", ["subquery", "UNION", "EXCEPT"], ["products", "customers", "orders", "order_items"], [
         Task("l19-t1", "Find products priced above the overall average price. Show name and price, sorted by price descending then name.", "", "SELECT name, price FROM products WHERE price > (SELECT AVG(price) FROM products) ORDER BY price DESC, name;"),
         Task("l19-t2", "Find customers who have placed at least one delivered order. Show name, sorted by name. Use a subquery with IN.", "", "SELECT name FROM customers WHERE id IN (SELECT customer_id FROM orders WHERE status = 'delivered') ORDER BY name;"),
         Task("l19-t3", "List all unique countries from customers combined with the literal value 'Canada' using UNION. Sort by country.", "", "SELECT country FROM customers UNION SELECT 'Canada' AS country ORDER BY country;"),
@@ -477,6 +485,7 @@ NOTES_BY_LESSON = {
     "create-table": "https://www.w3schools.com/sql/sql_create_table.asp",
     "alter-table": "https://www.w3schools.com/sql/sql_alter.asp",
     "drop-table": "https://www.w3schools.com/sql/sql_drop_table.asp",
+    "union-intersect-except": "https://www.w3schools.com/sql/sql_union.asp",
     "advanced-review": "https://www.w3schools.com/sql/sql_any_all.asp",
     "interview-filters": "https://www.w3schools.com/sql/sql_between.asp",
     "string-functions": "https://www.sqlite.org/lang_corefunc.html",
