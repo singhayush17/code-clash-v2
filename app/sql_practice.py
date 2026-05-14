@@ -627,7 +627,7 @@ def query_table_preview(conn: sqlite3.Connection, table_name: str) -> dict[str, 
     columns = [row["name"] for row in conn.execute(f"PRAGMA table_info({quote_identifier(table_name)})")]
     rows = [
         [normalize_value(row[column]) for column in columns]
-        for row in conn.execute(f"SELECT * FROM {quote_identifier(table_name)} LIMIT 8")
+        for row in conn.execute(f"SELECT * FROM {quote_identifier(table_name)} LIMIT 50")
     ]
     total = conn.execute(f"SELECT COUNT(*) AS count FROM {quote_identifier(table_name)}").fetchone()["count"]
     return {"name": table_name, "columns": columns, "rows": rows, "total": total}

@@ -1047,6 +1047,8 @@ button {
 
 .data-table-wrap {
   overflow-x: auto;
+  overflow-y: auto;
+  max-height: 240px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #ffffff;
