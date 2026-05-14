@@ -159,10 +159,12 @@ button {
 .nav-dropdown-menu {
   display: none;
   position: absolute;
-  top: calc(100% + 6px);
+  top: 100%;
   right: 0;
   min-width: 170px;
   padding: 6px;
+  padding-top: 12px;
+  margin-top: 0;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: var(--surface);

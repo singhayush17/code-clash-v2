@@ -39,7 +39,9 @@ const state = {
     autoCheckSeq: 0,
     chapterStartTime: null,
     chapterStoppedMs: null,
+    chapterPausedMs: null,
     questionStartTime: null,
+    questionPausedMs: null,
     sqlTimerId: null,
     taskTimes: loadSqlTaskTimes(),
     savedQueries: loadSqlQueries(),
@@ -162,13 +164,47 @@ function getTaskTime(lessonId, taskId) {
 
 function chapterElapsedMs() {
   if (state.sql.chapterStoppedMs != null) return state.sql.chapterStoppedMs;
+  if (state.sql.chapterPausedMs != null) return state.sql.chapterPausedMs;
   if (!state.sql.chapterStartTime) return 0;
   return Date.now() - state.sql.chapterStartTime;
 }
 
 function questionElapsedMs() {
+  if (state.sql.questionPausedMs != null) return state.sql.questionPausedMs;
   if (!state.sql.questionStartTime) return 0;
   return Date.now() - state.sql.questionStartTime;
+}
+
+function isChapterTimerPaused() {
+  return state.sql.chapterPausedMs != null;
+}
+
+function isQuestionTimerPaused() {
+  return state.sql.questionPausedMs != null;
+}
+
+function pauseChapterTimer() {
+  if (state.sql.chapterPausedMs != null || state.sql.chapterStoppedMs != null) return;
+  state.sql.chapterPausedMs = chapterElapsedMs();
+  state.sql.chapterStartTime = null;
+}
+
+function resumeChapterTimer() {
+  if (state.sql.chapterPausedMs == null) return;
+  state.sql.chapterStartTime = Date.now() - state.sql.chapterPausedMs;
+  state.sql.chapterPausedMs = null;
+}
+
+function pauseQuestionTimer() {
+  if (state.sql.questionPausedMs != null) return;
+  state.sql.questionPausedMs = questionElapsedMs();
+  state.sql.questionStartTime = null;
+}
+
+function resumeQuestionTimer() {
+  if (state.sql.questionPausedMs == null) return;
+  state.sql.questionStartTime = Date.now() - state.sql.questionPausedMs;
+  state.sql.questionPausedMs = null;
 }
 
 function formatElapsed(ms) {
@@ -231,7 +267,9 @@ function resetChapterTimers() {
   saveSqlQueries();
   state.sql.chapterStartTime = Date.now();
   state.sql.chapterStoppedMs = null;
+  state.sql.chapterPausedMs = null;
   state.sql.questionStartTime = Date.now();
+  state.sql.questionPausedMs = null;
   state.sql.selectedTaskId = state.sql.lesson.tasks[0]?.id || "";
   if (state.sql.autoCheckTimer) {
     window.clearTimeout(state.sql.autoCheckTimer);
@@ -1053,12 +1091,18 @@ function setSqlQueryFromTask() {
   const lessonId = state.sql.lesson?.id;
   const taskId = state.sql.selectedTaskId;
   const saved = lessonId && taskId ? getSavedQueryForTask(lessonId, taskId) : null;
+  const alreadySolved = lessonId && taskId && isSqlTaskSolved(taskId);
   state.sql.query = saved != null ? saved : (task?.starter || "");
   state.sql.result = null;
   state.sql.check = null;
   state.sql.showSolution = false;
   state.sql.questionStartTime = Date.now();
   saveSqlLastPosition();
+  // Auto-run if the user has a saved in-progress query or the task is already solved,
+  // so the result grid populates immediately (SQLBolt-style UX).
+  if (state.sql.query.trim() && (saved != null || alreadySolved)) {
+    scheduleSqlAutoCheck();
+  }
 }
 
 function currentSqlTask() {
@@ -1212,10 +1256,13 @@ function renderSqlWorkspace() {
           <h2>${escapeHtml(state.sql.lesson.title)}</h2>
         </div>
         <div class="lesson-tools">
-          <div class="sql-chapter-timer-block${state.sql.chapterStoppedMs != null ? ' stopped' : ''}">
+          <div class="sql-chapter-timer-block${(state.sql.chapterStoppedMs != null || state.sql.chapterPausedMs != null) ? ' stopped' : ''}">
             <span class="sql-timer-icon">⏱</span>
             <span class="sql-timer-value" data-sql-chapter-timer>${formatElapsed(chapterElapsedMs())}</span>
-            ${state.sql.chapterStartTime || state.sql.chapterStoppedMs != null ? `<button class="sql-timer-reset" data-action="sql-reset-timers" title="Reset chapter & question timers">↻</button>` : ""}
+            ${state.sql.chapterStoppedMs == null && (state.sql.chapterStartTime || state.sql.chapterPausedMs != null) ? `
+              <button class="sql-timer-reset" data-action="sql-pause-chapter" title="${isChapterTimerPaused() ? 'Resume chapter timer' : 'Pause chapter timer'}" aria-label="${isChapterTimerPaused() ? 'Resume' : 'Pause'} chapter timer">${isChapterTimerPaused() ? '▶' : '⏸'}</button>
+            ` : ''}
+            ${state.sql.chapterStartTime || state.sql.chapterStoppedMs != null || state.sql.chapterPausedMs != null ? `<button class="sql-timer-reset" data-action="sql-reset-timers" title="Reset chapter &amp; question timers">↻</button>` : ""}
           </div>
           <div class="question-meta">
             ${state.sql.lesson.focus.map((focus) => `<span class="pill">${escapeHtml(focus)}</span>`).join("")}
@@ -1315,9 +1362,11 @@ function renderSqlEditor() {
       <div class="sql-panel-head">
         <h3>${escapeHtml(task?.prompt || "SQL")}</h3>
         <div class="editor-actions">
-          <div class="sql-question-timer-block">
+          <div class="sql-question-timer-block${state.sql.questionPausedMs != null ? ' stopped' : ''}">
             <span class="sql-timer-icon">⏱</span>
             <span class="sql-timer-value" data-sql-question-timer>${formatElapsed(questionElapsedMs())}</span>
+            <button class="sql-timer-reset" data-action="sql-pause-question" title="${isQuestionTimerPaused() ? 'Resume question timer' : 'Pause question timer'}" aria-label="${isQuestionTimerPaused() ? 'Resume' : 'Pause'} question timer">${isQuestionTimerPaused() ? '▶' : '⏸'}</button>
+            <button class="sql-timer-reset" data-action="sql-reset-question-timer" title="Reset question timer" aria-label="Reset question timer">↻</button>
           </div>
           <button class="secondary-button compact" data-action="sql-solution">${state.sql.showSolution ? "Hide Solution" : "Solution"}</button>
           <button class="secondary-button compact" data-action="sql-run">Run</button>
@@ -1521,6 +1570,30 @@ document.addEventListener("click", async (event) => {
 
   if (action === "sql-reset-timers") {
     resetChapterTimers();
+    render();
+  }
+
+  if (action === "sql-pause-chapter") {
+    if (isChapterTimerPaused()) {
+      resumeChapterTimer();
+    } else {
+      pauseChapterTimer();
+    }
+    render();
+  }
+
+  if (action === "sql-pause-question") {
+    if (isQuestionTimerPaused()) {
+      resumeQuestionTimer();
+    } else {
+      pauseQuestionTimer();
+    }
+    render();
+  }
+
+  if (action === "sql-reset-question-timer") {
+    state.sql.questionPausedMs = null;
+    state.sql.questionStartTime = Date.now();
     render();
   }
 
