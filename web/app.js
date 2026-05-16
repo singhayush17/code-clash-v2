@@ -38,6 +38,7 @@ const state = {
     loading: false,
     error: "",
     showSolution: false,
+    showHint: false,
     solved: loadSqlSolved(),
     autoCheckTimer: null,
     autoCheckSeq: 0,
@@ -1113,6 +1114,7 @@ function setSqlQueryFromTask() {
   state.sql.result = null;
   state.sql.check = null;
   state.sql.showSolution = false;
+  state.sql.showHint = false;
   state.sql.questionStartTime = Date.now();
   state.sql.questionPausedMs = null;
   saveSqlLastPosition();
@@ -1414,13 +1416,14 @@ function renderSqlEditor() {
             <button class="sql-timer-reset" data-action="sql-pause-question" title="${isQuestionTimerPaused() ? 'Resume question timer' : 'Pause question timer'}" aria-label="${isQuestionTimerPaused() ? 'Resume' : 'Pause'} question timer">${isQuestionTimerPaused() ? '▶' : '⏸'}</button>
             <button class="sql-timer-reset" data-action="sql-reset-question-timer" title="Reset question timer" aria-label="Reset question timer">↻</button>
           </div>
+          <button class="secondary-button compact" data-action="sql-hint">${state.sql.showHint ? "Hide Hint" : "💡 Hint"}</button>
           <button class="secondary-button compact" data-action="sql-solution">${state.sql.showSolution ? "Hide Solution" : "Solution"}</button>
           <button class="secondary-button compact" data-action="sql-run">Run</button>
           <button class="primary-button compact" data-action="sql-check">Check</button>
         </div>
       </div>
       <textarea id="sqlEditor" spellcheck="false">${escapeHtml(state.sql.query)}</textarea>
-      ${task?.hint ? `<p class="sql-hint">${escapeHtml(task.hint)}</p>` : ""}
+      ${state.sql.showHint && task?.hint ? `<p class="sql-hint">💡 ${escapeHtml(task.hint)}</p>` : ""}
     </section>
   `;
 }
@@ -1667,6 +1670,11 @@ document.addEventListener("click", async (event) => {
 
   if (action === "sql-check") {
     await runSqlAction(true, { advanceOnCorrect: true });
+  }
+
+  if (action === "sql-hint") {
+    state.sql.showHint = !state.sql.showHint;
+    render();
   }
 
   if (action === "sql-solution") {

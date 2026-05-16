@@ -163,6 +163,125 @@ SEED: dict[str, list[tuple[Any, ...]]] = {
     ],
 }
 
+import re as _re
+
+def _auto_hint(solution: str) -> str:
+    """Generate a concise hint from the solution SQL by detecting key patterns."""
+    s = solution.upper()
+    parts: list[str] = []
+    # DDL / DML
+    if "CREATE TABLE" in s:
+        parts.append("CREATE TABLE")
+    if "ALTER TABLE" in s:
+        parts.append("ALTER TABLE")
+    if "DROP TABLE" in s:
+        parts.append("DROP TABLE")
+    if "CREATE VIEW" in s:
+        parts.append("CREATE VIEW")
+    if "DROP VIEW" in s:
+        parts.append("DROP VIEW")
+    if "CREATE INDEX" in s or "CREATE UNIQUE INDEX" in s:
+        parts.append("CREATE INDEX")
+    if "INSERT INTO" in s or _re.search(r'\bINSERT\b', s):
+        parts.append("INSERT")
+    if _re.search(r'\bUPDATE\b', s):
+        parts.append("UPDATE")
+    if _re.search(r'\bDELETE\b', s):
+        parts.append("DELETE")
+    # CTEs
+    if "WITH RECURSIVE" in s:
+        parts.append("Recursive CTE")
+    elif _re.search(r'\bWITH\b', s):
+        parts.append("CTE")
+    # Joins
+    if "CROSS JOIN" in s:
+        parts.append("CROSS JOIN")
+    if "FULL JOIN" in s or "FULL OUTER JOIN" in s:
+        parts.append("FULL JOIN")
+    if "LEFT JOIN" in s or "LEFT OUTER JOIN" in s:
+        parts.append("LEFT JOIN")
+    if "RIGHT JOIN" in s or "RIGHT OUTER JOIN" in s:
+        parts.append("RIGHT JOIN")
+    if _re.search(r'\bJOIN\b', s) and "LEFT" not in s and "RIGHT" not in s and "FULL" not in s and "CROSS" not in s:
+        parts.append("INNER JOIN")
+    if _re.search(r'FROM\s+(\w+)\s+\w+\s+JOIN\s+\1\s', s):
+        parts.append("Self Join")
+    # Subqueries / EXISTS
+    if "NOT EXISTS" in s:
+        parts.append("NOT EXISTS")
+    elif "EXISTS" in s:
+        parts.append("EXISTS")
+    if "NOT IN" in s and "SELECT" in s:
+        parts.append("NOT IN subquery")
+    elif _re.search(r'\bIN\s*\(\s*SELECT', s):
+        parts.append("IN subquery")
+    # Aggregation
+    aggs = []
+    for fn in ("COUNT", "SUM", "AVG", "MIN", "MAX"):
+        if _re.search(rf'\b{fn}\s*\(', s):
+            aggs.append(fn)
+    if aggs:
+        parts.append(", ".join(aggs))
+    if _re.search(r'\bGROUP\s+BY\b', s):
+        parts.append("GROUP BY")
+    if _re.search(r'\bHAVING\b', s):
+        parts.append("HAVING")
+    # Window functions
+    if "OVER(" in s or "OVER (" in s:
+        wfns = []
+        for fn in ("ROW_NUMBER", "RANK", "DENSE_RANK", "NTILE", "LAG", "LEAD"):
+            if fn in s:
+                wfns.append(fn)
+        if wfns:
+            parts.append("Window: " + ", ".join(wfns))
+        elif not aggs:
+            parts.append("Window function")
+    # Set operations
+    if "UNION ALL" in s:
+        parts.append("UNION ALL")
+    elif "UNION" in s:
+        parts.append("UNION")
+    if "INTERSECT" in s:
+        parts.append("INTERSECT")
+    if "EXCEPT" in s:
+        parts.append("EXCEPT")
+    # Expressions
+    if _re.search(r'\bCASE\b', s):
+        parts.append("CASE expression")
+    if "COALESCE" in s:
+        parts.append("COALESCE")
+    if "NULLIF" in s:
+        parts.append("NULLIF")
+    if "CAST(" in s:
+        parts.append("CAST")
+    # String / Date functions
+    sfns = []
+    for fn in ("SUBSTR", "INSTR", "REPLACE", "TRIM", "LENGTH", "LOWER", "UPPER"):
+        if fn in s:
+            sfns.append(fn)
+    if sfns:
+        parts.append("String: " + ", ".join(sfns))
+    dfns = []
+    for fn in ("STRFTIME", "JULIANDAY"):
+        if fn + "(" in s:
+            dfns.append(fn)
+    if dfns:
+        parts.append("Date: " + ", ".join(dfns))
+    # Filtering
+    if _re.search(r'\bBETWEEN\b', s):
+        parts.append("BETWEEN")
+    if _re.search(r'\bLIKE\b', s):
+        parts.append("LIKE")
+    if _re.search(r'\bIS\s+NULL\b', s):
+        parts.append("IS NULL")
+    if _re.search(r'\bDISTINCT\b', s) and "COUNT(DISTINCT" not in s:
+        parts.append("DISTINCT")
+    if _re.search(r'\bLIMIT\b', s):
+        parts.append("LIMIT")
+    if _re.search(r'\bOFFSET\b', s):
+        parts.append("OFFSET")
+    return " · ".join(parts) if parts else "Read the prompt carefully."
+
 
 @dataclass(frozen=True)
 class Task:
@@ -840,7 +959,7 @@ def lesson_payload(lesson_id: str) -> dict[str, Any]:
                 "id": task.id,
                 "prompt": task.prompt,
                 "starter": task.starter,
-                "hint": task.hint,
+                "hint": task.hint or _auto_hint(task.solution),
                 "tableNames": task_table_names(task, lesson.tables),
                 "tables": preview_tables(task_table_names(task, lesson.tables)),
             }
