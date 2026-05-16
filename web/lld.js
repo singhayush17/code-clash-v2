@@ -4,6 +4,7 @@ const state = {
   selectedLessonId: getLldLessonId(),
   selectedTaskId: "",
   loading: false,
+  dropdownOpen: false,
   error: "",
   check: null,
   runResult: null,
@@ -467,18 +468,17 @@ function render() {
 function renderTopbar() {
   return `
     <header class="topbar lld-topbar">
-      <div class="brand">
+      <div class="brand" style="cursor: pointer;" onclick="window.location.href='/'">
         <div class="lld-brand-mark">LLD</div>
         <div>
           <h1>Code Clash</h1>
           <p>Python low-level design practice with patterns, quizzes, and machine-coding drills.</p>
         </div>
       </div>
-      <div class="top-actions">
-        <a class="nav-button" href="/">Battles</a>
+      <div class="nav-links">
         <div class="nav-dropdown">
-          <span class="nav-dropdown-trigger active">Practice</span>
-          <div class="nav-dropdown-menu">
+          <button class="nav-button" data-action="nav-dropdown-toggle">Practice ▼</button>
+          <div class="nav-dropdown-menu${state.dropdownOpen ? ' open' : ''}">
             <a class="nav-dropdown-item" href="/sql">SQL Practice</a>
             <a class="nav-dropdown-item active" href="/lld">LLD Practice</a>
           </div>
@@ -846,11 +846,22 @@ function escapeHtml(value) {
 }
 
 document.addEventListener("click", async (event) => {
+  if (!event.target.closest(".nav-dropdown") && state.dropdownOpen) {
+    state.dropdownOpen = false;
+    render();
+  }
+
   const button = event.target.closest("[data-action]");
   if (!button) {
     return;
   }
   const action = button.dataset.action;
+
+  if (action === "nav-dropdown-toggle") {
+    state.dropdownOpen = !state.dropdownOpen;
+    render();
+    return;
+  }
 
   if (action === "clear-error") {
     state.error = "";
