@@ -1526,12 +1526,6 @@ async function runSqlAction(check = false, options = {}) {
       if (data.correct) {
         markSqlTaskSolved(state.sql.selectedTaskId);
         recordTaskTime(state.sql.selectedTaskId);
-        // Clear saved query for solved task since it's no longer in-progress
-        const solvedLessonId = state.sql.lesson?.id;
-        if (solvedLessonId && state.sql.savedQueries[solvedLessonId]) {
-          delete state.sql.savedQueries[solvedLessonId][state.sql.selectedTaskId];
-          saveSqlQueries();
-        }
         if (options.advanceOnCorrect) {
           advanced = advanceSqlTask();
         }
