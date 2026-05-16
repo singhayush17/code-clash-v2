@@ -16,8 +16,8 @@ Code Clash is hosted on Render at [https://code-clash-3uwa.onrender.com/](https:
 - Play solo with the same strict timed format.
 - Server-authoritative scoring: 1 point per correct answer, no negatives, no skips, highest score wins.
 - Review your own answered questions at the end of the current game, including your pick and the correct option. Reviews stay in memory only for the current room.
-- A dedicated SQL practice track with progressive sandboxed query exercises.
-- A dedicated Python LLD practice track with design-pattern drills, scenario-heavy quizzes, and machine-coding labs.
+- **Comprehensive SQL Practice:** A massive 49-chapter interactive curriculum covering everything from basic `SELECT` to advanced `WINDOW` functions, CTEs, Joins, DDL Constraints, Views, Indexes, and an interactive SQL Injection "Hacker Mode".
+- **LLD Practice Track:** A dedicated Python Low-Level Design practice track featuring design-pattern drills, scenario-heavy quizzes, and machine-coding labs.
 - Random usernames and generated SVG avatars.
 - Adaptive questions: players start on easy questions and move toward medium/hard as they answer more and build score/streak.
 - 300 starter MCQs across all supported subjects, with balanced correct-answer positions across A, B, C, and D.
@@ -27,6 +27,13 @@ Code Clash is hosted on Render at [https://code-clash-3uwa.onrender.com/](https:
 
 ## Run Locally
 
+You can run the server easily using the included script:
+
+```bash
+./run.sh
+```
+
+Or manually:
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
