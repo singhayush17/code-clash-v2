@@ -1235,13 +1235,13 @@ function renderSqlSidebar() {
                 ${lessons.map(lesson => {
                   const solved = solvedCountForLesson(lesson.id);
                   const totalTime = totalChapterTime(lesson.id);
-                  return \`
-                    <button class="sql-chapter \${state.sql.lesson?.id === lesson.id ? "active" : ""}" data-action="sql-lesson" data-lesson-id="\${escapeHtml(lesson.id)}">
-                      <span>\${lesson.number}</span>
-                      <b>\${escapeHtml(lesson.title)}</b>
-                      <small>\${solved}/\${lesson.taskCount}\${totalTime != null ? \` · \${formatElapsedCompact(totalTime)}\` : ""}</small>
+                  return `
+                    <button class="sql-chapter ${state.sql.lesson?.id === lesson.id ? "active" : ""}" data-action="sql-lesson" data-lesson-id="${escapeHtml(lesson.id)}">
+                      <span>${lesson.number}</span>
+                      <b>${escapeHtml(lesson.title)}</b>
+                      <small>${solved}/${lesson.taskCount}${totalTime != null ? ` · ${formatElapsedCompact(totalTime)}` : ""}</small>
                     </button>
-                  \`;
+                  `;
                 }).join("")}
               </div>
             `).join("");
