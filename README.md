@@ -41,12 +41,12 @@ python -m pip install -r requirements.txt
 uvicorn app.main:app --reload
 ```
 
-Open [http://127.0.0.1:8000](http://127.0.0.1:8000).
+Open [http://localhost:8000](http://localhost:8000).
 
 Practice routes:
 
-- [http://127.0.0.1:8000/sql](http://127.0.0.1:8000/sql)
-- [http://127.0.0.1:8000/lld](http://127.0.0.1:8000/lld)
+- [http://localhost:8000/sql](http://localhost:8000/sql)
+- [http://localhost:8000/lld](http://localhost:8000/lld)
 
 For 1v1 testing, open two browser windows. Create a link in one window and open it in the other, or click "Find Random Player" in both.
 
@@ -69,7 +69,7 @@ Questions live in [`data/questions.json`](data/questions.json). Each item uses:
 After editing the file while the server is running:
 
 ```bash
-curl -X POST http://127.0.0.1:8000/api/admin/reload-questions
+curl -X POST http://localhost:8000/api/admin/reload-questions
 ```
 
 For production, protect this reload endpoint with an admin token or remove it and reload only on deploy.
@@ -77,7 +77,7 @@ Set `ADMIN_TOKEN` to require `X-Admin-Token` on reload requests:
 
 ```bash
 ADMIN_TOKEN=change-me uvicorn app.main:app --reload
-curl -X POST -H "X-Admin-Token: change-me" http://127.0.0.1:8000/api/admin/reload-questions
+curl -X POST -H "X-Admin-Token: change-me" http://localhost:8000/api/admin/reload-questions
 ```
 
 ## Free Hosting Roadmap
