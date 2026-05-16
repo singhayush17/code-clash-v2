@@ -1101,6 +1101,9 @@ function setSqlQueryFromTask() {
     window.clearTimeout(state.sql.autoCheckTimer);
     state.sql.autoCheckTimer = null;
   }
+  // Invalidate any in-flight auto-check from the previous task so its
+  // response doesn't trigger an advance after we've switched away.
+  ++state.sql.autoCheckSeq;
   const task = currentSqlTask();
   const lessonId = state.sql.lesson?.id;
   const taskId = state.sql.selectedTaskId;
