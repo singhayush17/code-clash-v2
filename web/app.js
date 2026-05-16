@@ -1808,10 +1808,18 @@ document.addEventListener("input", (event) => {
 
     state.sql.query = event.target.value;
     saveSqlQueryForTask();
-    state.sql.check = null;
     scheduleSqlAutoCheck();
-    // Defer render to next frame to allow browser caret update to complete
-    requestAnimationFrame(() => render());
+    // Only do a full render if we need to clear a visible check result;
+    // otherwise skip render entirely to avoid destroying/recreating the
+    // textarea which causes the cursor to jump left randomly.
+    if (state.sql.check) {
+      state.sql.check = null;
+      // Targeted clear: remove only the feedback badge instead of full render
+      const badge = document.querySelector(".sql-check-badge");
+      if (badge) badge.remove();
+      const feedback = document.querySelector(".feedback");
+      if (feedback) feedback.innerHTML = '<div class="empty compact-empty">Run your query or press Check.</div>';
+    }
   }
 });
 
