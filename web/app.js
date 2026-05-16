@@ -1817,9 +1817,9 @@ document.addEventListener("input", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.target?.id === "sqlEditor") {
-    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "z") {
+    if ((event.metaKey || event.ctrlKey) && (event.key.toLowerCase() === "z" || event.key.toLowerCase() === "y")) {
       event.preventDefault();
-      if (event.shiftKey) {
+      if ((event.key.toLowerCase() === "z" && event.shiftKey) || event.key.toLowerCase() === "y") {
         // Redo
         if (sqlRedoStack.length > 0) {
           sqlUndoStack.push(state.sql.query);
