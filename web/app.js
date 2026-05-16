@@ -1221,21 +1221,32 @@ function renderSqlSidebar() {
         <p class="eyebrow">SQL Practice</p>
         <h2>Chapters</h2>
       </div>
-      <div class="sql-chapter-list">
-        ${state.sql.lessons
-          .map((lesson) => {
-            const solved = solvedCountForLesson(lesson.id);
-            const totalTime = totalChapterTime(lesson.id);
-            return `
-              <button class="sql-chapter ${state.sql.lesson?.id === lesson.id ? "active" : ""}" data-action="sql-lesson" data-lesson-id="${escapeHtml(lesson.id)}">
-                <span>${lesson.number}</span>
-                <b>${escapeHtml(lesson.title)}</b>
-                <small>${solved}/${lesson.taskCount}${totalTime != null ? ` · ${formatElapsedCompact(totalTime)}` : ""}</small>
-              </button>
-            `;
-          })
-          .join("")}
-      </div>
+        <div class="sql-chapter-list">
+          ${(() => {
+            const groups = {};
+            for (const lesson of state.sql.lessons) {
+              const g = lesson.group || "Other";
+              if (!groups[g]) groups[g] = [];
+              groups[g].push(lesson);
+            }
+            return Object.entries(groups).map(([group, lessons]) => `
+              <div class="sql-chapter-group">
+                <div class="sql-chapter-group-title">${escapeHtml(group)}</div>
+                ${lessons.map(lesson => {
+                  const solved = solvedCountForLesson(lesson.id);
+                  const totalTime = totalChapterTime(lesson.id);
+                  return \`
+                    <button class="sql-chapter \${state.sql.lesson?.id === lesson.id ? "active" : ""}" data-action="sql-lesson" data-lesson-id="\${escapeHtml(lesson.id)}">
+                      <span>\${lesson.number}</span>
+                      <b>\${escapeHtml(lesson.title)}</b>
+                      <small>\${solved}/\${lesson.taskCount}\${totalTime != null ? \` · \${formatElapsedCompact(totalTime)}\` : ""}</small>
+                    </button>
+                  \`;
+                }).join("")}
+              </div>
+            `).join("");
+          })()}
+        </div>
     </aside>
   `;
 }

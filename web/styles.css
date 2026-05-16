@@ -895,9 +895,24 @@ button {
   margin: 0;
 }
 
-.sql-chapter-list {
-  display: grid;
+.sql-chapter-group {
+  display: flex;
+  flex-direction: column;
   gap: 8px;
+  margin-bottom: 24px;
+}
+
+.sql-chapter-group:last-child {
+  margin-bottom: 0;
+}
+
+.sql-chapter-group-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding: 0 4px;
 }
 
 .sql-chapter,

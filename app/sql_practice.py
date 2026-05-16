@@ -600,6 +600,7 @@ def lesson_index() -> list[dict[str, Any]]:
             "id": lesson.id,
             "number": lesson.number,
             "title": lesson.title,
+            "group": GROUP_BY_LESSON.get(lesson.id, "Other"),
             "focus": lesson.focus,
             "taskCount": len(lesson.tasks),
             "notesUrl": NOTES_BY_LESSON.get(lesson.id, ""),
@@ -861,3 +862,62 @@ def normalize_value(value: Any) -> Any:
 
 def quote_identifier(identifier: str) -> str:
     return '"' + identifier.replace('"', '""') + '"'
+GROUP_BY_LESSON = {
+    "select-columns": "Basic Queries",
+    "where-numeric": "Basic Queries",
+    "where-text": "Basic Queries",
+    "sorting-limits": "Basic Queries",
+    "select-review": "Basic Queries",
+    
+    "inner-joins": "Joins",
+    "outer-joins": "Joins",
+    "right-joins": "Joins",
+    "full-joins": "Joins",
+    "self-joins": "Joins",
+    "semi-anti-joins": "Joins",
+    "join-patterns": "Joins",
+    
+    "nulls": "Expressions & Types",
+    "expressions": "Expressions & Types",
+    "string-functions": "Expressions & Types",
+    "date-analytics": "Expressions & Types",
+    "dates-advanced": "Expressions & Types",
+    "data-types": "Expressions & Types",
+    "data-cleaning": "Expressions & Types",
+    
+    "aggregates": "Aggregations",
+    "grouping": "Aggregations",
+    "conditional-aggregation": "Aggregations",
+    
+    "union-intersect-except": "Sets & Subqueries",
+    "set-operations-advanced": "Sets & Subqueries",
+    "advanced-review": "Sets & Subqueries",
+    
+    "ctes": "Advanced Queries",
+    "recursive-ctes": "Advanced Queries",
+    "window-ranking": "Advanced Queries",
+    "window-analytics": "Advanced Queries",
+    "top-n-per-group": "Advanced Queries",
+    
+    "execution-order": "Theory & Execution",
+    "indexes-query-plans": "Theory & Execution",
+    "interview-filters": "Theory & Execution",
+    
+    "insert": "DDL & Admin",
+    "update": "DDL & Admin",
+    "delete": "DDL & Admin",
+    "create-table": "DDL & Admin",
+    "alter-table": "DDL & Admin",
+    "drop-table": "DDL & Admin",
+    "insert-select": "DDL & Admin",
+    "constraints-not-null-default": "DDL & Admin",
+    "constraints-unique-check": "DDL & Admin",
+    "constraints-keys": "DDL & Admin",
+    "views": "DDL & Admin",
+    "indexes": "DDL & Admin",
+    "injection": "DDL & Admin",
+    
+    "leetcode-patterns": "Interview Prep",
+    "business-analytics": "Interview Prep",
+    "final-interview-sets": "Interview Prep",
+}
