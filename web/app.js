@@ -1115,8 +1115,14 @@ function setSqlQueryFromTask() {
   saveSqlLastPosition();
   // Auto-run if the user has a saved in-progress query or the task is already solved,
   // so the result grid populates immediately (SQLBolt-style UX).
+  // But do NOT auto-advance if the user is revisiting an already-solved task.
   if (state.sql.query.trim() && (saved != null || alreadySolved)) {
-    scheduleSqlAutoCheck();
+    if (alreadySolved) {
+      // Just run the query to show results — don't advance away
+      runSqlAction(false, { auto: true, preserveEditor: true });
+    } else {
+      scheduleSqlAutoCheck();
+    }
   }
 }
 
