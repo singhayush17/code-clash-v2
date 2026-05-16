@@ -616,6 +616,9 @@ function render() {
     ? { start: editor.selectionStart, end: editor.selectionEnd }
     : null;
 
+  const sidebar = document.querySelector(".sql-sidebar");
+  const savedSidebarScroll = sidebar ? sidebar.scrollTop : null;
+
   app.innerHTML = `
     ${renderTopbar()}
     ${state.error ? renderNotice() : ""}
@@ -627,6 +630,11 @@ function render() {
 
   if (savedSel) {
     restoreSqlEditorFocus(savedSel);
+  }
+
+  if (savedSidebarScroll !== null) {
+    const newSidebar = document.querySelector(".sql-sidebar");
+    if (newSidebar) newSidebar.scrollTop = savedSidebarScroll;
   }
 }
 
@@ -1100,6 +1108,7 @@ function setSqlQueryFromTask() {
   state.sql.check = null;
   state.sql.showSolution = false;
   state.sql.questionStartTime = Date.now();
+  state.sql.questionPausedMs = null;
   saveSqlLastPosition();
   // Auto-run if the user has a saved in-progress query or the task is already solved,
   // so the result grid populates immediately (SQLBolt-style UX).
