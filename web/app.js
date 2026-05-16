@@ -1,3 +1,6 @@
+let sqlUndoStack = [];
+let sqlRedoStack = [];
+
 const state = {
   socket: null,
   connected: false,
@@ -1795,6 +1798,14 @@ document.addEventListener("change", (event) => {
 
 document.addEventListener("input", (event) => {
   if (event.target?.id === "sqlEditor") {
+    // Only save to undo stack on spaces, newlines, or deletions to chunk history reasonably
+    if (event.data === " " || event.data === null || event.inputType === "insertLineBreak" || sqlUndoStack.length === 0) {
+      if (sqlUndoStack[sqlUndoStack.length - 1] !== state.sql.query) {
+        sqlUndoStack.push(state.sql.query);
+        sqlRedoStack = [];
+      }
+    }
+
     state.sql.query = event.target.value;
     saveSqlQueryForTask();
     state.sql.check = null;
@@ -1806,6 +1817,28 @@ document.addEventListener("input", (event) => {
 
 document.addEventListener("keydown", (event) => {
   if (event.target?.id === "sqlEditor") {
+    if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "z") {
+      event.preventDefault();
+      if (event.shiftKey) {
+        // Redo
+        if (sqlRedoStack.length > 0) {
+          sqlUndoStack.push(state.sql.query);
+          state.sql.query = sqlRedoStack.pop();
+          saveSqlQueryForTask();
+          render();
+        }
+      } else {
+        // Undo
+        if (sqlUndoStack.length > 0) {
+          sqlRedoStack.push(state.sql.query);
+          state.sql.query = sqlUndoStack.pop();
+          saveSqlQueryForTask();
+          render();
+        }
+      }
+      return;
+    }
+
     if ((event.metaKey || event.ctrlKey) && event.key === "Enter") {
       runSqlAction(event.shiftKey);
     }
