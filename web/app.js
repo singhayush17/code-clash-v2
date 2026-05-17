@@ -606,6 +606,25 @@ function avatarSrc(avatar = {}) {
   return `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 }
 
+function syncLiveSqlEditorState() {
+  const editor = document.querySelector("#sqlEditor");
+  if (!editor || document.activeElement !== editor) {
+    return null;
+  }
+
+  if (editor.value !== state.sql.query) {
+    state.sql.query = editor.value;
+    saveSqlQueryForTask();
+    state.sql.check = null;
+    state.sql.result = null;
+  }
+
+  return {
+    start: editor.selectionStart,
+    end: editor.selectionEnd,
+  };
+}
+
 function renderAvatar(player, className = "avatar") {
   if (!player) {
     return "";
@@ -614,11 +633,7 @@ function renderAvatar(player, className = "avatar") {
 }
 
 function render() {
-  const editor = document.querySelector("#sqlEditor");
-  const hadFocus = editor && document.activeElement === editor;
-  const savedSel = hadFocus
-    ? { start: editor.selectionStart, end: editor.selectionEnd }
-    : null;
+  const savedSel = syncLiveSqlEditorState();
 
   const sidebar = document.querySelector(".sql-sidebar");
   const savedSidebarScroll = sidebar ? sidebar.scrollTop : null;

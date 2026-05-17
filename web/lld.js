@@ -445,11 +445,7 @@ async function checkCurrentTask() {
 }
 
 function render() {
-  const editor = document.querySelector("#lldEditor");
-  const hadFocus = editor && document.activeElement === editor;
-  const selection = hadFocus
-    ? { start: editor.selectionStart, end: editor.selectionEnd }
-    : null;
+  const selection = syncLiveEditorState();
 
   app.innerHTML = `
     ${renderTopbar()}
@@ -739,6 +735,25 @@ function renderCodePanel(task) {
       <textarea id="lldEditor" spellcheck="false">${escapeHtml(state.editorValue)}</textarea>
     </section>
   `;
+}
+
+function syncLiveEditorState() {
+  const editor = document.querySelector("#lldEditor");
+  if (!editor || document.activeElement !== editor) {
+    return null;
+  }
+
+  if (editor.value !== state.editorValue) {
+    state.editorValue = editor.value;
+    saveCurrentResponse();
+    state.runResult = null;
+    state.check = null;
+  }
+
+  return {
+    start: editor.selectionStart,
+    end: editor.selectionEnd,
+  };
 }
 
 function renderResultPanel(task) {
