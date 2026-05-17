@@ -613,6 +613,7 @@ function syncLiveSqlEditorState() {
   }
 
   if (editor.value !== state.sql.query) {
+    state.sql.queryEditSeq += 1;
     state.sql.query = editor.value;
     saveSqlQueryForTask();
     state.sql.check = null;
@@ -1511,8 +1512,14 @@ async function runSqlAction(check = false, options = {}) {
     return;
   }
   let advanced = false;
+  let shouldRender = true;
   const selection = options.preserveEditor ? sqlEditorSelection() : null;
   const editSeqAtStart = state.sql.queryEditSeq;
+  const taskIdAtStart = state.sql.selectedTaskId;
+  const requestIsStale = () =>
+    (options.seq && options.seq !== state.sql.autoCheckSeq) ||
+    (options.auto && state.sql.queryEditSeq !== editSeqAtStart) ||
+    state.sql.selectedTaskId !== taskIdAtStart;
   state.sql.loading = !options.auto;
   state.sql.error = "";
   if (!options.auto) {
@@ -1544,7 +1551,8 @@ async function runSqlAction(check = false, options = {}) {
     if (!data.ok) {
       throw new Error(data.error || "SQL failed.");
     }
-    if (options.seq && options.seq !== state.sql.autoCheckSeq) {
+    if (requestIsStale()) {
+      shouldRender = false;
       return;
     }
     if (check) {
@@ -1563,7 +1571,8 @@ async function runSqlAction(check = false, options = {}) {
       state.sql.result = data.result;
     }
   } catch (error) {
-    if (options.seq && options.seq !== state.sql.autoCheckSeq) {
+    if (requestIsStale()) {
+      shouldRender = false;
       return;
     }
     state.sql.check = {
@@ -1572,6 +1581,9 @@ async function runSqlAction(check = false, options = {}) {
     };
   } finally {
     state.sql.loading = false;
+    if (!shouldRender) {
+      return;
+    }
     render();
     if (
       options.preserveEditor &&
@@ -1832,6 +1844,7 @@ document.addEventListener("input", (event) => {
       }
     }
 
+    state.sql.queryEditSeq += 1;
     state.sql.query = event.target.value;
     saveSqlQueryForTask();
     scheduleSqlAutoCheck();
@@ -1858,6 +1871,7 @@ document.addEventListener("keydown", (event) => {
         if (sqlRedoStack.length > 0) {
           sqlUndoStack.push(state.sql.query);
           state.sql.query = sqlRedoStack.pop();
+          state.sql.queryEditSeq += 1;
           saveSqlQueryForTask();
           render();
         }
@@ -1866,6 +1880,7 @@ document.addEventListener("keydown", (event) => {
         if (sqlUndoStack.length > 0) {
           sqlRedoStack.push(state.sql.query);
           state.sql.query = sqlUndoStack.pop();
+          state.sql.queryEditSeq += 1;
           saveSqlQueryForTask();
           render();
         }
