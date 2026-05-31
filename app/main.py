@@ -32,6 +32,7 @@ class SqlRunRequest(BaseModel):
 
 class SqlCheckRequest(SqlRunRequest):
     taskId: str
+    answer: int | None = None
 
 
 class LldRunRequest(BaseModel):
@@ -93,7 +94,7 @@ async def sql_run(request: SqlRunRequest) -> JSONResponse:
 @app.post("/api/sql/check")
 async def sql_check(request: SqlCheckRequest) -> JSONResponse:
     try:
-        result = check_sql(request.lessonId, request.taskId, request.sql)
+        result = check_sql(request.lessonId, request.taskId, request.sql, answer=request.answer)
     except Exception as exc:
         return JSONResponse({"ok": False, "error": str(exc)}, status_code=400)
     return JSONResponse({"ok": True, **result})

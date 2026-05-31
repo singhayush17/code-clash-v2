@@ -53,6 +53,7 @@ const state = {
     taskTimes: loadSqlTaskTimes(),
     savedQueries: loadSqlQueries(),
     queryEditSeq: 0,
+    selectedAnswer: null,
   },
 };
 
@@ -1127,6 +1128,7 @@ function setSqlQueryFromTask() {
   const saved = lessonId && taskId ? getSavedQueryForTask(lessonId, taskId) : null;
   const alreadySolved = lessonId && taskId && isSqlTaskSolved(taskId);
   state.sql.query = saved != null ? saved : (task?.starter || "");
+  state.sql.selectedAnswer = null;
   state.sql.result = null;
   state.sql.check = null;
   state.sql.showSolution = false;
@@ -1421,6 +1423,9 @@ function renderSqlTasks() {
 
 function renderSqlEditor() {
   const task = currentSqlTask();
+  if (task?.kind === "mcq") {
+    return renderSqlMcqEditor(task);
+  }
   return `
     <section class="sql-panel editor-panel">
       <div class="sql-panel-head">
@@ -1440,6 +1445,45 @@ function renderSqlEditor() {
       </div>
       <textarea id="sqlEditor" spellcheck="false">${escapeHtml(state.sql.query)}</textarea>
       ${state.sql.showHint && task?.hint ? `<p class="sql-hint">💡 ${escapeHtml(task.hint)}</p>` : ""}
+    </section>
+  `;
+}
+
+function renderSqlMcqEditor(task) {
+  const check = state.sql.check;
+  const labels = ["A", "B", "C", "D"];
+  return `
+    <section class="sql-panel editor-panel">
+      <div class="sql-panel-head">
+        <h3>${escapeHtml(task.prompt)}</h3>
+        <div class="editor-actions">
+          <div class="sql-question-timer-block${state.sql.questionPausedMs != null ? ' stopped' : ''}">
+            <span class="sql-timer-icon">⏱</span>
+            <span class="sql-timer-value" data-sql-question-timer>${formatElapsed(questionElapsedMs())}</span>
+            <button class="sql-timer-reset" data-action="sql-pause-question" title="${isQuestionTimerPaused() ? 'Resume' : 'Pause'} question timer">${isQuestionTimerPaused() ? '▶' : '⏸'}</button>
+            <button class="sql-timer-reset" data-action="sql-reset-question-timer" title="Reset question timer">↻</button>
+          </div>
+          <button class="primary-button compact" data-action="sql-check">Check</button>
+        </div>
+      </div>
+      <div class="quiz-options">
+        ${task.options.map((option, index) => {
+          const selected = state.sql.selectedAnswer === index;
+          const isCorrect = check?.expectedIndex === index;
+          const wrongSelected = check && !check.correct && selected && !isCorrect;
+          let cls = "quiz-option";
+          if (selected && !check) cls += " selected";
+          if (check && isCorrect) cls += " correct";
+          if (wrongSelected) cls += " wrong";
+          return `
+            <button class="${cls}" data-action="sql-mcq-answer" data-index="${index}">
+              <span class="quiz-option-key">${labels[index]}</span>
+              <span>${escapeHtml(option)}</span>
+            </button>
+          `;
+        }).join("")}
+      </div>
+      ${check?.explanation ? `<p class="sql-hint">💡 ${escapeHtml(check.explanation)}</p>` : ""}
     </section>
   `;
 }
@@ -1533,12 +1577,17 @@ async function runSqlAction(check = false, options = {}) {
   }
 
   const url = check ? "/api/sql/check" : "/api/sql/run";
+  const task = currentSqlTask();
+  const isMcq = task?.kind === "mcq";
   const payload = {
     lessonId: state.sql.lesson.id,
-    sql: state.sql.query,
+    sql: isMcq ? "" : state.sql.query,
   };
   if (check) {
     payload.taskId = state.sql.selectedTaskId;
+    if (isMcq) {
+      payload.answer = state.sql.selectedAnswer;
+    }
   }
 
   try {
@@ -1693,6 +1742,12 @@ document.addEventListener("click", async (event) => {
 
   if (action === "sql-run") {
     await runSqlAction(false);
+  }
+
+  if (action === "sql-mcq-answer") {
+    state.sql.selectedAnswer = Number(button.dataset.index);
+    state.sql.check = null;
+    render();
   }
 
   if (action === "sql-check") {

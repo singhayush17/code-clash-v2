@@ -291,6 +291,10 @@ class Task:
     solution: str
     verifier: str | None = None
     hint: str = ""
+    kind: str = "sql"
+    options: list[str] | None = None
+    answer_index: int | None = None
+    explanation: str = ""
 
 
 @dataclass(frozen=True)
@@ -897,6 +901,12 @@ LESSONS = [
     ]),
 ]
 
+# Import and append MCQ interview lessons
+from .sql_mcqs import MCQ_LESSONS as _mcq_batch_1
+from .sql_mcqs_2 import MCQ_LESSONS_2 as _mcq_batch_2
+LESSONS.extend(_mcq_batch_1)
+LESSONS.extend(_mcq_batch_2)
+
 
 NOTES_BY_LESSON = {
     "select-columns": "https://www.w3schools.com/sql/sql_select.asp",
@@ -947,6 +957,13 @@ NOTES_BY_LESSON = {
     "data-cleaning": "https://www.sqlite.org/lang_corefunc.html",
     "indexes-query-plans": "https://www.sqlite.org/eqp.html",
     "final-interview-sets": "https://www.w3schools.com/sql/",
+    "basic-mcq": "https://www.w3schools.com/sql/sql_select.asp",
+    "joins-mcq": "https://www.w3schools.com/sql/sql_join.asp",
+    "expressions-mcq": "https://www.w3schools.com/sql/sql_case.asp",
+    "aggregations-mcq": "https://www.w3schools.com/sql/sql_count_avg_sum.asp",
+    "sets-mcq": "https://www.w3schools.com/sql/sql_union.asp",
+    "advanced-mcq": "https://www.postgresql.org/docs/current/tutorial-window.html",
+    "ddl-mcq": "https://www.w3schools.com/sql/sql_create_table.asp",
 }
 
 
@@ -983,9 +1000,14 @@ def lesson_payload(lesson_id: str) -> dict[str, Any]:
                 "id": task.id,
                 "prompt": task.prompt,
                 "starter": task.starter,
-                "hint": task.hint or _auto_hint(task.solution),
-                "tableNames": task_table_names(task, lesson.tables),
-                "tables": preview_tables(task_table_names(task, lesson.tables)),
+                "hint": task.hint or _auto_hint(task.solution) if task.kind != "mcq" else "",
+                "kind": task.kind,
+                **({
+                    "options": task.options,
+                } if task.kind == "mcq" else {
+                    "tableNames": task_table_names(task, lesson.tables),
+                    "tables": preview_tables(task_table_names(task, lesson.tables)),
+                }),
             }
             for task in lesson.tasks
         ],
@@ -1062,9 +1084,19 @@ def run_sql(lesson_id: str, sql: str) -> dict[str, Any]:
         conn.close()
 
 
-def check_sql(lesson_id: str, task_id: str, sql: str) -> dict[str, Any]:
+def check_sql(lesson_id: str, task_id: str, sql: str, answer: int | None = None) -> dict[str, Any]:
     lesson = get_lesson(lesson_id)
     task = get_task(lesson, task_id)
+
+    # MCQ path
+    if task.kind == "mcq":
+        correct = answer == task.answer_index
+        return {
+            "correct": correct,
+            "message": "Correct!" if correct else "Incorrect.",
+            "expectedIndex": task.answer_index,
+            "explanation": task.explanation,
+        }
 
     expected_conn = build_connection()
     user_conn = build_connection()
@@ -1288,4 +1320,12 @@ GROUP_BY_LESSON = {
     "business-analytics": "Interview Prep",
     "final-interview-sets": "Interview Prep",
     "mixed-bag-capstone": "Interview Prep",
+
+    "basic-mcq": "Basic Queries",
+    "joins-mcq": "Joins",
+    "expressions-mcq": "Expressions & Types",
+    "aggregations-mcq": "Aggregations",
+    "sets-mcq": "Sets & Subqueries",
+    "advanced-mcq": "Advanced Queries",
+    "ddl-mcq": "DDL & Admin",
 }
