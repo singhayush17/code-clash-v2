@@ -2478,36 +2478,60 @@ LESSONS: tuple[Lesson, ...] = (
 )
 
 # Import and append HLD System Design MCQ lessons
-from .hld_core import networking_lesson, api_design_lesson, data_modeling_lesson
-from .hld_infra import caching_lesson, sharding_lesson, cap_and_numbers_lesson
-from .hld_patterns import patterns_lesson, technologies_lesson
-from .hld_designs import design_questions_lesson
+# --- Core Concepts (9 chapters) ---
+from .hld_core import networking_lesson as _hld_networking, api_design_lesson as _hld_api, data_modeling_lesson as _hld_dm
+from .hld_core2 import db_indexing_lesson as _hld_idx, caching_lesson as _hld_cache
+from .hld_core3 import sharding_lesson as _hld_shard, consistent_hashing_lesson as _hld_ch, cap_theorem_lesson as _hld_cap, numbers_lesson as _hld_num
+# --- Patterns (7 chapters) ---
+from .hld_patterns import realtime_updates_lesson as _hld_rt, contention_lesson as _hld_cnt, multistep_lesson as _hld_ms, scaling_reads_lesson as _hld_sr
+from .hld_patterns2 import scaling_writes_lesson as _hld_sw, large_blobs_lesson as _hld_lb, long_running_tasks_lesson as _hld_lt
+# --- Key Technologies (9 chapters) ---
+from .hld_tech import redis_lesson as _hld_redis, elasticsearch_lesson as _hld_es, kafka_lesson as _hld_kafka
+from .hld_tech2 import api_gateway_lesson as _hld_gw, cassandra_lesson as _hld_cass, dynamodb_lesson as _hld_ddb
+from .hld_tech3 import postgresql_lesson as _hld_pg, flink_lesson as _hld_flink, zookeeper_lesson as _hld_zk
 
 LESSONS = LESSONS + (
-    networking_lesson(),
-    api_design_lesson(),
-    data_modeling_lesson(),
-    caching_lesson(),
-    sharding_lesson(),
-    cap_and_numbers_lesson(),
-    patterns_lesson(),
-    technologies_lesson(),
-    design_questions_lesson(),
+    # Core Concepts
+    _hld_networking(), _hld_api(), _hld_dm(), _hld_idx(), _hld_cache(),
+    _hld_shard(), _hld_ch(), _hld_cap(), _hld_num(),
+    # Patterns
+    _hld_rt(), _hld_cnt(), _hld_ms(), _hld_sr(), _hld_sw(), _hld_lb(), _hld_lt(),
+    # Key Technologies
+    _hld_redis(), _hld_es(), _hld_kafka(), _hld_gw(), _hld_cass(), _hld_ddb(), _hld_pg(), _hld_flink(), _hld_zk(),
 )
 
 
 LESSON_BY_ID = {lesson.id: lesson for lesson in LESSONS}
 
 NOTES_BY_LESSON = {
-    "hld-networking": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
-    "hld-api-design": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
-    "hld-data-modeling": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
+    # Core Concepts
+    "hld-networking": "https://www.hellointerview.com/learn/system-design/deep-dives/networking",
+    "hld-api-design": "https://www.hellointerview.com/learn/system-design/deep-dives/api-design",
+    "hld-data-modeling": "https://www.hellointerview.com/learn/system-design/deep-dives/data-modeling",
+    "hld-db-indexing": "https://www.hellointerview.com/learn/system-design/deep-dives/db-indexing",
     "hld-caching": "https://www.hellointerview.com/learn/system-design/deep-dives/caching",
     "hld-sharding": "https://www.hellointerview.com/learn/system-design/deep-dives/sharding",
-    "hld-cap-numbers": "https://www.hellointerview.com/learn/system-design/deep-dives/cap-theorem",
-    "hld-patterns": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
-    "hld-technologies": "https://www.hellointerview.com/learn/system-design/deep-dives/redis",
-    "hld-design-questions": "https://www.hellointerview.com/learn/system-design/in-a-hurry/question-breakdowns",
+    "hld-consistent-hashing": "https://www.hellointerview.com/learn/system-design/deep-dives/consistent-hashing",
+    "hld-cap-theorem": "https://www.hellointerview.com/learn/system-design/deep-dives/cap-theorem",
+    "hld-numbers": "https://www.hellointerview.com/learn/system-design/deep-dives/numbers",
+    # Patterns
+    "hld-realtime-updates": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-contention": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-multistep": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-scaling-reads": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-scaling-writes": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-large-blobs": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-long-tasks": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    # Key Technologies
+    "hld-redis": "https://www.hellointerview.com/learn/system-design/deep-dives/redis",
+    "hld-elasticsearch": "https://www.hellointerview.com/learn/system-design/deep-dives/elasticsearch",
+    "hld-kafka": "https://www.hellointerview.com/learn/system-design/deep-dives/kafka",
+    "hld-api-gateway": "https://www.hellointerview.com/learn/system-design/deep-dives/api-gateway",
+    "hld-cassandra": "https://www.hellointerview.com/learn/system-design/deep-dives/cassandra",
+    "hld-dynamodb": "https://www.hellointerview.com/learn/system-design/deep-dives/dynamodb",
+    "hld-postgresql": "https://www.hellointerview.com/learn/system-design/deep-dives/postgresql",
+    "hld-flink": "https://www.hellointerview.com/learn/system-design/deep-dives/flink",
+    "hld-zookeeper": "https://www.hellointerview.com/learn/system-design/deep-dives/zookeeper",
 }
 
 
