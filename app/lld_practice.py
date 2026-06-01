@@ -2489,6 +2489,8 @@ from .hld_patterns2 import scaling_writes_lesson as _hld_sw, large_blobs_lesson 
 from .hld_tech import redis_lesson as _hld_redis, elasticsearch_lesson as _hld_es, kafka_lesson as _hld_kafka
 from .hld_tech2 import api_gateway_lesson as _hld_gw, cassandra_lesson as _hld_cass, dynamodb_lesson as _hld_ddb
 from .hld_tech3 import postgresql_lesson as _hld_pg, flink_lesson as _hld_flink, zookeeper_lesson as _hld_zk
+# --- Advanced Topics (3 chapters) ---
+from .hld_advanced import bigdata_ds_lesson as _hld_bd, vector_db_lesson as _hld_vec, timeseries_db_lesson as _hld_ts
 
 LESSONS = LESSONS + (
     # Core Concepts
@@ -2498,6 +2500,8 @@ LESSONS = LESSONS + (
     _hld_rt(), _hld_cnt(), _hld_ms(), _hld_sr(), _hld_sw(), _hld_lb(), _hld_lt(),
     # Key Technologies
     _hld_redis(), _hld_es(), _hld_kafka(), _hld_gw(), _hld_cass(), _hld_ddb(), _hld_pg(), _hld_flink(), _hld_zk(),
+    # Advanced Topics
+    _hld_bd(), _hld_vec(), _hld_ts(),
 )
 
 
@@ -2532,6 +2536,10 @@ NOTES_BY_LESSON = {
     "hld-postgresql": "https://www.hellointerview.com/learn/system-design/deep-dives/postgresql",
     "hld-flink": "https://www.hellointerview.com/learn/system-design/deep-dives/flink",
     "hld-zookeeper": "https://www.hellointerview.com/learn/system-design/deep-dives/zookeeper",
+    # Advanced Topics
+    "hld-bigdata-ds": "https://www.hellointerview.com/learn/system-design/deep-dives/bloom-filters",
+    "hld-vector-db": "https://www.hellointerview.com/learn/system-design/deep-dives/vector-dbs",
+    "hld-timeseries-db": "https://www.hellointerview.com/learn/system-design/deep-dives/timeseries-dbs",
 }
 
 
