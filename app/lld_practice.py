@@ -449,8 +449,7 @@ def singleton_lesson() -> Lesson:
                 "A process should expose exactly one in-memory feature-flag registry shared by all callers in the same runtime. Which pattern fits most directly?",
                 "easy",
                 ("singleton", "creational"),
-                ("Singleton", "Prototype", "Builder", "Decorator"),
-                0,
+                ("Decorator","Singleton","Builder","Prototype"),1,
                 "The requirement is about exactly one shared runtime instance.",
             ),
             quiz(
@@ -532,8 +531,7 @@ def factory_method_lesson() -> Lesson:
                 "A router must choose `EmailSender`, `SmsSender`, or `SlackSender` based on a channel string, but the caller should only ask for a sender. Which pattern fits best?",
                 "easy",
                 ("factory-method", "creational"),
-                ("Factory Method", "Adapter", "Prototype", "Visitor"),
-                0,
+                ("Factory Method","Prototype","Adapter","Visitor"),0,
                 "This is straightforward conditional construction hidden from the caller.",
             ),
             quiz(
@@ -637,8 +635,7 @@ def abstract_factory_lesson() -> Lesson:
                 "A deployment tool must create a VM, load balancer, and metrics client together for either AWS or GCP, and the family must stay internally compatible. Which pattern fits best?",
                 "medium",
                 ("abstract-factory", "creational"),
-                ("Abstract Factory", "Factory Method", "Bridge", "Decorator"),
-                0,
+                ("Decorator","Bridge","Abstract Factory","Factory Method"),2,
                 "The key phrase is 'related family of objects that must stay compatible'.",
             ),
             quiz(
@@ -675,8 +672,7 @@ def builder_lesson() -> Lesson:
                 "You need a readable API to assemble a query with optional filters, grouping, ordering, and limits. Which pattern makes the call site cleanest?",
                 "easy",
                 ("builder", "api-design"),
-                ("Builder", "Prototype", "Visitor", "Adapter"),
-                0,
+                ("Prototype","Visitor","Builder","Adapter"),2,
                 "This is classic Builder territory: lots of optional pieces and a desire for readable chaining.",
             ),
             quiz(
@@ -827,8 +823,7 @@ def adapter_lesson() -> Lesson:
                 "A payment SDK exposes `charge(amount_paise, account_ref)` while your domain wants `pay(amount_rupees, customer_id)`. Which pattern is the direct fit?",
                 "easy",
                 ("adapter", "integration"),
-                ("Adapter", "Facade", "Decorator", "Bridge"),
-                0,
+                ("Decorator","Bridge","Facade","Adapter"),3,
                 "That is an interface translation problem, which is exactly what Adapter solves.",
             ),
             quiz(
@@ -908,8 +903,7 @@ def bridge_lesson() -> Lesson:
                 "A document service has report types like invoice and scorecard, while rendering backends like HTML and PDF also evolve independently. Which pattern is strongest here?",
                 "medium",
                 ("bridge", "structure"),
-                ("Bridge", "Strategy", "Prototype", "Composite"),
-                0,
+                ("Prototype","Strategy","Bridge","Composite"),2,
                 "This is the canonical 'two durable axes of variation' signal for Bridge.",
             ),
             quiz(
@@ -946,8 +940,7 @@ def composite_lesson() -> Lesson:
                 "You need folders and files to both answer `size()` so callers can work uniformly over a tree. Which pattern fits best?",
                 "easy",
                 ("composite", "trees"),
-                ("Composite", "Decorator", "Visitor", "Chain of Responsibility"),
-                0,
+                ("Chain of Responsibility","Visitor","Composite","Decorator"),2,
                 "This is a classic uniform-leaf-and-container tree problem.",
             ),
             quiz(
@@ -1033,8 +1026,7 @@ def decorator_lesson() -> Lesson:
                 "You want to add logging and retry behavior around an existing notifier without changing the notifier's public role. Which pattern fits best?",
                 "easy",
                 ("decorator", "wrapping"),
-                ("Decorator", "Adapter", "Proxy", "Facade"),
-                0,
+                ("Facade","Decorator","Proxy","Adapter"),1,
                 "You are layering extra behavior around the same outward interface.",
             ),
             quiz(
@@ -1114,8 +1106,7 @@ def facade_lesson() -> Lesson:
                 "A support platform coordinates ticketing, notifications, and audit logging, but callers should open an incident through one simple method. Which pattern fits best?",
                 "easy",
                 ("facade", "workflow"),
-                ("Facade", "Adapter", "Chain of Responsibility", "Visitor"),
-                0,
+                ("Facade","Visitor","Chain of Responsibility","Adapter"),0,
                 "This is subsystem simplification through one orchestrating front door.",
             ),
             quiz(
@@ -1222,8 +1213,7 @@ def flyweight_lesson() -> Lesson:
                 "A text editor has millions of characters but only a small set of shared font-style combinations. Which pattern helps share style objects efficiently?",
                 "medium",
                 ("flyweight", "memory"),
-                ("Flyweight", "Prototype", "Decorator", "Singleton"),
-                0,
+                ("Prototype","Decorator","Singleton","Flyweight"),3,
                 "This is about shared intrinsic state across huge numbers of logical objects.",
             ),
             quiz(
@@ -1260,8 +1250,7 @@ def proxy_lesson() -> Lesson:
                 "A dashboard should lazy-load an expensive candidate report only when opened and reuse the result afterward. Which pattern is the direct fit?",
                 "medium",
                 ("proxy", "lazy-loading"),
-                ("Proxy", "Decorator", "Facade", "Flyweight"),
-                0,
+                ("Proxy","Flyweight","Facade","Decorator"),0,
                 "This is access and loading control around an expensive target.",
             ),
             quiz(
@@ -1342,8 +1331,7 @@ def strategy_lesson() -> Lesson:
                 "A delivery app computes fees differently for regular, surge, and premium contexts, but checkout itself should stay simple. Which pattern fits best?",
                 "easy",
                 ("strategy", "pricing"),
-                ("Strategy", "State", "Bridge", "Mediator"),
-                0,
+                ("State","Strategy","Mediator","Bridge"),1,
                 "This is a textbook swappable-policy problem.",
             ),
             quiz(
@@ -1449,8 +1437,7 @@ def observer_lesson() -> Lesson:
                 "An inventory service should publish stock changes to notifications, analytics, and cache invalidation without hard-coding those consumers. Which pattern fits best?",
                 "easy",
                 ("observer", "events"),
-                ("Observer", "Mediator", "Visitor", "Builder"),
-                0,
+                ("Mediator","Builder","Observer","Visitor"),2,
                 "This is exactly what Observer is for: one publisher, many decoupled listeners.",
             ),
             quiz(
@@ -1616,8 +1603,7 @@ def state_lesson() -> Lesson:
                 "An order moves through `created -> paid -> packed -> shipped -> delivered`, and allowed operations vary by stage. Which pattern is strongest?",
                 "easy",
                 ("state", "workflow"),
-                ("State", "Strategy", "Proxy", "Facade"),
-                0,
+                ("State","Proxy","Strategy","Facade"),0,
                 "The behavior depends on lifecycle state and legal transitions.",
             ),
             quiz(
@@ -1691,8 +1677,7 @@ def template_method_lesson() -> Lesson:
                 "Every ingestion pipeline follows `fetch -> validate -> transform -> persist -> emit metrics`, but validation and transformation differ by source. Which pattern fits best?",
                 "medium",
                 ("template-method", "workflow"),
-                ("Template Method", "Strategy", "Memento", "Observer"),
-                0,
+                ("Strategy","Memento","Template Method","Observer"),2,
                 "The workflow skeleton is fixed; some steps vary.",
             ),
             quiz(
@@ -1729,8 +1714,7 @@ def iterator_lesson() -> Lesson:
                 "A repository should let callers iterate search results without exposing whether data comes from memory or paginated remote fetches. Which pattern fits best?",
                 "easy",
                 ("iterator", "traversal"),
-                ("Iterator", "Visitor", "Mediator", "Bridge"),
-                0,
+                ("Bridge","Mediator","Visitor","Iterator"),3,
                 "This is traversal over hidden representation.",
             ),
             quiz(
@@ -1767,8 +1751,7 @@ def chain_lesson() -> Lesson:
                 "A request should pass through handlers until one approves, rejects, or escalates it. Which pattern fits best?",
                 "easy",
                 ("chain-of-responsibility", "pipelines"),
-                ("Chain of Responsibility", "Mediator", "Observer", "Interpreter"),
-                0,
+                ("Chain of Responsibility","Mediator","Interpreter","Observer"),0,
                 "This is direct request fallthrough across handlers.",
             ),
             quiz(
@@ -1874,8 +1857,7 @@ def mediator_lesson() -> Lesson:
                 "An interview scheduling system has Candidate, Interviewer, RoomCalendar, and ReminderService, and direct coordination is turning into a dependency mesh. Which pattern gives one coordination hub?",
                 "medium",
                 ("mediator", "coordination"),
-                ("Mediator", "Observer", "Proxy", "Decorator"),
-                0,
+                ("Decorator","Mediator","Proxy","Observer"),1,
                 "This is the classic many-peers, one-workflow-owner signal for Mediator.",
             ),
             quiz(
@@ -1912,8 +1894,7 @@ def memento_lesson() -> Lesson:
                 "A collaborative editor needs undo for draft text and formatting without exposing all document internals to outside callers. Which pattern fits best?",
                 "medium",
                 ("memento", "undo"),
-                ("Memento", "Prototype", "Observer", "Command"),
-                0,
+                ("Memento","Command","Observer","Prototype"),0,
                 "Memento is built for safe snapshot-and-restore behavior.",
             ),
             quiz(
@@ -1950,8 +1931,7 @@ def interpreter_lesson() -> Lesson:
                 "You need a tiny rules engine supporting expressions like `tier == gold AND orders > 3`. Which pattern fits best?",
                 "medium",
                 ("interpreter", "rules"),
-                ("Interpreter", "Visitor", "Facade", "Proxy"),
-                0,
+                ("Visitor","Proxy","Facade","Interpreter"),3,
                 "This is a mini grammar composed from expression objects.",
             ),
             quiz(
@@ -2059,8 +2039,7 @@ def visitor_lesson() -> Lesson:
                 "An AST has stable node types like Literal, Add, and Multiply, but new analyses like pretty-printing and cost estimation keep arriving. Which pattern fits best?",
                 "medium",
                 ("visitor", "ast"),
-                ("Visitor", "Iterator", "Decorator", "Mediator"),
-                0,
+                ("Mediator","Iterator","Visitor","Decorator"),2,
                 "The structure is stable and the operations keep growing.",
             ),
             quiz(
