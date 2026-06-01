@@ -553,6 +553,7 @@ function renderWorkspace() {
           </div>
           <div class="lld-focus-pills">
             ${state.lesson.focus.map((item) => `<span class="pill">${escapeHtml(item)}</span>`).join("")}
+            ${state.lesson.notesUrl ? `<a class="notes-link" href="${escapeHtml(state.lesson.notesUrl)}" target="_blank" rel="noreferrer">📖 Notes</a>` : ""}
           </div>
         </div>
       </div>

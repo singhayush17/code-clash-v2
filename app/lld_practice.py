@@ -2477,8 +2477,38 @@ LESSONS: tuple[Lesson, ...] = (
     notification_router_lab(),
 )
 
+# Import and append HLD System Design MCQ lessons
+from .hld_core import networking_lesson, api_design_lesson, data_modeling_lesson
+from .hld_infra import caching_lesson, sharding_lesson, cap_and_numbers_lesson
+from .hld_patterns import patterns_lesson, technologies_lesson
+from .hld_designs import design_questions_lesson
+
+LESSONS = LESSONS + (
+    networking_lesson(),
+    api_design_lesson(),
+    data_modeling_lesson(),
+    caching_lesson(),
+    sharding_lesson(),
+    cap_and_numbers_lesson(),
+    patterns_lesson(),
+    technologies_lesson(),
+    design_questions_lesson(),
+)
+
 
 LESSON_BY_ID = {lesson.id: lesson for lesson in LESSONS}
+
+NOTES_BY_LESSON = {
+    "hld-networking": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
+    "hld-api-design": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
+    "hld-data-modeling": "https://www.hellointerview.com/learn/system-design/in-a-hurry/core-concepts",
+    "hld-caching": "https://www.hellointerview.com/learn/system-design/deep-dives/caching",
+    "hld-sharding": "https://www.hellointerview.com/learn/system-design/deep-dives/sharding",
+    "hld-cap-numbers": "https://www.hellointerview.com/learn/system-design/deep-dives/cap-theorem",
+    "hld-patterns": "https://www.hellointerview.com/learn/system-design/in-a-hurry/common-patterns",
+    "hld-technologies": "https://www.hellointerview.com/learn/system-design/deep-dives/redis",
+    "hld-design-questions": "https://www.hellointerview.com/learn/system-design/in-a-hurry/question-breakdowns",
+}
 
 
 def lesson_index() -> list[dict[str, Any]]:
@@ -2491,6 +2521,7 @@ def lesson_index() -> list[dict[str, Any]]:
             "taskCount": len(lesson.tasks),
             "patternCount": len(lesson.patterns),
             "badge": lesson.badge,
+            "notesUrl": NOTES_BY_LESSON.get(lesson.id, ""),
         }
         for lesson in LESSONS
     ]
@@ -2535,6 +2566,7 @@ def lesson_payload(lesson_id: str) -> dict[str, Any]:
         "focus": list(lesson.focus),
         "overview": lesson.overview,
         "badge": lesson.badge,
+        "notesUrl": NOTES_BY_LESSON.get(lesson.id, ""),
         "patterns": [pattern_payload(name) for name in lesson.patterns],
         "tasks": [task_payload(task) for task in lesson.tasks],
     }
