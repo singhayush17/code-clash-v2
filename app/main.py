@@ -13,6 +13,7 @@ from .game import GameManager
 from .question_bank import QuestionBank, QuestionBankError
 from .lld_practice import check_lld, lesson_index as lld_lesson_index, lesson_payload as lld_lesson_payload, run_python
 from .sql_practice import check_sql, lesson_index, lesson_payload, run_sql
+from .hld_practice import check_hld, lesson_index as hld_lesson_index, lesson_payload as hld_lesson_payload
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -133,6 +134,29 @@ async def lld_check(request: LldCheckRequest) -> JSONResponse:
     return JSONResponse({"ok": True, **result})
 
 
+@app.get("/api/hld/lessons")
+async def hld_lessons() -> dict[str, object]:
+    return {"lessons": hld_lesson_index()}
+
+
+@app.get("/api/hld/lessons/{lesson_id}")
+async def hld_lesson(lesson_id: str) -> dict[str, object]:
+    return {"lesson": hld_lesson_payload(lesson_id)}
+
+
+@app.post("/api/hld/check")
+async def hld_check(request: LldCheckRequest) -> JSONResponse:
+    try:
+        result = check_hld(
+            request.lessonId,
+            request.taskId,
+            answer=request.answer,
+        )
+    except Exception as exc:
+        return JSONResponse({"ok": False, "error": str(exc)}, status_code=400)
+    return JSONResponse({"ok": True, **result})
+
+
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket) -> None:
     conn = await manager.register(websocket)
@@ -175,6 +199,16 @@ async def lld_practice_page() -> FileResponse:
 @app.get("/lld/{lesson_id}")
 async def lld_practice_lesson(lesson_id: str) -> FileResponse:
     return FileResponse(WEB_DIR / "lld.html")
+
+
+@app.get("/hld")
+async def hld_practice_page() -> FileResponse:
+    return FileResponse(WEB_DIR / "hld.html")
+
+
+@app.get("/hld/{lesson_id}")
+async def hld_practice_lesson(lesson_id: str) -> FileResponse:
+    return FileResponse(WEB_DIR / "hld.html")
 
 
 app.mount("/static", StaticFiles(directory=WEB_DIR), name="static")

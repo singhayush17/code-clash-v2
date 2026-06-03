@@ -477,6 +477,7 @@ function renderTopbar() {
           <div class="nav-dropdown-menu${state.dropdownOpen ? ' open' : ''}">
             <a class="nav-dropdown-item" href="/sql">SQL Practice</a>
             <a class="nav-dropdown-item active" href="/lld">LLD Practice</a>
+            <a class="nav-dropdown-item" href="/hld">HLD Practice</a>
           </div>
         </div>
       </div>

@@ -1,0 +1,243 @@
+.hld-body .app {
+  width: min(1480px, calc(100% - 32px));
+}
+
+.hld-topbar .nav-button,
+.hld-topbar a.nav-button {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.hld-brand-mark {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(139, 92, 246, 0.9));
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  flex: 0 0 auto;
+}
+
+.hld-workspace-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.hld-workspace-head p,
+.hld-workspace-head h2 {
+  margin-top: 0;
+}
+
+.hld-workspace-head-copy {
+  display: grid;
+  gap: 6px;
+}
+
+.hld-workspace-head-copy p:last-child {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.hld-lesson-tools {
+  display: grid;
+  justify-items: end;
+  gap: 10px;
+}
+
+.hld-focus-pills,
+.hld-meta-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.hld-left {
+  display: grid;
+  gap: 18px;
+}
+
+.hld-overview-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.hld-stat {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 12px;
+  background: var(--wash);
+}
+
+.hld-stat b {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+}
+
+.hld-stat span {
+  color: var(--muted);
+  font-size: 0.88rem;
+}
+
+.quiz-options {
+  display: grid;
+  gap: 10px;
+}
+
+.quiz-option {
+  width: 100%;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #ffffff;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.quiz-option:hover {
+  border-color: rgba(99, 102, 241, 0.35);
+  background: rgba(99, 102, 241, 0.05);
+}
+
+.quiz-option.selected {
+  border-color: rgba(99, 102, 241, 0.45);
+  background: rgba(99, 102, 241, 0.10);
+}
+
+.quiz-option.correct {
+  border-color: rgba(16, 185, 129, 0.45);
+  background: rgba(16, 185, 129, 0.08);
+}
+
+.quiz-option.wrong {
+  border-color: rgba(215, 38, 61, 0.3);
+  background: rgba(215, 38, 61, 0.06);
+}
+
+.quiz-option-key {
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  display: grid;
+  place-items: center;
+  background: var(--wash);
+  color: var(--muted);
+  flex: 0 0 auto;
+  font-weight: 700;
+}
+
+.quiz-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.task-kind-pill {
+  text-transform: capitalize;
+}
+
+.task-time {
+  color: var(--muted);
+}
+
+.result-stack {
+  display: grid;
+  gap: 12px;
+}
+
+.result-card {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 14px;
+  background: #ffffff;
+}
+
+.result-card h3,
+.result-card p,
+.result-card pre {
+  margin-top: 0;
+}
+
+.result-card p:last-child {
+  margin-bottom: 0;
+}
+
+.hld-empty {
+  min-height: 200px;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  color: var(--muted);
+}
+
+.hld-footnote {
+  margin: 18px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+@media (max-width: 900px) {
+  .hld-workspace-head,
+  .hld-lesson-tools {
+    grid-auto-flow: row;
+  }
+
+  .hld-workspace-head {
+    flex-direction: column;
+  }
+
+  .hld-lesson-tools {
+    justify-items: start;
+  }
+
+  .hld-overview-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Custom active states for HLD using indigo/violet primary */
+.hld-body .sql-chapter.active,
+.hld-body .sql-task.active {
+  border-color: rgba(99, 102, 241, 0.45) !important;
+  background: rgba(99, 102, 241, 0.08) !important;
+}
+
+.hld-body .sql-chapter.active span,
+.hld-body .sql-task.active span {
+  background: rgba(99, 102, 241, 0.15) !important;
+  color: rgb(99, 102, 241) !important;
+}
+
+.hld-body .sql-button.primary {
+  background: linear-gradient(135deg, rgba(99, 102, 241, 0.95), rgba(139, 92, 246, 0.9)) !important;
+  color: #ffffff !important;
+  border: none !important;
+  cursor: pointer;
+}
+
+.hld-body .sql-button.primary:hover {
+  opacity: 0.9;
+}
+
+.hld-body .sql-button.primary:disabled {
+  background: var(--wash) !important;
+  color: var(--muted) !important;
+  border: 1px solid var(--line) !important;
+  cursor: not-allowed;
+}

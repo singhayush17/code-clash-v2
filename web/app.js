@@ -681,6 +681,7 @@ function renderTopbar() {
           <div class="nav-dropdown-menu${state.dropdownOpen ? ' open' : ''}">
             <button class="nav-dropdown-item ${isSqlRoute() ? "active" : ""}" data-action="nav-sql">SQL Practice</button>
             <a class="nav-dropdown-item" href="/lld">LLD Practice</a>
+            <a class="nav-dropdown-item" href="/hld">HLD Practice</a>
           </div>
         </div>
         <div class="connection">
