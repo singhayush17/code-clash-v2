@@ -6,7 +6,7 @@ def _mcq(id, prompt, options, answer, explanation=""):
     return Task(id=id, prompt=prompt, starter="", solution="", kind="mcq",
                 options=options, answer_index=answer, explanation=explanation)
 
-AGGREGATIONS_MCQS = Lesson("aggregations-mcq", 62, "Aggregations: Interview MCQs", ["MCQ", "Interview"], [], [
+AGGREGATIONS_MCQS = Lesson("aggregations-mcq", 63, "Aggregations: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("am-1", "What does COUNT(*) count?",
          ["Distinct values", "Only non-NULL values", "Columns", "All rows including NULLs"], 3,
          "COUNT(*) counts every row regardless of NULL values."),
@@ -69,7 +69,7 @@ AGGREGATIONS_MCQS = Lesson("aggregations-mcq", 62, "Aggregations: Interview MCQs
          "WHERE cannot reference aggregates directly. Use HAVING, or put the aggregate in a subquery."),
 ])
 
-SETS_MCQS = Lesson("sets-mcq", 63, "Sets & Subqueries: Interview MCQs", ["MCQ", "Interview"], [], [
+SETS_MCQS = Lesson("sets-mcq", 64, "Sets & Subqueries: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("sm-1", "What does UNION do?",
          ["Combines results and removes duplicates", "Intersects results", "Joins tables side by side", "Cross joins"], 0,
          "UNION stacks result sets vertically and removes duplicate rows."),
@@ -132,7 +132,7 @@ SETS_MCQS = Lesson("sets-mcq", 63, "Sets & Subqueries: Interview MCQs", ["MCQ", 
          "EXISTS doesn't have the NULL pitfall of NOT IN and stops as soon as it finds a match."),
 ])
 
-ADVANCED_MCQS = Lesson("advanced-mcq", 64, "Advanced Queries: Interview MCQs", ["MCQ", "Interview"], [], [
+ADVANCED_MCQS = Lesson("advanced-mcq", 65, "Advanced Queries: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("adm-1", "What is a CTE?",
          ["A type of JOIN", "A permanent table", "A Common Table Expression defined with WITH", "A stored procedure"], 2,
          "CTEs provide named temporary result sets using the WITH clause."),
@@ -195,7 +195,7 @@ ADVANCED_MCQS = Lesson("advanced-mcq", 64, "Advanced Queries: Interview MCQs", [
          "Without a termination condition, the CTE recurses until the DB's recursion limit is hit."),
 ])
 
-DDL_MCQS = Lesson("ddl-mcq", 65, "DDL & Admin: Interview MCQs", ["MCQ", "Interview"], [], [
+DDL_MCQS = Lesson("ddl-mcq", 66, "DDL & Admin: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("dm-1", "What does DDL stand for?",
          ["Database Design Logic", "Data Deletion Language", "Dynamic Data Linking", "Data Definition Language"], 3,
          "DDL = Data Definition Language — commands that define/alter database structure."),
@@ -258,4 +258,68 @@ DDL_MCQS = Lesson("ddl-mcq", 65, "DDL & Admin: Interview MCQs", ["MCQ", "Intervi
          "A clustered index determines the physical order of data; a table can have only one."),
 ])
 
-MCQ_LESSONS_2 = [AGGREGATIONS_MCQS, SETS_MCQS, ADVANCED_MCQS, DDL_MCQS]
+
+FOREIGN_KEYS_MCQS = Lesson("foreign-keys-mcq", 67, "Foreign Keys: Interview MCQs", ["MCQ", "Interview"], [], [
+    _mcq("fkm-1", "What does a FOREIGN KEY constraint enforce?",
+         ["Referential integrity between tables", "Entity integrity on a single column", "Query performance optimization", "Unique values in a child table"], 0,
+         "FOREIGN KEY enforces referential integrity, ensuring values in a column match those in a parent table's primary key or unique column."),
+    _mcq("fkm-2", "What happens by default if you try to delete a parent row referenced by a child row (under RESTRICT)?",
+         ["The parent row is deleted and child rows become NULL", "The deletion is blocked/prevented", "All referencing child rows are deleted", "The child rows are deleted first"], 1,
+         "RESTRICT prevents the deletion of a parent row if there are any referencing child rows."),
+    _mcq("fkm-3", "What is the effect of the ON DELETE CASCADE option on a foreign key?",
+         ["Prevents deletion of parent rows", "Automatically sets child columns to NULL", "Automatically deletes child rows when the parent row is deleted", "Deletes all tables in the database"], 2,
+         "ON DELETE CASCADE automatically propagates parent row deletions to referencing child rows."),
+    _mcq("fkm-4", "What does ON DELETE SET NULL do when a parent row is deleted?",
+         ["Sets the parent row's primary key to NULL", "Deletes the child rows", "Sets the referencing foreign key columns in the child rows to NULL", "Blocks the deletion"], 2,
+         "ON DELETE SET NULL sets the child row's referencing foreign key column values to NULL when the parent row is deleted."),
+    _mcq("fkm-5", "Which SQL command is used to enable foreign key support in SQLite?",
+         ["SET foreign_keys = ON;", "PRAGMA foreign_keys = ON;", "ALTER TABLE foreign_keys = ON;", "ENABLE FOREIGN KEYS;"], 1,
+         "SQLite requires executing 'PRAGMA foreign_keys = ON;' per connection to enforce foreign key constraints."),
+    _mcq("fkm-6", "Can a foreign key reference a column that is not a PRIMARY KEY?",
+         ["No, it must always reference a PRIMARY KEY", "Yes, but only if it references a UNIQUE column", "Yes, it can reference any column", "No, it must reference an indexed column"], 1,
+         "A foreign key must reference either a primary key or a column with a UNIQUE constraint in the parent table."),
+    _mcq("fkm-7", "What happens if you try to insert a row in a child table with a foreign key value that does not exist in the parent table?",
+         ["The value is inserted as NULL", "The database automatically creates the parent row", "The insertion fails with a constraint violation", "The database ignores the constraint"], 2,
+         "Inserting an invalid foreign key value results in a foreign key constraint violation/error."),
+    _mcq("fkm-8", "Can a column defined as a FOREIGN KEY contain NULL values?",
+         ["No, it must be NOT NULL", "Yes, unless it is also defined as NOT NULL", "Only if it references a nullable primary key", "Only with ON DELETE SET NULL"], 1,
+         "By default, foreign key columns can contain NULL unless they are explicitly declared NOT NULL."),
+    _mcq("fkm-9", "What is a self-referential foreign key?",
+         ["A foreign key that references a different database", "A foreign key that references the same table", "A primary key that acts as a foreign key", "A foreign key with no parent table"], 1,
+         "A self-referential foreign key references a column (often the primary key) in the same table, commonly used for tree/hierarchical structures."),
+    _mcq("fkm-10", "Which is NOT a valid ON DELETE action in standard SQL?",
+         ["RESTRICT", "CASCADE", "SET DEFAULT", "DELETE ALL"], 3,
+         "DELETE ALL is not a valid SQL ON DELETE action. Valid ones include RESTRICT, CASCADE, SET NULL, SET DEFAULT, and NO ACTION."),
+    _mcq("fkm-11", "If a table has a composite primary key (A, B), how must a foreign key reference it?",
+         ["It can reference column A only", "It must reference both columns A and B together", "It must reference a different table", "It is not possible to reference composite keys"], 1,
+         "A foreign key referencing a composite key must include the same number of columns in the same order."),
+    _mcq("fkm-12", "What is the difference between ON DELETE SET DEFAULT and ON DELETE SET NULL?",
+         ["SET DEFAULT sets the child columns to their default values, while SET NULL sets them to NULL", "There is no difference", "SET DEFAULT is not supported in SQL", "SET NULL is faster"], 0,
+         "SET DEFAULT resets the referencing column to its DEFAULT value; SET NULL resets it to NULL."),
+    _mcq("fkm-13", "What is referential integrity?",
+         ["Ensuring users have access permission", "Ensuring data in child tables remains consistent with parent tables", "Ensuring database backups are clean", "Ensuring queries execute fast"], 1,
+         "Referential integrity ensures relationship consistency between primary/unique keys and foreign keys."),
+    _mcq("fkm-14", "Why is it recommended to index foreign key columns in a child table?",
+         ["To prevent insertion of NULL values", "To allow ON DELETE CASCADE to execute efficiently and speed up joins", "To enforce uniqueness in the child table", "To make the column a primary key"], 1,
+         "Indexing foreign key columns prevents full-table scans on parent table updates/deletions and speeds up joins."),
+    _mcq("fkm-15", "What happens if a parent row is updated and the foreign key has ON UPDATE CASCADE?",
+         ["The child row's foreign key value is automatically updated to match", "The update is blocked", "The child row is deleted", "The parent row is reset to NULL"], 0,
+         "ON UPDATE CASCADE updates the child row's foreign key values automatically if the parent key value is updated."),
+    _mcq("fkm-16", "Which of the following is true about SQLite foreign key constraints?",
+         ["They are always active by default", "They can be added to existing tables using ALTER TABLE", "They must be enabled per database connection using PRAGMA", "SQLite does not support foreign keys"], 2,
+         "Foreign keys in SQLite must be explicitly enabled per-connection using PRAGMA foreign_keys = ON."),
+    _mcq("fkm-17", "What is an orphan row in a database context?",
+         ["A row in a parent table with no children", "A row in a child table whose foreign key references a non-existent parent row", "A row containing only NULL values", "A deleted row"], 1,
+         "An orphan row is a child record referencing a non-existent parent ID (a violation of referential integrity)."),
+    _mcq("fkm-18", "If ON DELETE NO ACTION is specified, what happens when a parent row is deleted?",
+         ["The database does nothing and allows orphan rows", "It acts similarly to RESTRICT, blocking the deletion if referencing rows exist", "The child rows are deleted", "The child columns are set to NULL"], 1,
+         "NO ACTION acts similarly to RESTRICT by checking and raising a constraint error if child records exist."),
+    _mcq("fkm-19", "Can you define multiple foreign keys in a single table?",
+         ["No, a table can have at most one foreign key", "Yes, a table can have multiple columns referencing different tables", "Only if the table has no primary key", "Only in composite keys"], 1,
+         "Yes, a table can have multiple foreign key constraints pointing to different parent tables."),
+    _mcq("fkm-20", "In a one-to-many relationship, which table contains the foreign key?",
+         ["The 'one' side (parent table)", "The 'many' side (child table)", "Both tables", "Neither table"], 1,
+         "The foreign key is placed in the child table (the 'many' side of the relationship)."),
+])
+
+MCQ_LESSONS_2 = [AGGREGATIONS_MCQS, SETS_MCQS, ADVANCED_MCQS, DDL_MCQS, FOREIGN_KEYS_MCQS]
