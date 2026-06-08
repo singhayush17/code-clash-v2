@@ -2426,7 +2426,9 @@ def notification_router_lab() -> Lesson:
     )
 
 
-LESSONS: tuple[Lesson, ...] = (
+from .balancer import balance_lessons
+
+LESSONS: tuple[Lesson, ...] = tuple(balance_lessons([
     solid_lesson(),
     singleton_lesson(),
     factory_method_lesson(),
@@ -2454,7 +2456,7 @@ LESSONS: tuple[Lesson, ...] = (
     parking_lot_lab(),
     rate_limiter_lab(),
     notification_router_lab(),
-)
+]))
 
 LESSON_BY_ID = {lesson.id: lesson for lesson in LESSONS}
 

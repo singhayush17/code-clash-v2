@@ -951,6 +951,11 @@ from .sql_mcqs_2 import MCQ_LESSONS_2 as _mcq_batch_2
 LESSONS.extend(_mcq_batch_1)
 LESSONS.extend(_mcq_batch_2)
 
+# Balance correct answer options
+from .balancer import balance_lessons
+LESSONS = balance_lessons(LESSONS)
+
+
 
 NOTES_BY_LESSON = {
     "select-columns": "https://www.w3schools.com/sql/sql_select.asp",

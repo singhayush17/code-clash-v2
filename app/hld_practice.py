@@ -36,7 +36,9 @@ from .hld_breakdowns3 import (
     chatgpt_lesson as _hld_chatgpt
 )
 
-LESSONS: list[Lesson] = [
+from .balancer import balance_lessons
+
+LESSONS: list[Lesson] = balance_lessons([
     # Core Concepts
     _hld_networking(), _hld_api(), _hld_dm(), _hld_idx(), _hld_cache(),
     _hld_shard(), _hld_ch(), _hld_cap(), _hld_num(),
@@ -53,7 +55,7 @@ LESSONS: list[Lesson] = [
     _hld_price(), _hld_insta(), _hld_topk(), _hld_uber(), _hld_robinhood(),
     _hld_docs(), _hld_dist_cache(), _hld_youtube(), _hld_scheduler(), _hld_crawler(),
     _hld_ad(), _hld_pay(), _hld_metrics(), _hld_chatgpt(),
-]
+])
 
 LESSON_BY_ID = {lesson.id: lesson for lesson in LESSONS}
 
