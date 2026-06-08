@@ -660,6 +660,7 @@ function render() {
 }
 
 function renderTopbar() {
+  const isDark = (document.documentElement.getAttribute('data-theme') || 'light') === 'dark';
   return `
     <header class="topbar">
       <div class="brand">
@@ -684,6 +685,9 @@ function renderTopbar() {
             <a class="nav-dropdown-item" href="/hld">HLD Practice</a>
           </div>
         </div>
+        <button class="nav-button" data-action="toggle-theme" title="Toggle dark mode" style="padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem;">
+          ${isDark ? "☀️" : "🌙"}
+        </button>
         <div class="connection">
           <span class="dot ${state.connected ? "ok" : ""}"></span>
           ${state.connected ? `${state.onlineCount} players live` : "Connecting"}
@@ -1664,6 +1668,15 @@ document.addEventListener("click", async (event) => {
 
   if (action === "nav-dropdown-toggle") {
     state.dropdownOpen = !state.dropdownOpen;
+    render();
+    return;
+  }
+
+  if (action === "toggle-theme") {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
     render();
     return;
   }

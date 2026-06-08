@@ -314,6 +314,15 @@ function handleAction(event) {
     return;
   }
 
+  if (action === "toggle-theme") {
+    const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    render();
+    return;
+  }
+
   state.dropdownOpen = false;
 
   if (action === "hld-lesson") {
@@ -395,6 +404,7 @@ function render() {
 }
 
 function renderTopbar() {
+  const isDark = (document.documentElement.getAttribute('data-theme') || 'light') === 'dark';
   return `
     <header class="topbar hld-topbar">
       <div class="brand" style="cursor: pointer;" onclick="window.location.href='/'">
@@ -404,7 +414,10 @@ function renderTopbar() {
           <p>System design architectural practice, interactive quizzes, and case studies.</p>
         </div>
       </div>
-      <div class="nav-links">
+      <div class="nav-links" style="display: flex; align-items: center; gap: 10px;">
+        <button class="nav-button" data-action="toggle-theme" title="Toggle dark mode" style="padding: 0 10px; display: inline-flex; align-items: center; justify-content: center; font-size: 1.15rem;">
+          ${isDark ? "☀️" : "🌙"}
+        </button>
         <div class="nav-dropdown">
           <button class="nav-button" data-action="nav-dropdown-toggle">Practice ▼</button>
           <div class="nav-dropdown-menu${state.dropdownOpen ? ' open' : ''}">

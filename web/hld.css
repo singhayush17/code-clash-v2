@@ -102,7 +102,7 @@
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--surface);
   color: var(--ink);
   cursor: pointer;
   text-align: left;
@@ -165,7 +165,7 @@
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 14px;
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .result-card h3,
@@ -240,4 +240,16 @@
   color: var(--muted) !important;
   border: 1px solid var(--line) !important;
   cursor: not-allowed;
+}
+
+/* HLD Dark mode overrides */
+html[data-theme="dark"] .hld-body .sql-chapter.active,
+html[data-theme="dark"] .hld-body .sql-task.active {
+  border-color: rgba(99, 102, 241, 0.6) !important;
+  background: rgba(99, 102, 241, 0.15) !important;
+}
+html[data-theme="dark"] .hld-body .sql-chapter.active span,
+html[data-theme="dark"] .hld-body .sql-task.active span {
+  background: rgba(99, 102, 241, 0.25) !important;
+  color: #8b92f6 !important;
 }

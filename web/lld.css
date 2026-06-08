@@ -97,7 +97,7 @@
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 14px;
-  background: #ffffff;
+  background: var(--surface);
   display: grid;
   gap: 10px;
 }
@@ -164,7 +164,7 @@
   padding: 14px;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: #ffffff;
+  background: var(--surface);
   color: var(--ink);
   cursor: pointer;
   text-align: left;
@@ -227,7 +227,7 @@
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 14px;
-  background: #ffffff;
+  background: var(--surface);
 }
 
 .result-card h3,
@@ -261,7 +261,7 @@
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 10px 12px;
-  background: #ffffff;
+  background: var(--surface);
   display: flex;
   gap: 10px;
   align-items: flex-start;
@@ -316,4 +316,33 @@
   .lld-overview-grid {
     grid-template-columns: 1fr;
   }
+}
+
+/* LLD Dark mode overrides */
+html[data-theme="dark"] .lld-brand-mark {
+  background: linear-gradient(135deg, rgba(46, 160, 67, 0.95), rgba(46, 196, 182, 0.9)) !important;
+}
+html[data-theme="dark"] .quiz-option:hover {
+  border-color: rgba(46, 160, 67, 0.35) !important;
+  background: rgba(46, 160, 67, 0.05) !important;
+}
+html[data-theme="dark"] .quiz-option.selected {
+  border-color: rgba(46, 160, 67, 0.45) !important;
+  background: rgba(46, 160, 67, 0.10) !important;
+}
+html[data-theme="dark"] .quiz-option.correct {
+  border-color: rgba(46, 160, 67, 0.45) !important;
+  background: rgba(46, 160, 67, 0.08) !important;
+}
+html[data-theme="dark"] .quiz-option.wrong {
+  border-color: rgba(248, 81, 73, 0.3) !important;
+  background: rgba(248, 81, 73, 0.06) !important;
+}
+html[data-theme="dark"] .check-item.ok {
+  border-color: rgba(46, 160, 67, 0.3) !important;
+  background: rgba(46, 160, 67, 0.05) !important;
+}
+html[data-theme="dark"] .check-item.bad {
+  border-color: rgba(248, 81, 73, 0.22) !important;
+  background: rgba(248, 81, 73, 0.04) !important;
 }
