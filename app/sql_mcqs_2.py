@@ -6,7 +6,7 @@ def _mcq(id, prompt, options, answer, explanation=""):
     return Task(id=id, prompt=prompt, starter="", solution="", kind="mcq",
                 options=options, answer_index=answer, explanation=explanation)
 
-AGGREGATIONS_MCQS = Lesson("aggregations-mcq", 63, "Aggregations: Interview MCQs", ["MCQ", "Interview"], [], [
+AGGREGATIONS_MCQS = Lesson("aggregations-mcq", 69, "Aggregations: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("am-1", "What does COUNT(*) count?",
          ["Distinct values", "Only non-NULL values", "Columns", "All rows including NULLs"], 3,
          "COUNT(*) counts every row regardless of NULL values."),
@@ -69,7 +69,7 @@ AGGREGATIONS_MCQS = Lesson("aggregations-mcq", 63, "Aggregations: Interview MCQs
          "WHERE cannot reference aggregates directly. Use HAVING, or put the aggregate in a subquery."),
 ])
 
-SETS_MCQS = Lesson("sets-mcq", 64, "Sets & Subqueries: Interview MCQs", ["MCQ", "Interview"], [], [
+SETS_MCQS = Lesson("sets-mcq", 70, "Sets & Subqueries: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("sm-1", "What does UNION do?",
          ["Combines results and removes duplicates", "Intersects results", "Joins tables side by side", "Cross joins"], 0,
          "UNION stacks result sets vertically and removes duplicate rows."),
@@ -132,7 +132,7 @@ SETS_MCQS = Lesson("sets-mcq", 64, "Sets & Subqueries: Interview MCQs", ["MCQ", 
          "EXISTS doesn't have the NULL pitfall of NOT IN and stops as soon as it finds a match."),
 ])
 
-ADVANCED_MCQS = Lesson("advanced-mcq", 65, "Advanced Queries: Interview MCQs", ["MCQ", "Interview"], [], [
+ADVANCED_MCQS = Lesson("advanced-mcq", 71, "Advanced Queries: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("adm-1", "What is a CTE?",
          ["A type of JOIN", "A permanent table", "A Common Table Expression defined with WITH", "A stored procedure"], 2,
          "CTEs provide named temporary result sets using the WITH clause."),
@@ -195,7 +195,7 @@ ADVANCED_MCQS = Lesson("advanced-mcq", 65, "Advanced Queries: Interview MCQs", [
          "Without a termination condition, the CTE recurses until the DB's recursion limit is hit."),
 ])
 
-DDL_MCQS = Lesson("ddl-mcq", 66, "DDL & Admin: Interview MCQs", ["MCQ", "Interview"], [], [
+DDL_MCQS = Lesson("ddl-mcq", 72, "DDL & Admin: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("dm-1", "What does DDL stand for?",
          ["Database Design Logic", "Data Deletion Language", "Dynamic Data Linking", "Data Definition Language"], 3,
          "DDL = Data Definition Language — commands that define/alter database structure."),
@@ -256,6 +256,9 @@ DDL_MCQS = Lesson("ddl-mcq", 66, "DDL & Admin: Interview MCQs", ["MCQ", "Intervi
     _mcq("dm-20", "What is the difference between a clustered and non-clustered index?",
          ["Clustered is only for primary keys", "No difference", "Non-clustered is faster", "Clustered sorts the actual table data; non-clustered is a separate structure"], 3,
          "A clustered index determines the physical order of data; a table can have only one."),
+    _mcq("dm-21", "What is the difference between DROP TABLE and TRUNCATE TABLE?",
+         ["DROP removes rows only, TRUNCATE removes schema", "TRUNCATE removes all rows but keeps the table definition; DROP removes both data and structure", "They are identical commands", "TRUNCATE can remove only one column"], 1,
+         "TRUNCATE clears table data while preserving the table object; DROP removes the table itself."),
 ])
 
 

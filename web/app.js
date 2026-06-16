@@ -125,6 +125,33 @@ function saveSqlQueryForTask() {
   saveSqlQueries();
 }
 
+function clearSqlFeedback() {
+  state.sql.check = null;
+  state.sql.result = null;
+  const badge = document.querySelector(".sql-check-badge");
+  if (badge) badge.remove();
+  const feedback = document.querySelector(".feedback");
+  if (feedback) {
+    feedback.innerHTML = '<div class="empty compact-empty">Run your query or press Check.</div>';
+  }
+}
+
+function applySqlEditorHistory(nextQuery) {
+  state.sql.query = nextQuery;
+  state.sql.queryEditSeq += 1;
+  saveSqlQueryForTask();
+  scheduleSqlAutoCheck();
+  clearSqlFeedback();
+
+  const editor = document.querySelector("#sqlEditor");
+  if (editor) {
+    editor.value = nextQuery;
+    const cursor = nextQuery.length;
+    editor.focus();
+    editor.setSelectionRange(cursor, cursor);
+  }
+}
+
 function getSavedQueryForTask(lessonId, taskId) {
   return state.sql.savedQueries[lessonId]?.[taskId] || null;
 }
@@ -1132,6 +1159,8 @@ function setSqlQueryFromTask() {
   const taskId = state.sql.selectedTaskId;
   const saved = lessonId && taskId ? getSavedQueryForTask(lessonId, taskId) : null;
   const alreadySolved = lessonId && taskId && isSqlTaskSolved(taskId);
+  sqlUndoStack = [];
+  sqlRedoStack = [];
   state.sql.query = saved != null ? saved : (task?.starter || "");
   state.sql.selectedAnswer = null;
   state.sql.result = null;
@@ -1939,19 +1968,13 @@ document.addEventListener("keydown", (event) => {
         // Redo
         if (sqlRedoStack.length > 0) {
           sqlUndoStack.push(state.sql.query);
-          state.sql.query = sqlRedoStack.pop();
-          state.sql.queryEditSeq += 1;
-          saveSqlQueryForTask();
-          render();
+          applySqlEditorHistory(sqlRedoStack.pop());
         }
       } else {
         // Undo
         if (sqlUndoStack.length > 0) {
           sqlRedoStack.push(state.sql.query);
-          state.sql.query = sqlUndoStack.pop();
-          state.sql.queryEditSeq += 1;
-          saveSqlQueryForTask();
-          render();
+          applySqlEditorHistory(sqlUndoStack.pop());
         }
       }
       return;

@@ -6,7 +6,7 @@ def _mcq(id, prompt, options, answer, explanation=""):
     return Task(id=id, prompt=prompt, starter="", solution="", kind="mcq",
                 options=options, answer_index=answer, explanation=explanation)
 
-BASIC_MCQS = Lesson("basic-mcq", 60, "Basic Queries: Interview MCQs", ["MCQ", "Interview"], [], [
+BASIC_MCQS = Lesson("basic-mcq", 66, "Basic Queries: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("bm-1", "What does SELECT * FROM employees do?",
          ["Returns all columns and rows", "Updates all rows", "Creates a table", "Deletes all rows"], 0,
          "SELECT * returns every column and every row from the table."),
@@ -69,7 +69,7 @@ BASIC_MCQS = Lesson("basic-mcq", 60, "Basic Queries: Interview MCQs", ["MCQ", "I
          "SQL uses -- for single-line comments."),
 ])
 
-JOINS_MCQS = Lesson("joins-mcq", 61, "Joins: Interview MCQs", ["MCQ", "Interview"], [], [
+JOINS_MCQS = Lesson("joins-mcq", 67, "Joins: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("jm-1", "What does an INNER JOIN return?",
          ["All from left, matching from right", "Cartesian product", "All rows from both tables", "Only matching rows from both tables"], 3,
          "INNER JOIN returns only rows that have matching values in both tables."),
@@ -132,7 +132,7 @@ JOINS_MCQS = Lesson("joins-mcq", 61, "Joins: Interview MCQs", ["MCQ", "Interview
          "An anti-join returns rows from one table that do not have a corresponding match in another."),
 ])
 
-EXPRESSIONS_MCQS = Lesson("expressions-mcq", 62, "Expressions & Types: Interview MCQs", ["MCQ", "Interview"], [], [
+EXPRESSIONS_MCQS = Lesson("expressions-mcq", 68, "Expressions & Types: Interview MCQs", ["MCQ", "Interview"], [], [
     _mcq("em-1", "What does COALESCE(a, b, c) return?",
          ["The last value", "Sum of all", "The first non-NULL value", "Always a"], 2,
          "COALESCE returns the first non-NULL argument in order."),
